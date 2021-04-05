@@ -7,7 +7,7 @@
             "examTitle": "Aktuelle Prüfung von \"{{ course }}\":",
             "cardTitle": "Deine insgesamte Punktzahl:",
             "cardNoExerciseLabel": "Keine Übung geplant",
-            "cardExerciseLabel": "Nächste Übung:",
+            "cardExerciseLabel": "Nächste Übungen:",
             "register": {
                 "signUp": "Für einen Kurs anmelden",
                 "registerSuccessful": "Anmeldung erfolgreich",

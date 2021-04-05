@@ -1,18 +1,54 @@
 <div class="card" [class.guided-tour]="hasGuidedTour">
-    <div class="card-header text-white" routerLink="/courses/{{ course.id }}" [ngStyle]="{ backgroundColor: course.color || ARTEMIS_DEFAULT_COLOR }">
+    <div class="card-header text-white" [routerLink]="['/courses', course.id!]" [ngStyle]="{ backgroundColor: course.color || ARTEMIS_DEFAULT_COLOR }">
         <h5 class="card-title text-center">
             {{ course.title }}
         </h5>
+        <div class="course-info-amounts">
+            <span *ngIf="exerciseCount > 0">Exercises: {{ exerciseCount }}</span>
+            <span *ngIf="lectureCount > 0">Lectures: {{ lectureCount }}</span>
+            <span *ngIf="examCount > 0">Exams: {{ examCount }}</span>
+        </div>
     </div>
-    <div class="card-body" routerLink="/courses/{{ course.id }}">
-        <h4 jhiTranslate="artemisApp.studentDashboard.cardTitle">Your overall score:</h4>
-        <h2>{{ displayTotalRelativeScore() }}%</h2>
+    <div class="card-body" [routerLink]="['/courses', course.id!]">
+        <div class="chart-container" *ngIf="exerciseCount > 0">
+            <div class="chart-text">
+                <h2 class="text-center">{{ totalRelativeScore }}%</h2>
+                <h4 class="text-center">{{ totalAbsoluteScore }} / {{ totalReachableScore }}</h4>
+            </div>
+            <canvas
+                baseChart
+                id="score-chart"
+                [height]="!!nextRelevantExercise ? 150 : 200"
+                [width]="!!nextRelevantExercise ? 150 : 200"
+                [legend]="false"
+                [datasets]="doughnutChartData"
+                [options]="totalScoreOptions"
+                [colors]="doughnutChartColors"
+                [labels]="doughnutChartLabels"
+                [chartType]="'doughnut'"
+            ></canvas>
+        </div>
+        <!--<h4 jhiTranslate="artemisApp.studentDashboard.cardTitle">Your overall score:</h4>-->
     </div>
 
-    <div class="card-footer text-muted" *ngIf="nextRelevantExercise" (click)="startExercise(nextRelevantExercise)">
-        <h6 jhiTranslate="artemisApp.studentDashboard.cardExerciseLabel">Next exercise:</h6>
-        <h5>{{ nextRelevantExercise.title }}</h5>
-        <h6>{{ nextRelevantExercise.dueDate | artemisDate }}</h6>
+    <div class="card-footer text-muted" *ngIf="nextRelevantExercise" [routerLink]="['/courses', course.id!, 'exercises', nextRelevantExercise.id!]">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h6 jhiTranslate="artemisApp.studentDashboard.cardExerciseLabel">Next exercises:</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h5>{{ nextRelevantExercise.title }}</h5>
+                    <h6>{{ nextRelevantExercise.dueDate | artemisDate }}</h6>
+                </div>
+                <div class="col-6" *ngIf="secondNextRelevantExercise">
+                    <h5>{{ secondNextRelevantExercise.title }}</h5>
+                    <h6>{{ secondNextRelevantExercise.dueDate | artemisDate }}</h6>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card-footer text-muted" *ngIf="!nextRelevantExercise">
         <h6 jhiTranslate="artemisApp.studentDashboard.cardNoExerciseLabel">No Exercise planned</h6>

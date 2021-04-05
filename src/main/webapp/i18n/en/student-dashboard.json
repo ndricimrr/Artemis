@@ -7,7 +7,7 @@
             "examTitle": "Current exam of \"{{ course }}\":",
             "cardTitle": "Your overall points:",
             "cardNoExerciseLabel": "No exercise planned",
-            "cardExerciseLabel": "Next Exercise:",
+            "cardExerciseLabel": "Next Exercises:",
             "register": {
                 "signUp": "Sign up for a course",
                 "registerSuccessful": "Register successful",
