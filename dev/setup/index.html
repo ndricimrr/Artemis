@@ -1,0 +1,657 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup Guide &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Setup for Programming Exercises with Bamboo, Bitbucket and Jira" href="bamboo-bitbucket-jira/" />
+    <link rel="prev" title="Students’ Guide" href="../../user/exams/students_guide/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#server-setup">Server Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bamboo-bitbucket-jira/">Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jenkins-gitlab/">Jenkins and Gitlab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributed/">Multiple instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programming-exercises/">Adjustments for programming exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="programming-exercises/#caching-example-for-maven">Caching example for Maven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-server-via-a-service-configuration">Run the server via a service configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-server-via-a-run-configuration-in-intellij">Run the server via a run configuration in IntelliJ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#other-run-debug-configurations">Other run / debug configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#typical-problems-with-liquibase-checksums">Typical problems with Liquibase checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-server-with-spring-boot-and-spring-profiles">Run the server with Spring Boot and Spring profiles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#set-spring-profiles-with-intellij-ultimate">Set Spring profiles with IntelliJ Ultimate</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-server-with-the-command-line-gradle-wrapper">Run the server with the command line (Gradle wrapper)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#client-setup">Client Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-intellij">Using IntelliJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-command-line">Using the command line</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#customize-your-artemis-instance">Customize your Artemis instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alternative-using-docker-compose">Alternative: Using docker-compose</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-a-shell-into-the-containers">Get a shell into the containers:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-useful-commands">Other useful commands:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#athene-service">Athene Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enable-the-athene-spring-profile">Enable the <code class="docutils literal notranslate"><span class="pre">athene</span></code> Spring profile:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-api-endpoints">Configure API Endpoints:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Setup Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/setup.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-guide">
+<h1>Setup Guide<a class="headerlink" href="#setup-guide" title="Permalink to this headline">¶</a></h1>
+<p>In this guide you learn how to setup the development environment of
+Artemis. Artemis is based on <a class="reference external" href="https://jhipster.github.io">JHipster</a>,
+i.e. <a class="reference external" href="http://projects.spring.io/spring-boot">Spring Boot</a>
+development on the application server using Java 16, and TypeScript
+development on the application client in the browser using
+<a class="reference external" href="https://angular.io">Angular</a> and Webpack. To get an overview of the
+used technology, have a look at the <a class="reference external" href="https://jhipster.github.io/tech-stack">JHipster Technology stack</a>
+and other tutorials on the JHipster homepage.</p>
+<p>You can find tutorials how to setup JHipster in an IDE (<a class="reference external" href="https://www.jetbrains.com/idea">IntelliJ IDEA
+Ultimate</a> is recommended) on
+<a class="reference external" href="https://jhipster.github.io/configuring-ide">https://jhipster.github.io/configuring-ide</a>. Note that the Community
+Edition of IntelliJ IDEA does not provide Spring Boot support (see the
+<a class="reference external" href="https://www.jetbrains.com/idea/features/editions_comparison_matrix.html">comparison
+matrix</a>).
+Before you can build Artemis, you must install and configure the
+following dependencies/tools on your machine:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://www.oracle.com/java/technologies/javase-downloads.html">Java
+JDK</a>:
+We use Java (JDK 16) to develop and run the Artemis application
+server which is based on <a class="reference external" href="http://projects.spring.io/spring-boot">Spring
+Boot</a>.</p></li>
+<li><p><a class="reference external" href="https://dev.mysql.com/downloads/mysql">MySQL Database Server 8</a>:
+Artemis uses Hibernate to store entities in a MySQL database.
+Download and install the MySQL Community Server (8.0.x) and configure
+the ‘root’ user with an empty password. (In case you want to use a
+different password, make sure to change the value in
+application-dev.yml and in liquibase.gradle). The required Artemis
+scheme will be created / updated automatically at startup time of the
+server application. Alternatively, you can run the MySQL Database
+Server inside a Docker container using
+e.g. <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">src/main/docker/mysql.yml</span> <span class="pre">up</span></code></p></li>
+<li><p><a class="reference external" href="https://nodejs.org">Node.js</a>: We use Node LTS (&gt;=14.15.0 &lt; 15) to compile
+and run the client Angular application. Depending on your system, you
+can install Node either from source or as a pre-packaged bundle.</p></li>
+<li><p><a class="reference external" href="https://classic.yarnpkg.com">Yarn</a>: We use Yarn (&gt;=1.22.4 &lt;2) to
+manage client side Node dependencies. Depending on your system, you
+can install Yarn either from source or as a pre-packaged bundle. To
+do so, please follow the instructions on the <a class="reference external" href="https://classic.yarnpkg.com/en/docs/install">Yarn installation
+page</a>.</p></li>
+</ol>
+<div class="section" id="server-setup">
+<h2>Server Setup<a class="headerlink" href="#server-setup" title="Permalink to this headline">¶</a></h2>
+<p>To start the Artemis application server from the development
+environment, first import the project into IntelliJ and then make sure
+to install the Spring Boot plugins to run the main class
+<code class="docutils literal notranslate"><span class="pre">de.tum.in.www1.artemis.ArtemisApp</span></code>. Before the application runs, you
+have to configure the file <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> in the folder
+<code class="docutils literal notranslate"><span class="pre">src/main/resources/config</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">repo-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos/</span>
+    <span class="nt">repo-download-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos-download/</span>
+    <span class="nt">encryption-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;encrypt-password&gt;</span>     <span class="c1"># arbitrary password for encrypting database values</span>
+    <span class="nt">user-management</span><span class="p">:</span>
+        <span class="nt">use-external</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">external</span><span class="p">:</span>
+            <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://jira.ase.in.tum.de</span>
+            <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>    <span class="c1"># e.g. ga12abc</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+            <span class="nt">admin-group-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tumuser</span>
+        <span class="nt">ldap</span><span class="p">:</span>
+            <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;url&gt;</span>
+            <span class="nt">user-dn</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;user-dn&gt;</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+            <span class="nt">base</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;base&gt;</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://bitbucket.ase.in.tum.de</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>    <span class="c1"># e.g. ga12abc</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>                 <span class="c1"># VCS API token giving Artemis full Admin access. Not needed for Bamboo+Bitbucket</span>
+        <span class="nt">ci-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token from the CI&gt;</span>   <span class="c1"># Token generated by the CI (e.g. Jenkins) for webhooks from the VCS to the CI. Not needed for Bamboo+Bitbucket</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://bamboo.ase.in.tum.de</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>    <span class="c1"># e.g. ga12abc</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>      <span class="c1"># Enter a valid token generated by bamboo or leave this empty to use the fallback authentication user + password</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+        <span class="nt">vcs-application-link-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">LS1 Bitbucket Server</span>     <span class="c1"># If the VCS and CI are directly linked (normally only for Bitbucket + Bamboo)</span>
+        <span class="nt">empty-commit-necessary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>                        <span class="c1"># Do we need an empty commit for new exercises/repositories in order for the CI to register the repo</span>
+        <span class="c1"># Hash/key of the ci-token, equivalent e.g. to the ci-token in version-control</span>
+        <span class="c1"># Some CI systems, like Jenkins, offer a specific token that gets checked against any incoming notifications</span>
+        <span class="c1"># from a VCS trying to trigger a build plan. Only if the notification request contains the correct token, the plan</span>
+        <span class="c1"># is triggered. This can be seen as an alternative to sending an authenticated request to a REST API and then</span>
+        <span class="c1"># triggering the plan.</span>
+        <span class="c1"># In the case of Artemis, this is only really needed for the Jenkins + GitLab setup, since the GitLab plugin in</span>
+        <span class="c1"># Jenkins only allows triggering the Jenkins jobs using such a token. Furthermore, in this case, the value of the</span>
+        <span class="c1"># hudson.util.Secret is stored in the build plan, so you also have to specify this encrypted string here and NOT the actual token value itself!</span>
+        <span class="c1"># You can get this by GETting any job.xml for a job with an activated GitLab step and your token value of choice.</span>
+        <span class="nt">secret-push-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token hash&gt;</span>
+        <span class="c1"># Key of the saved credentials for the VCS service</span>
+        <span class="c1"># Bamboo: not needed</span>
+        <span class="c1"># Jenkins: You have to specify the key from the credentials page in Jenkins under which the user and</span>
+        <span class="c1">#          password for the VCS are stored</span>
+        <span class="nt">vcs-credentials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;credentials key&gt;</span>
+        <span class="c1"># Key of the credentials for the Artemis notification token</span>
+        <span class="c1"># Bamboo: not needed</span>
+        <span class="c1"># Jenkins: You have to specify the key from the credentials page in Jenkins under which the notification token is stored</span>
+        <span class="nt">notification-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;credentials key&gt;</span>
+        <span class="c1"># The actual value of the notification token to check against in Artemis. This is the token that gets send with</span>
+        <span class="c1"># every request the CI system makes to Artemis containing a new result after a build.</span>
+        <span class="c1"># Bamboo: The token value you use for the Server Notification Plugin</span>
+        <span class="c1"># Jenkins: The token value you use for the Server Notification Plugin and is stored under the notification-token credential above</span>
+        <span class="nt">authentication-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
+    <span class="nt">lti</span><span class="p">:</span>
+        <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_lti</span>
+        <span class="nt">oauth-key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_lti_key</span>
+        <span class="nt">oauth-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;secret&gt;</span>    <span class="c1"># only important for online courses on the edX platform, can typically be ignored</span>
+        <span class="nt">user-prefix-edx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edx_</span>
+        <span class="nt">user-prefix-u4i</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">u4i_</span>
+        <span class="nt">user-group-name-edx</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">edx</span>
+        <span class="nt">user-group-name-u4i</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">u4i</span>
+    <span class="nt">git</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Artemis</span>
+        <span class="nt">email</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis@in.tum.de</span>
+    <span class="nt">athene</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+        <span class="nt">base64-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YWVuaXF1YWRpNWNlaXJpNmFlbTZkb283dXphaVF1b29oM3J1MWNoYWlyNHRoZWUzb2huZ2FpM211bGVlM0VpcAo=</span>
+        <span class="nt">token-validity-in-seconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10800</span>
+</pre></div>
+</div>
+<p>Change all entries with <code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code> with proper values, e.g. your TUM
+Online account credentials to connect to the given instances of JIRA,
+Bitbucket and Bamboo. Alternatively, you can connect to your local JIRA,
+Bitbucket and Bamboo instances. It’s not necessary to fill all the
+fields, most of them can be left blank. Note that there is additional
+information about the setup for programming exercises provided:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bamboo-bitbucket-jira/">Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jenkins-gitlab/">Jenkins and Gitlab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed/">Multiple instances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programming-exercises/">Adjustments for programming exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programming-exercises/#caching-example-for-maven">Caching example for Maven</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be careful that you don’t commit changes to <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code>.
+To avoid this, follow the best practice when configuring your local development environment:</p>
+<ol class="arabic simple">
+<li><p>Create a file named <code class="docutils literal notranslate"><span class="pre">application-local.yml</span></code> under <code class="docutils literal notranslate"><span class="pre">src/main/resources/config</span></code>.</p></li>
+<li><p>Copy the contents of <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> into the new file.</p></li>
+<li><p>Update configuration values in <code class="docutils literal notranslate"><span class="pre">application-local.yml</span></code>.</p></li>
+</ol>
+<p>By default, changes to <code class="docutils literal notranslate"><span class="pre">application-local.yml</span></code> will be ignored by git so you don’t accidentally
+share your credentials or other local configuration options.</p>
+</div>
+<p>If you use a password, you need to adapt it in
+<code class="docutils literal notranslate"><span class="pre">gradle/liquibase.gradle</span></code>.</p>
+<div class="section" id="run-the-server-via-a-service-configuration">
+<h3>Run the server via a service configuration<a class="headerlink" href="#run-the-server-via-a-service-configuration" title="Permalink to this headline">¶</a></h3>
+<p>This setup is recommended for production instances as it registers Artemis as a service and e.g. enables auto-restarting of Artemis after the VM running Artemis has been restarted.
+For development setups, see the other guides below.</p>
+<p>This is a service file that works on Debian/Ubuntu (using systemd):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Artemis</span>
+<span class="n">After</span><span class="o">=</span><span class="n">syslog</span><span class="o">.</span><span class="n">target</span>
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">User</span><span class="o">=</span><span class="n">artemis</span>
+<span class="n">WorkingDirectory</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">artemis</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">java</span> \
+  <span class="o">-</span><span class="n">Djdk</span><span class="o">.</span><span class="n">tls</span><span class="o">.</span><span class="n">ephemeralDHKeySize</span><span class="o">=</span><span class="mi">2048</span> \
+  <span class="o">-</span><span class="n">DLC_CTYPE</span><span class="o">=</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+  <span class="o">-</span><span class="n">Dfile</span><span class="o">.</span><span class="n">encoding</span><span class="o">=</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+  <span class="o">-</span><span class="n">Dsun</span><span class="o">.</span><span class="n">jnu</span><span class="o">.</span><span class="n">encoding</span><span class="o">=</span><span class="n">UTF</span><span class="o">-</span><span class="mi">8</span> \
+  <span class="o">-</span><span class="n">Djava</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">egd</span><span class="o">=</span><span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="o">/./</span><span class="n">urandom</span> \
+  <span class="o">-</span><span class="n">Xmx2048m</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">modules</span> <span class="n">java</span><span class="o">.</span><span class="n">se</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">exports</span> <span class="n">java</span><span class="o">.</span><span class="n">base</span><span class="o">/</span><span class="n">jdk</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">ref</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">exports</span> <span class="n">java</span><span class="o">.</span><span class="n">naming</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">jndi</span><span class="o">.</span><span class="n">ldap</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span> <span class="n">java</span><span class="o">.</span><span class="n">base</span><span class="o">/</span><span class="n">java</span><span class="o">.</span><span class="n">lang</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span> <span class="n">java</span><span class="o">.</span><span class="n">base</span><span class="o">/</span><span class="n">java</span><span class="o">.</span><span class="n">nio</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span> <span class="n">java</span><span class="o">.</span><span class="n">base</span><span class="o">/</span><span class="n">sun</span><span class="o">.</span><span class="n">nio</span><span class="o">.</span><span class="n">ch</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span> <span class="n">java</span><span class="o">.</span><span class="n">management</span><span class="o">/</span><span class="n">sun</span><span class="o">.</span><span class="n">management</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span> <span class="n">jdk</span><span class="o">.</span><span class="n">management</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">sun</span><span class="o">.</span><span class="n">management</span><span class="o">.</span><span class="n">internal</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span> \
+  <span class="o">-</span><span class="n">jar</span> <span class="n">artemis</span><span class="o">.</span><span class="n">war</span> \
+  <span class="o">--</span><span class="n">spring</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">active</span><span class="o">=</span><span class="n">prod</span><span class="p">,</span><span class="n">bamboo</span><span class="p">,</span><span class="n">bitbucket</span><span class="p">,</span><span class="n">jira</span><span class="p">,</span><span class="n">ldap</span><span class="p">,</span><span class="n">scheduling</span><span class="p">,</span><span class="n">openapi</span>
+<span class="n">SuccessExitStatus</span><span class="o">=</span><span class="mi">143</span>
+<span class="n">StandardOutput</span><span class="o">=/</span><span class="n">opt</span><span class="o">/</span><span class="n">artemis</span><span class="o">/</span><span class="n">artemis</span><span class="o">.</span><span class="n">log</span>
+<span class="n">StandardError</span><span class="o">=</span><span class="n">inherit</span>
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>The following parts might also be useful for other (production) setups, even if this service file is not used:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">-Djava.security.egd=file:/dev/./urandom</span></code>: This is required if repositories are cloned via SSH from the VCS.</dt><dd><p>The default (pseudo-)random-generator <code class="docutils literal notranslate"><span class="pre">/dev/random</span></code> is blocking which results in very bad performance when using SSH due to lack of entropy.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>The file should be placed at <code class="docutils literal notranslate"><span class="pre">/etc/systemd/system/artemis.service</span></code> and after running <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">systemctl</span> <span class="pre">daemon-reload</span></code>, you can start the service using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">artemis</span> <span class="pre">start</span></code>.</p>
+<p>You can stop the service using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">artemis</span> <span class="pre">stop</span></code> and restart it using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">artemis</span> <span class="pre">restart</span></code>.</p>
+<p>Logs can be fetched using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">journalctl</span> <span class="pre">-u</span> <span class="pre">artemis</span> <span class="pre">-f</span> <span class="pre">-n</span> <span class="pre">200</span></code>.</p>
+</div>
+<div class="section" id="run-the-server-via-a-run-configuration-in-intellij">
+<h3>Run the server via a run configuration in IntelliJ<a class="headerlink" href="#run-the-server-via-a-run-configuration-in-intellij" title="Permalink to this headline">¶</a></h3>
+<p>The project comes with some pre-configured run / debug configurations that are stored in the <code class="docutils literal notranslate"><span class="pre">.idea</span></code> directory.
+When you import the project into IntelliJ the run configurations will also be imported.</p>
+<p>The recommended way is to run the server and the client separated. This provides fast rebuilds of the server and hot module replacement in the client.</p>
+<ul class="simple">
+<li><p><strong>Artemis (Server):</strong> The server will be started separated from the client. The startup time decreases significantly.</p></li>
+<li><p><strong>Artemis (Client):</strong> Will execute <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">install</span></code> and <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">start</span></code>. The client will be available at <a class="reference external" href="http://localhost:9000/">http://localhost:9000/</a> with hot module replacement enabled (also see <a class="reference external" href="setup.rst#client-setup">Client Setup</a>).</p></li>
+</ul>
+<div class="section" id="other-run-debug-configurations">
+<h4>Other run / debug configurations<a class="headerlink" href="#other-run-debug-configurations" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Artemis (Server &amp; Client):</strong> Will start the server and the client. The client will be available at <a class="reference external" href="http://localhost:8080/">http://localhost:8080/</a> with hot module replacement disabled.</p></li>
+<li><p><strong>Artemis (Server, Jenkins &amp; Gitlab):</strong> The server will be started separated from the client with the profiles <code class="docutils literal notranslate"><span class="pre">dev,jenkins,gitlab,artemis</span></code> instead of <code class="docutils literal notranslate"><span class="pre">dev,bamboo,bitbucket,jira,artemis</span></code>.</p></li>
+<li><p><strong>Artemis (Server, Athene):</strong> The server will be started separated from the client with <code class="docutils literal notranslate"><span class="pre">athene</span></code> profile enabled (see <a class="reference external" href="setup.rst#athene-service">Athene Service</a>).</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="typical-problems-with-liquibase-checksums">
+<h3>Typical problems with Liquibase checksums<a class="headerlink" href="#typical-problems-with-liquibase-checksums" title="Permalink to this headline">¶</a></h3>
+<p>One typical problem in the development setup is that an exception occurs
+during the database initialization. Artemis uses
+<a class="reference external" href="https://www.liquibase.org">Liquibase</a> to automatically upgrade the
+database scheme after changes to the data model. This ensures that the
+changes can also be applied to the production server. In case you
+encounter errors with liquibase checksum values, run the following
+command in your terminal / command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">gradlew</span> <span class="n">liquibaseClearChecksums</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-the-server-with-spring-boot-and-spring-profiles">
+<h3>Run the server with Spring Boot and Spring profiles<a class="headerlink" href="#run-the-server-with-spring-boot-and-spring-profiles" title="Permalink to this headline">¶</a></h3>
+<p>The Artemis server should startup by running the main class
+<code class="docutils literal notranslate"><span class="pre">de.tum.in.www1.artemis.ArtemisApp</span></code> using Spring Boot.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Artemis uses Spring profiles to segregate parts of the
+application configuration and make it only available in certain
+environments. For development purposes, the following program arguments
+can be used to enable the <code class="docutils literal notranslate"><span class="pre">dev</span></code> profile and the profiles for JIRA,
+Bitbucket and Bamboo:</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">spring</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">active</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span><span class="n">bamboo</span><span class="p">,</span><span class="n">bitbucket</span><span class="p">,</span><span class="n">jira</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span>
+</pre></div>
+</div>
+<p>If you use IntelliJ (Community or Ultimate) you can set the active
+profiles by</p>
+<ul class="simple">
+<li><p>Choosing <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">|</span> <span class="pre">Edit</span> <span class="pre">Configurations...</span></code></p></li>
+<li><p>Going to the <code class="docutils literal notranslate"><span class="pre">Configuration</span> <span class="pre">Tab</span></code></p></li>
+<li><p>Expanding the <code class="docutils literal notranslate"><span class="pre">Environment</span></code> section to reveal <code class="docutils literal notranslate"><span class="pre">VM</span> <span class="pre">Options</span></code> and setting them to
+<code class="docutils literal notranslate"><span class="pre">-Dspring.profiles.active=dev,bamboo,bitbucket,jira,artemis,scheduling</span></code></p></li>
+</ul>
+<div class="section" id="set-spring-profiles-with-intellij-ultimate">
+<h4>Set Spring profiles with IntelliJ Ultimate<a class="headerlink" href="#set-spring-profiles-with-intellij-ultimate" title="Permalink to this headline">¶</a></h4>
+<p>If you use IntelliJ Ultimate, add the following entry to the section
+<code class="docutils literal notranslate"><span class="pre">Active</span> <span class="pre">Profiles</span></code> (within <code class="docutils literal notranslate"><span class="pre">Spring</span> <span class="pre">Boot</span></code>) in the server run
+configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span><span class="p">,</span><span class="n">bamboo</span><span class="p">,</span><span class="n">bitbucket</span><span class="p">,</span><span class="n">jira</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-the-server-with-the-command-line-gradle-wrapper">
+<h3>Run the server with the command line (Gradle wrapper)<a class="headerlink" href="#run-the-server-with-the-command-line-gradle-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>If you want to run the application via the command line instead, make
+sure to pass the active profiles to the <code class="docutils literal notranslate"><span class="pre">gradlew</span></code> command like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">gradlew</span> <span class="n">bootRun</span> <span class="o">--</span><span class="n">args</span><span class="o">=</span><span class="s1">&#39;--spring.profiles.active=dev,bamboo,bitbucket,jira,artemis,scheduling&#39;</span>
+</pre></div>
+</div>
+<p>As an alternative, you might want to use Jenkins and Gitlab with an
+internal user management in Artemis, then you would use the profiles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span><span class="p">,</span><span class="n">jenkins</span><span class="p">,</span><span class="n">gitlab</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="client-setup">
+<h2>Client Setup<a class="headerlink" href="#client-setup" title="Permalink to this headline">¶</a></h2>
+<p>You need to install Node and Yarn on your local machine.</p>
+<div class="section" id="using-intellij">
+<h3>Using IntelliJ<a class="headerlink" href="#using-intellij" title="Permalink to this headline">¶</a></h3>
+<p>If you are using <strong>IntelliJ</strong> you can use the pre-configured <code class="docutils literal notranslate"><span class="pre">Artemis</span> <span class="pre">(Client)</span></code>
+run configuration that will be delivered with this repository:</p>
+<ul class="simple">
+<li><p>Choose <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">|</span> <span class="pre">Edit</span> <span class="pre">Configurations...</span></code></p></li>
+<li><p>Select the <code class="docutils literal notranslate"><span class="pre">Artemis</span> <span class="pre">(Client)</span></code> configuration from the <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">section</span></code></p></li>
+<li><p>Now you can run the configuration in the upper right corner of IntelliJ</p></li>
+</ul>
+</div>
+<div class="section" id="using-the-command-line">
+<h3>Using the command line<a class="headerlink" href="#using-the-command-line" title="Permalink to this headline">¶</a></h3>
+<p>You should be able to run the following
+command to install development tools and dependencies. You will only
+need to run this command when dependencies change in
+<a class="reference external" href="package.json">package.json</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yarn</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>To start the client application in the browser, use the following
+command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yarn</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>This compiles TypeScript code to JavaScript code, starts the hot module
+replacement feature in Webpack (i.e. whenever you change a TypeScript
+file and save, the client is automatically reloaded with the new code)
+and will start the client application in your browser on
+<code class="docutils literal notranslate"><span class="pre">http://localhost:9000</span></code>. If you have activated the JIRA profile (see
+above in Server Setup) and if you have configured
+<code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> correctly, then you should be able to login
+with your TUM Online account.</p>
+<p>For more information, review <a class="reference external" href="https://www.jhipster.tech/development/#working-with-angular">Working with
+Angular</a>.
+For further instructions on how to develop with JHipster, have a look at
+<a class="reference external" href="http://www.jhipster.tech/development">Using JHipster in
+development</a>.</p>
+</div>
+</div>
+<div class="section" id="customize-your-artemis-instance">
+<h2>Customize your Artemis instance<a class="headerlink" href="#customize-your-artemis-instance" title="Permalink to this headline">¶</a></h2>
+<p>You can define the following custom assets for Artemis to be used
+instead of the TUM defaults:</p>
+<ul class="simple">
+<li><p>The logo next to the “Artemis” heading on the navbar → <code class="docutils literal notranslate"><span class="pre">${artemisRunDirectory}/public/images/logo.png</span></code></p></li>
+<li><p>The favicon → <code class="docutils literal notranslate"><span class="pre">${artemisRunDirectory}/public/images/favicon.ico</span></code></p></li>
+<li><p>The privacy statement HTML → <code class="docutils literal notranslate"><span class="pre">${artemisRunDirectory}/public/content/privacy_statement.html</span></code></p></li>
+<li><p>The imprint statement HTML → <code class="docutils literal notranslate"><span class="pre">${artemisRunDirectory}/public/content/imprint.html</span></code></p></li>
+<li><p>The contact email address in the <code class="docutils literal notranslate"><span class="pre">application-{dev,prod}.yml</span></code> configuration file under the key <code class="docutils literal notranslate"><span class="pre">info.contact</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="alternative-using-docker-compose">
+<h2>Alternative: Using docker-compose<a class="headerlink" href="#alternative-using-docker-compose" title="Permalink to this headline">¶</a></h2>
+<p>A full functioning development environment can also be set up using
+docker-compose:</p>
+<ol class="arabic simple">
+<li><p>Install <a class="reference external" href="https://docs.docker.com/install/">docker</a> and <a class="reference external" href="https://docs.docker.com/compose/install/">docker-compose</a></p></li>
+<li><p>Configure the credentials in <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> in the folder <code class="docutils literal notranslate"><span class="pre">src/main/resources/config</span></code> as described above</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code></p></li>
+<li><p>Go to <a class="reference external" href="http://localhost:9000">http://localhost:9000</a></p></li>
+</ol>
+<p>The client and the server will run in different containers. As yarn is
+used with its live reload mode to build and run the client, any change
+in the client’s codebase will trigger a rebuild automatically. In case
+of changes in the codebase of the server one has to restart the
+<code class="docutils literal notranslate"><span class="pre">artemis-server</span></code> container via
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">restart</span> <span class="pre">artemis-server</span></code>.</p>
+<p>(Native) Running and Debugging from IDEs is currently not supported.</p>
+<div class="section" id="get-a-shell-into-the-containers">
+<h3>Get a shell into the containers:<a class="headerlink" href="#get-a-shell-into-the-containers" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>app container:
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-it</span> <span class="pre">$(docker-compose</span> <span class="pre">ps</span> <span class="pre">-q</span> <span class="pre">artemis-app)</span> <span class="pre">sh</span></code></p></li>
+<li><p>mysql container:
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-it</span> <span class="pre">$(docker-compose</span> <span class="pre">ps</span> <span class="pre">-q</span> <span class="pre">artemis-mysql)</span> <span class="pre">mysql</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="other-useful-commands">
+<h3>Other useful commands:<a class="headerlink" href="#other-useful-commands" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Stop the server: <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">stop</span> <span class="pre">artemis-server</span></code> (restart via
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">start</span> <span class="pre">artemis-server</span></code>)</p></li>
+<li><p>Stop the client: <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">stop</span> <span class="pre">artemis-client</span></code> (restart via
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">start</span> <span class="pre">artemis-client</span></code>)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="athene-service">
+<h2>Athene Service<a class="headerlink" href="#athene-service" title="Permalink to this headline">¶</a></h2>
+<p>The semi-automatic text assessment relies on the <a class="reference external" href="https://github.com/ls1intum/Athene">Athene</a> service.
+To enable automatic text assessments, special configuration is required:</p>
+<div class="section" id="enable-the-athene-spring-profile">
+<h3>Enable the <code class="docutils literal notranslate"><span class="pre">athene</span></code> Spring profile:<a class="headerlink" href="#enable-the-athene-spring-profile" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">spring</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">active</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span><span class="n">bamboo</span><span class="p">,</span><span class="n">bitbucket</span><span class="p">,</span><span class="n">jira</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span><span class="p">,</span><span class="n">athene</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-api-endpoints">
+<h3>Configure API Endpoints:<a class="headerlink" href="#configure-api-endpoints" title="Permalink to this headline">¶</a></h3>
+<p>The Athene service is running on a dedicated machine and is adressed via
+HTTP. We need to extend the configuration in the file
+<code class="docutils literal notranslate"><span class="pre">src/main/resources/config/application-artemis.yml</span></code> like so:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+  <span class="c1"># ...</span>
+  <span class="nt">athene</span><span class="p">:</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+    <span class="nt">base64-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YWVuaXF1YWRpNWNlaXJpNmFlbTZkb283dXphaVF1b29oM3J1MWNoYWlyNHRoZWUzb2huZ2FpM211bGVlM0VpcAo=</span>
+    <span class="nt">token-validity-in-seconds</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10800</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bamboo-bitbucket-jira/" class="btn btn-neutral float-right" title="Setup for Programming Exercises with Bamboo, Bitbucket and Jira" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../user/exams/students_guide/" class="btn btn-neutral float-left" title="Students’ Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,687 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Server &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Client" href="../client/" />
+    <link rel="prev" title="Coding and design guidelines" href="../" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../">Coding and design guidelines</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#folder-structure">0. Folder structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#naming-convention">1. Naming convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#single-responsibility-principle">2. Single responsibility principle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#small-methods">3. Small methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#duplication">4. Duplication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables-and-methods-declaration">5. Variables and methods declaration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structure-your-code-correctly">6. Structure your code correctly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database">7. Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments">8. Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utility">9. Utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#auto-configuration">10. Auto configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keep-your-restcontrollers-clean-and-focused">11. Keep your <code class="docutils literal notranslate"><span class="pre">&#64;RestController</span></code>’s clean and focused</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependency-injection">12. Dependency injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keep-it-simple-and-stupid">13. Keep it simple and stupid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-handling">14. File handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-best-practices">15. General best practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avoid-service-dependencies">16. Avoid service dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proper-annotation-of-sql-query-parameters">17. Proper annotation of SQL query parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sql-statement-formatting">18. SQL statement formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avoid-the-usage-of-sub-queries">19. Avoid the usage of Sub-queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rest-endpoint-best-practices-for-authorization">20. REST endpoint best practices for authorization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assert-using-the-most-specific-overload-method">21. Assert using the most specific overload method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-testing-tips">22. General Testing Tips</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#avoid-using-mockbean">23. Avoid using &#64;MockBean</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../client/">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/">Database Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-review/">Code Review</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Coding and design guidelines</a> &raquo;</li>
+        
+      <li>Server</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/guidelines/server.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="server">
+<h1>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h1>
+<p>WORK IN PROGRESS</p>
+<div class="section" id="folder-structure">
+<h2>0. Folder structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>The main application is stored under <code class="docutils literal notranslate"><span class="pre">/src/main</span></code> and the main folders are:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>resources - script, config files and templates are stored here.</dt><dd><ul>
+<li><dl class="simple">
+<dt>config - different configurations (production, development, etc.) for application.</dt><dd><ul>
+<li><dl class="simple">
+<dt>liquibase - contains <code class="docutils literal notranslate"><span class="pre">master.xml</span></code> file where all the changelogs from the changelog folder are specified.</dt><dd><p>When you want to do some changes to the database, you will need to add a new changelog file here.
+To understand how to create new changelog file you can check existing changelog files or read documentation: <a class="reference external" href="https://www.liquibase.org/documentation/databasechangelog.html">https://www.liquibase.org/documentation/databasechangelog.html</a>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>java - Artemis Spring Boot application is located here. It contains the following folders:</dt><dd><ul>
+<li><p>config - different classes for configuring database, Sentry, Liquibase, etc.</p></li>
+<li><p>domain - all the entities and data classes are located here (the model of the server application).</p></li>
+<li><dl class="simple">
+<dt>exception - store custom types of exceptions here. We encourage to create custom exceptions to help other developers understand what problem exactly happened.</dt><dd><p>This can also be helpful when we want to provide specific exception handling logic.</p>
+</dd>
+</dl>
+</li>
+<li><p>security - contains different POJOs (simple classes that don’t implement/extend any interface/class and don’t have annotations) and component classes related to security.</p></li>
+<li><p>repository - used to access or change objects in the database. There are several techniques to query database: named queries, queries with SpEL expressions and Entity Graphs.</p></li>
+<li><p>service - represents the controller of the server application. Add the application logic here. Retrieve and change objects using repositories.</p></li>
+<li><dl class="simple">
+<dt>web - contains two folders:</dt><dd><ul>
+<li><p>rest - contains REST controllers that act as the view of the server application. Validate input and security here, but do not include complex application logic</p></li>
+<li><p>websocket - contains controllers that handle real-time communication with the client based on the Websocket protocol. Use the <code class="docutils literal notranslate"><span class="pre">MessagingTemplate</span></code> to push data to the client or to notify the client about events.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="naming-convention">
+<h2>1. Naming convention<a class="headerlink" href="#naming-convention" title="Permalink to this headline">¶</a></h2>
+<p>All variables, methods and classes should use CamelCase style. The only difference: the first letter of any class should be capital. Most importantly use intention-revealing, pronounceable names.</p>
+</div>
+<div class="section" id="single-responsibility-principle">
+<h2>2. Single responsibility principle<a class="headerlink" href="#single-responsibility-principle" title="Permalink to this headline">¶</a></h2>
+<p>One method should be responsible for only one action, it should do it well and do nothing else. Reduce coupling, if our method does two or three different things at a time then we should consider splitting the functionality.</p>
+</div>
+<div class="section" id="small-methods">
+<h2>3. Small methods<a class="headerlink" href="#small-methods" title="Permalink to this headline">¶</a></h2>
+<p>There is no standard pattern for method length among the developers. Someone can say 5, in some cases even 20 lines of code is okay. Just try to make methods as small as possible.</p>
+</div>
+<div class="section" id="duplication">
+<h2>4. Duplication<a class="headerlink" href="#duplication" title="Permalink to this headline">¶</a></h2>
+<p>Avoid code duplication. If we cannot reuse a method elsewhere, then the method is probably bad and we should consider a better way to write this method. Use Abstraction to abstract common things in one place.</p>
+</div>
+<div class="section" id="variables-and-methods-declaration">
+<h2>5. Variables and methods declaration<a class="headerlink" href="#variables-and-methods-declaration" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Encapsulate the code you feel might change in future.</p></li>
+<li><p>Make variables and methods private by default and increase access step by step by changing them from a private to package-private or protected first and not public right away.</p></li>
+<li><p>Classes, methods or functions should be open for extension and closed for modification (open closed design principle).</p></li>
+<li><p>Program for the interface and not for implementation, you should use interface type on variables, return types of a method or argument type of methods. Just like using SuperClass type to store object rather using SubClass.</p></li>
+<li><p>The use of interface is to facilitate polymorphism, a client should not implement an interface method if its not needed.</p></li>
+</ul>
+</div>
+<div class="section" id="structure-your-code-correctly">
+<h2>6. Structure your code correctly<a class="headerlink" href="#structure-your-code-correctly" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Default packages are not allowed. It can cause particular problems for Spring Boot applications that use the <code class="docutils literal notranslate"><span class="pre">&#64;ComponentScan</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;EntityScan</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;SpringBootApplication</span></code> annotations since every class from every jar is read.</p></li>
+<li><p>All variables in the class should be declared at the top of the class.</p></li>
+<li><p>If a variable is used only in one method then it would be better to declare it as a local variable of this method.</p></li>
+<li><p>Methods should be declared in the same order as they are used (from top to bottom).</p></li>
+<li><p>More important methods should be declared at the top of a class and minor methods at the end.</p></li>
+</ul>
+</div>
+<div class="section" id="database">
+<h2>7. Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Write performant queries that can also deal with more than 1000 objects in a reasonable time.</p></li>
+<li><p>Prefer one query that fetches additional data instead of many small queries, but don’t overdo it. A good rule of thumb is to query not more than 3 associations at the same time.</p></li>
+<li><p>Think about lazy vs. eager fetching when modeling the data types.</p></li>
+<li><p>Only if it is inevitable, use nested queries. You should try use as few tables as possible.</p></li>
+<li><p>Simple datatypes: immediately think about whether <code class="docutils literal notranslate"><span class="pre">null</span></code> should be supported as additional state or not. In most cases it is preferable to avoid <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">Timestamp</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Datetime</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="comments">
+<h2>8. Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>Only write comments for complicated algorithms, to help other developers better understand them. We should only add a comment, if our code is not self-explanatory.</p>
+</div>
+<div class="section" id="utility">
+<h2>9. Utility<a class="headerlink" href="#utility" title="Permalink to this headline">¶</a></h2>
+<p>Utility methods can and should be placed in a class named for specific functionality, not “miscellaneous stuff related to project”. Most of the time, our static methods belong in a related class.</p>
+</div>
+<div class="section" id="auto-configuration">
+<h2>10. Auto configuration<a class="headerlink" href="#auto-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Spring Boot favors Java-based configuration.
+Although it is possible to use Sprint Boot with XML sources, it is generally not recommended.
+You don’t have to put all your <code class="docutils literal notranslate"><span class="pre">&#64;Configuration</span></code> into a single class.
+The <code class="docutils literal notranslate"><span class="pre">&#64;Import</span></code> annotation can be used to import additional configuration classes.
+One of the flagship features of Spring Boot is its use of Auto-configuration. This is the part of Spring Boot that makes your code simply work.
+It gets activated when a particular jar file is detected on the classpath. The simplest way to make use of it is to rely on the Spring Boot Starters.</p>
+</div>
+<div class="section" id="keep-your-restcontrollers-clean-and-focused">
+<h2>11. Keep your <code class="docutils literal notranslate"><span class="pre">&#64;RestController</span></code>’s clean and focused<a class="headerlink" href="#keep-your-restcontrollers-clean-and-focused" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>RestControllers should be stateless.</p></li>
+<li><p>RestControllers are by default singletons.</p></li>
+<li><p>RestControllers should not execute business logic but rely on delegation.</p></li>
+<li><p>RestControllers should deal with the HTTP layer of the application.</p></li>
+<li><p>RestControllers should be oriented around a use-case/business-capability.</p></li>
+</ul>
+<p>Route naming conventions:</p>
+<ul class="simple">
+<li><p>Always use kebab-case (e.g. “/exampleAssessment” → “/example-assessment”).</p></li>
+<li><p>The routes should follow the general structure entity &gt; entityId &gt; sub-entity … (e.g. “/exercises/{exerciseId}/participations”).</p></li>
+<li><p>Use plural for a route’s entities.</p></li>
+<li><p>Specify the key entity at the end of the route (e.g. “text-editor/participations/{participationId}” should be changed to “participations/{participationId}/text-editor”).</p></li>
+<li><p>Use consistent routes that start with <code class="docutils literal notranslate"><span class="pre">courses</span></code>, <code class="docutils literal notranslate"><span class="pre">exercises</span></code> or <code class="docutils literal notranslate"><span class="pre">lectures</span></code> to simplify access control. Do not start routes with other entity names.</p></li>
+</ul>
+<p>Additional notes on the controller methods:</p>
+<ul class="simple">
+<li><p>POST should return the newly created entity</p></li>
+<li><dl class="simple">
+<dt>Verify that API endpoints perform appropriate authorization and authentication consistent with the rest of the code base.</dt><dd><ul>
+<li><p>Always use <code class="docutils literal notranslate"><span class="pre">&#64;PreAuthorize</span></code> to only allow certain roles to access the method.</p></li>
+<li><p>Perform additional security checks using the <code class="docutils literal notranslate"><span class="pre">AuthorizationCheckService</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Check for other common weaknesses, e.g., weak configuration, malicious user input, missing log events, etc.</p></li>
+<li><p>Never trust user input and check if the passed data exists in the database.</p></li>
+<li><p>Handle exceptions and errors with a standard response. Errors are very important in REST APIs. They inform clients that something went wrong, after all.</p></li>
+<li><dl class="simple">
+<dt>Always use different response status codes to notify the client about errors on the server, e.g.:</dt><dd><ul>
+<li><p>Forbidden - the user is not authorized to access the controller.</p></li>
+<li><p>Bad Request - the request was wrong.</p></li>
+<li><p>Not Found - can’t find the requested data or it should be not accessible yet.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="dependency-injection">
+<h2>12. Dependency injection<a class="headerlink" href="#dependency-injection" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Some of you may argue with this, but by favoring constructor injection you can keep your business logic free from Spring. Not only is the &#64;Autowired annotation optional on constructors, you also get the benefit of being able to easily instantiate your bean without Spring.</p></li>
+<li><p>Use setter based DI only for optional dependencies.</p></li>
+<li><p>Avoid circular dependencies, try constructor and setter based DI for such cases.</p></li>
+</ul>
+</div>
+<div class="section" id="keep-it-simple-and-stupid">
+<h2>13. Keep it simple and stupid<a class="headerlink" href="#keep-it-simple-and-stupid" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Don’t write complex code.</p></li>
+<li><p>Don’t write code when you are tired or in a bad mood.</p></li>
+<li><p>Optimization vs Readability: always write code that is simple to read and which will be understandable for developers. Because the time and resources spent on hard-to-read code cost much more than what we gain through optimization</p></li>
+<li><p>Commit messages should describe both what the commit changes and how it does it.</p></li>
+<li><p>ARCHITECTURE FIRST: writing code without thinking of the system’s architecture is useless, in the same way as dreaming about your desires without a plan of achieving them.</p></li>
+</ul>
+</div>
+<div class="section" id="file-handling">
+<h2>14. File handling<a class="headerlink" href="#file-handling" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Never use operating system (OS) specific file paths such as “test/test”. Always use OS independent paths.</p></li>
+<li><p>Do not deal with File.separator manually. Instead use the Paths.get(firstPart, secondPart, …) method which deals with separators automatically.</p></li>
+<li><p>Existing paths can easily be appended with a new folder using <code class="docutils literal notranslate"><span class="pre">existingPath.resolve(subfolder)</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="general-best-practices">
+<h2>15. General best practices<a class="headerlink" href="#general-best-practices" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Always use the least possible access level, prefer using private over public access modifier (package-private or protected can be used as well).</p></li>
+<li><p>Previously we used transactions very randomly, now we want to avoid using <code class="docutils literal notranslate"><span class="pre">Transactional</span></code>. Transactions can kill performance, introduce locking issues and database concurrency problems, and add complexity to our application. Good read: <a class="reference external" href="https://codete.com/blog/5-common-spring-transactional-pitfalls/">https://codete.com/blog/5-common-spring-transactional-pitfalls/</a></p></li>
+<li><p>Define a constant if the same value is used more than once. Constants allow you to change code later a lot easier. Instead of looking for the places where this variable was used, you only need to change it in only one place.</p></li>
+<li><p>Facilitate code reuse. Always move duplicated code to reusable methods. IntelliJ is very good at suggesting duplicated lines and even automatically extracting them. Also don’t be shy to use Generics.</p></li>
+<li><p>Always qualify a static class member reference with its class name and not with a reference or expression of that class’s type.</p></li>
+<li><p>Prefer using primitive types to classes, e.g. <code class="docutils literal notranslate"><span class="pre">long</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Long</span></code>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">./gradlew</span> <span class="pre">spotlessCheck</span></code> and <code class="docutils literal notranslate"><span class="pre">./gradlew</span> <span class="pre">spotlessApply</span></code> to check Java code style and to automatically fix it.</p></li>
+</ul>
+</div>
+<div class="section" id="avoid-service-dependencies">
+<h2>16. Avoid service dependencies<a class="headerlink" href="#avoid-service-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>In order to achieve low coupling and high cohesion, services should have as few dependencies on other services as possible:</p>
+<ul class="simple">
+<li><p>Avoid cyclic and redirectional dependencies</p></li>
+<li><p>Do not break the dependency cycle manually or by using <cite>&#64;Lazy</cite></p></li>
+<li><p>Move simple service methods into the repository as <code class="docutils literal notranslate"><span class="pre">default</span></code> methods</p></li>
+</ul>
+<p>An example for a simple method is finding a single entity by ID:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="k">default</span> <span class="n">StudentExam</span> <span class="nf">findByIdElseThrow</span><span class="p">(</span><span class="n">Long</span> <span class="n">studentExamId</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">EntityNotFoundException</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="n">findById</span><span class="p">(</span><span class="n">studentExamId</span><span class="p">).</span><span class="na">orElseThrow</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">EntityNotFoundException</span><span class="p">(</span><span class="s">&quot;Student Exam&quot;</span><span class="p">,</span> <span class="n">studentExamId</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This approach has several benefits:</p>
+<ul class="simple">
+<li><p>Repositories don’t have further dependencies (they are facades for the database), therefore there are no cycles</p></li>
+<li><p>We don’t need to check for an <code class="docutils literal notranslate"><span class="pre">EntityNotFoundException</span></code> in the service since we throw in the repository already</p></li>
+<li><p>The “ElseThrow” suffix at the end of the method name makes the behaviour clear to outside callers</p></li>
+</ul>
+<p>In general everything changing small database objects can go into the repository. More complex operations have to be done in the service.</p>
+<p>Another approach is moving objects into the domain classes, but be aware that you need to add <code class="docutils literal notranslate"><span class="pre">&#64;JsonIgnore</span></code> where necessary:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@JsonIgnore</span>
+<span class="k">default</span> <span class="kt">boolean</span> <span class="nf">isLocked</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span> <span class="k">instanceof</span> <span class="n">ProgrammingExerciseStudentParticipation</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">[</span><span class="p">...</span><span class="o">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proper-annotation-of-sql-query-parameters">
+<h2>17. Proper annotation of SQL query parameters<a class="headerlink" href="#proper-annotation-of-sql-query-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Query parameters for SQL must be annotated with <code class="docutils literal notranslate"><span class="pre">&#64;Param(&quot;variable&quot;)</span></code>!</p>
+<p>Do <strong>not</strong> write</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        SELECT r FROM Result r</span>
+<span class="s">        LEFT JOIN FETCH r.feedbacks</span>
+<span class="s">        WHERE r.id = :resultId</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="nf">findByIdWithEagerFeedbacks</span><span class="p">(</span><span class="n">Long</span> <span class="n">resultId</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>but instead annotate the parameter with &#64;Param:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        SELECT r FROM Result r</span>
+<span class="s">        LEFT JOIN FETCH r.feedbacks</span>
+<span class="s">        WHERE r.id = :resultId</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="nf">findByIdWithEagerFeedbacks</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;resultId&quot;</span><span class="p">)</span> <span class="n">Long</span> <span class="n">resultId</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The string name inside must match the name of the variable exactly!</p>
+</div>
+<div class="section" id="sql-statement-formatting">
+<h2>18. SQL statement formatting<a class="headerlink" href="#sql-statement-formatting" title="Permalink to this headline">¶</a></h2>
+<p>We prefer to write SQL statements all in upper case. Split queries onto multiple lines using the Java Text Blocks notation (triple quotation mark):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        SELECT r FROM Result r</span>
+<span class="s">        LEFT JOIN FETCH r.feedbacks</span>
+<span class="s">        WHERE r.id = :resultId</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="nf">findByIdWithEagerFeedbacks</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;resultId&quot;</span><span class="p">)</span> <span class="n">Long</span> <span class="n">resultId</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="avoid-the-usage-of-sub-queries">
+<h2>19. Avoid the usage of Sub-queries<a class="headerlink" href="#avoid-the-usage-of-sub-queries" title="Permalink to this headline">¶</a></h2>
+<p>SQL statements which do not contain sub-queries are preferable as they are more readable and have a better performance.
+So instead of:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        SELECT COUNT (DISTINCT p) FROM StudentParticipation p</span>
+<span class="s">            WHERE p.exercise.id = :#{#exerciseId}</span>
+<span class="s">            AND EXISTS (SELECT s FROM Submission s</span>
+<span class="s">                WHERE s.participation.id = p.id</span>
+<span class="s">                AND s.submitted = TRUE</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="kt">long</span> <span class="nf">countByExerciseIdSubmitted</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;exerciseId&quot;</span><span class="p">)</span> <span class="kt">long</span> <span class="n">exerciseId</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>you should use:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        SELECT COUNT (DISTINCT p) FROM StudentParticipation p JOIN p.submissions s</span>
+<span class="s">            WHERE p.exercise.id = :#{#exerciseId}</span>
+<span class="s">            AND s.submitted = TRUE</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="kt">long</span> <span class="nf">countByExerciseIdSubmitted</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;exerciseId&quot;</span><span class="p">)</span> <span class="kt">long</span> <span class="n">exerciseId</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Functionally both queries extract the same result set, but the first one is less efficient as the sub-query is calculated for each StudentParticipation.</p>
+</div>
+<div class="section" id="rest-endpoint-best-practices-for-authorization">
+<h2>20. REST endpoint best practices for authorization<a class="headerlink" href="#rest-endpoint-best-practices-for-authorization" title="Permalink to this headline">¶</a></h2>
+<p>To prevent unauthorized access to resources Artemis employs a two-step system:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PreAuthorize</span></code> annotations are responsible for blocking users with wrong or missing authorization roles without querying the database.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">AuthorizationCheckService</span></code> is responsible for checking access rights to individual resources by querying the database.</p></li>
+</ol>
+<p>Because the first method without database queries is substantially faster, always annotate your REST endpoints with <code class="docutils literal notranslate"><span class="pre">&#64;PreAuthorize</span></code>. Pass the role with the <em>least</em> permissions as parameter to the <code class="docutils literal notranslate"><span class="pre">hasRole</span></code> method.
+The following example makes the call only accessible to ADMIN and INSTRUCTOR users:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasRole(&#39;INSTRUCTOR&#39;)&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">ProgrammingExercise</span><span class="o">&gt;</span> <span class="nf">getProgrammingExercise</span><span class="p">(</span><span class="nd">@PathVariable</span> <span class="kt">long</span> <span class="n">exerciseId</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Artemis distinguishes between six different roles: ADMIN, INSTRUCTOR, EDITOR, TA (teaching assistant), USER and ANONYMOUS.
+Each of the roles has the all the access rights of the roles following it, e.g. ANONOYMOUS has almost no rights, while ADMIN users can access every page.</p>
+<p>If a user passess the <code class="docutils literal notranslate"><span class="pre">PreAuthorize</span></code> check, the access to individual resources like courses and exercises still has to be checked. (A user can be a teaching assistant in one course, but only a student in another, for example.)
+However, do not fetch the user from the database yourself (unless you need to re-use the user object), but only hand a role to the <code class="docutils literal notranslate"><span class="pre">AuthorizationCheckService</span></code>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// If we pass &#39;null&#39; instead of a user here, the service will fetch the user object</span>
+<span class="c1">// and check if the user has at least the given role and access to the resource</span>
+<span class="n">authCheckService</span><span class="p">.</span><span class="na">checkHasAtLeastRoleForExerciseElseThrow</span><span class="p">(</span><span class="n">Role</span><span class="p">.</span><span class="na">INSTRUCTOR</span><span class="p">,</span> <span class="n">exercise</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To reduce duplication, do not add explicit checks for authorization or existence of an entity but always use the <code class="docutils literal notranslate"><span class="pre">AuthorizationCheckService</span></code>:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@GetMapping</span><span class="p">(</span><span class="n">Endpoints</span><span class="p">.</span><span class="na">GET_FOR_COURSE</span><span class="p">)</span>
+<span class="nd">@PreAuthorize</span><span class="p">(</span><span class="s">&quot;hasRole(&#39;TA&#39;)&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">ProgrammingExercise</span><span class="o">&gt;&gt;</span> <span class="nf">getActiveProgrammingExercisesForCourse</span><span class="p">(</span><span class="nd">@PathVariable</span> <span class="n">Long</span> <span class="n">courseId</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Course</span> <span class="n">course</span> <span class="o">=</span> <span class="n">courseRepository</span><span class="p">.</span><span class="na">findByIdElseThrow</span><span class="p">(</span><span class="n">courseId</span><span class="p">);</span>
+    <span class="n">authCheckService</span><span class="p">.</span><span class="na">checkHasAtLeastRoleInCourseElseThrow</span><span class="p">(</span><span class="n">Role</span><span class="p">.</span><span class="na">TEACHING_ASSISTANT</span><span class="p">,</span> <span class="n">course</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">ProgrammingExercise</span><span class="o">&gt;</span> <span class="n">exercises</span> <span class="o">=</span> <span class="n">programmingExerciseService</span><span class="p">.</span><span class="na">findActiveExercisesByCourseId</span><span class="p">(</span><span class="n">courseId</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ResponseEntity</span><span class="p">.</span><span class="na">ok</span><span class="p">().</span><span class="na">body</span><span class="p">(</span><span class="n">exercises</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The course repository call takes care of throwing a <code class="docutils literal notranslate"><span class="pre">404</span> <span class="pre">Not</span> <span class="pre">Found</span></code> exception if there exists no matching course. The <code class="docutils literal notranslate"><span class="pre">AuthorizationCheckService</span></code> throws a <code class="docutils literal notranslate"><span class="pre">403</span> <span class="pre">Forbidden</span></code> exception if the user with the given role is unauthorized. Afterwards delegate to a service or repository method. The code becomes much shorter, cleaner and more maintainable.</p>
+</div>
+<div class="section" id="assert-using-the-most-specific-overload-method">
+<h2>21. Assert using the most specific overload method<a class="headerlink" href="#assert-using-the-most-specific-overload-method" title="Permalink to this headline">¶</a></h2>
+<p>When expecting results use <code class="docutils literal notranslate"><span class="pre">assertThat</span></code> for server tests. That call <strong>must</strong> be followed by another assertion statement like <code class="docutils literal notranslate"><span class="pre">isTrue()</span></code>. It is best practice to use more specific assertion statement rather than always expecting boolean values.</p>
+<p>For example, instead of</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">assertThat</span><span class="p">(</span><span class="n">submissionInDb</span><span class="p">.</span><span class="na">isPresent</span><span class="p">()).</span><span class="na">isTrue</span><span class="p">();</span>
+<span class="n">assertThat</span><span class="p">(</span><span class="n">submissionInDb</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getFilePath</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;ffile.png&quot;</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>use the methods from inside the <code class="docutils literal notranslate"><span class="pre">assertThat</span></code> directly:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">assertThat</span><span class="p">(</span><span class="n">submissionInDb</span><span class="p">).</span><span class="na">isPresent</span><span class="p">();</span>
+<span class="n">assertThat</span><span class="p">(</span><span class="n">submissionInDb</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getFilePath</span><span class="p">()).</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;ffile.png&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This gives better error messages when an assertion fails and improves the code readability. However, be aware that not all methods can be used for assertions like this.</p>
+<p>If you can’t avoid using <code class="docutils literal notranslate"><span class="pre">isTrue</span></code> use the <code class="docutils literal notranslate"><span class="pre">as</span></code> keyword to add a custom error message:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">assertThat</span><span class="p">(</span><span class="n">submission</span><span class="p">.</span><span class="na">isSubmittedInTime</span><span class="p">()).</span><span class="na">as</span><span class="p">(</span><span class="s">&quot;submission was not in time&quot;</span><span class="p">).</span><span class="na">isTrue</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Please read <a class="reference external" href="https://assertj.github.io/doc/#assertj-core-assertions-guide">the AssertJ documentation</a>, especially the <a class="reference external" href="https://assertj.github.io/doc/#assertj-core-incorrect-usage">section about avoiding incorrect usage</a>.</p>
+<p>Some parts of these guidelines are adapted from <a class="reference external" href="https://medium.com/&#64;madhupathy/ultimate-clean-code-guide-for-java-spring-based-applications-4d4c9095cc2a">https://medium.com/&#64;madhupathy/ultimate-clean-code-guide-for-java-spring-based-applications-4d4c9095cc2a</a></p>
+</div>
+<div class="section" id="general-testing-tips">
+<h2>22. General Testing Tips<a class="headerlink" href="#general-testing-tips" title="Permalink to this headline">¶</a></h2>
+<p>Write meaningful comments for your tests.
+These comments should contain information about what is tested specifically.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Tests that borrow() in Book successfully sets the available attribute to false</span>
+<span class="cm"> */</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Use appropriate and descriptive names for test cases. This makes it easier for other developers to understand what you actually test without looking deeper into it.
+This is the same reason why you should not name your variables int a, double b, String c, and so on. For example, if you want to test the method borrow in the class Book, testBorrowInBook() would be an appropriate name for the test case.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Try to follow the best practices for Java testing:</p>
+<ul class="simple">
+<li><p>Write small and specific tests by heavily using helper functions, parameterized tests, AssertJ’s powerful assertions, not overusing variables, asserting only what’s relevant and avoiding one test for all corner cases.</p></li>
+<li><p>Write self-contained tests by revealing all relevant parameters, insert data right in the test and prefer composition over inheritance.</p></li>
+<li><p>Write dumb tests by avoiding the reuse of production code and focusing on comparing output values with hard-coded values.</p></li>
+<li><p>KISS &gt; DRY (“Keep it simple, Stupid!” and “Don’t repeat yourself!”)</p></li>
+<li><p>Invest in a testable implementation by avoiding static access, using constructor injection, using Clocks and separating business logic from asynchronous execution.</p></li>
+</ul>
+<p>For a more detailed overview definitely check out: <a class="reference external" href="https://phauer.com/2019/modern-best-practices-testing-java/">https://phauer.com/2019/modern-best-practices-testing-java/</a></p>
+<p>Make use of JUnit 5 Features:
+<a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests">https://junit.org/junit5/docs/current/user-guide/#writing-tests</a>
+<a class="reference external" href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html">https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html</a></p>
+<p>Here you can find JUnit 5 best practices:
+<a class="reference external" href="https://howtodoinjava.com/best-practices/unit-testing-best-practices-junit-reference-guide/">https://howtodoinjava.com/best-practices/unit-testing-best-practices-junit-reference-guide/</a></p>
+<p>Also check out this page for spring related testing:
+<a class="reference external" href="https://www.baeldung.com/spring-tests">https://www.baeldung.com/spring-tests</a></p>
+<p>If you want to write tests for Programming Exercises to test student’s submissions check out <a class="reference external" href="https://confluence.ase.in.tum.de/display/ArTEMiS/Best+Practices+for+writing+Java+Programming+Exercise+Tests+in+Artemis">this</a>.</p>
+</div>
+<div class="section" id="avoid-using-mockbean">
+<h2>23. Avoid using &#64;MockBean<a class="headerlink" href="#avoid-using-mockbean" title="Permalink to this headline">¶</a></h2>
+<p>Do not use the <code class="docutils literal notranslate"><span class="pre">&#64;SpyBean</span></code> or <code class="docutils literal notranslate"><span class="pre">&#64;MockBean</span></code> annotation unless absolutely necessary, or possibly in an abstract Superclass. If you want to see why in more detail, take a look <a class="reference external" href="https://www.baeldung.com/spring-tests">here</a>.
+Basically, every time <code class="docutils literal notranslate"><span class="pre">&#64;MockBean</span></code> appears in a class, the ApplicationContext cache gets marked as dirty, hence the runner will clean the cache after the test-class is done and restarts the application context.
+This leads to a large overhead, which tends to make the tests take a lot more time.</p>
+<p>Here is an example how to replace a <code class="docutils literal notranslate"><span class="pre">&#64;SpyBean</span></code>. We wanted to test an edge case which is only executed if an <code class="docutils literal notranslate"><span class="pre">IOException</span></code> is thrown. We did this by mocking the service method and making it throw an Exception.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>public class TestExport extends AbstractSpringIntegrationBambooBitbucketJiraTest {
+    @SpyBean
+    private FileUploadSubmissionExportService fileUploadSubmissionExportService;
+
+    @Test
+    @WithMockUser(username = &quot;instructor1&quot;, roles = &quot;INSTRUCTOR&quot;)
+    public void testExportAll_IOException() throws Exception {
+        doThrow(IOException.class).when(fileUploadSubmissionExportService).export(any(), any());
+        request.postWithResponseBodyFile(&quot;/api/file-upload-export/&quot; + fileUploadExercise.getId()&quot;, HttpStatus.BAD_REQUEST);
+    }
+}
+</pre></div>
+</div>
+<p>As mentioned above, we should really avoid this.
+Instead we can use <a class="reference external" href="https://asolntsev.github.io/en/2020/07/11/mockito-static-methods/">Static Mocks</a>. When we look deeper in the <code class="docutils literal notranslate"><span class="pre">export()</span></code> method we find that there is a call of <code class="docutils literal notranslate"><span class="pre">File.newOutputStream(..)</span></code>.
+Now, instead of mocking the whole Service, we can just mock the static method, like this:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>public class TestExport extends AbstractSpringIntegrationBambooBitbucketJiraTest {
+    // No beans used anymore
+    @Test
+    @WithMockUser(username = &quot;instructor1&quot;, roles = &quot;INSTRUCTOR&quot;)
+    public void testExportAll_IOException() throws Exception {
+        MockedStatic&lt;Files&gt; mockedFiles = mockStatic(Files.class);
+        mockedFiles.when(() -&gt; Files.newOutputStream(any(), any())).thenThrow(IOException.class);
+        request.postWithResponseBodyFile(&quot;/api/file-upload-export/&quot; + fileUploadExercise.getId()&quot;, HttpStatus.BAD_REQUEST);
+
+        mockedFiles.close();
+    }
+}
+</pre></div>
+</div>
+<p>You should notice here that we can avoid the use of a Bean and also test deeper. Instead of mocking the uppermost method we only throw the exception at the place where it could actually happen. Very important to mention is that you need to close the mock at the end of the test again.</p>
+<p>For a real example where a SpyBean was replaced with a static mock look at the SubmissionExportIntegrationTest.java in <a class="reference external" href="https://github.com/ls1intum/Artemis/commit/4843137aa01cfdf27ea019400c48df00df36ed45">here</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../client/" class="btn btn-neutral float-right" title="Client" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../" class="btn btn-neutral float-left" title="Coding and design guidelines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup Guide for Guided Tutorials in Artemis &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Test Servers" href="../testservers/" />
+    <link rel="prev" title="Shibboleth/SAML2 Login &amp; Registration" href="../saml2-shibboleth/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Guided Tour</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-guidedtour-object">Create GuidedTour object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#texttourstep-with-highlighted-element">TextTourStep with highlighted element</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#texttourstep-with-multiple-markdown-elements">TextTourStep with multiple markdown elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imagetourstep">ImageTourStep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#videotourstep">VideoTourStep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#userinteractiontourstep">UserInteractionTourStep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelingtasktourstep">ModelingTaskTourStep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assessmenttasktourstep">AssessmentTaskTourStep</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-implementation-of-a-guidedtour-object">Example implementation of a GuidedTour object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mandatory-attributes">Mandatory attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-attributes">Optional attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-translations">Add translations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embed-in-component-file">Embed in component file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-of-integrating-the-guidedtour-exampletutorial-into-a-component-file">Example of integrating the GuidedTour <code class="docutils literal notranslate"><span class="pre">exampleTutorial</span></code> into a component file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extend-configuration-file">Extend configuration file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-test-cases-for-guided-tutorials">Writing test cases for guided tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Setup Guide for Guided Tutorials in Artemis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/guided-tour.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-guide-for-guided-tutorials-in-artemis">
+<h1>Setup Guide for Guided Tutorials in Artemis<a class="headerlink" href="#setup-guide-for-guided-tutorials-in-artemis" title="Permalink to this headline">¶</a></h1>
+<p>This guide gives you instructions on how to setup and create guided tutorials for Artemis:</p>
+<div class="section" id="create-guidedtour-object">
+<h2>Create GuidedTour object<a class="headerlink" href="#create-guidedtour-object" title="Permalink to this headline">¶</a></h2>
+<p>A guided tutorial can be created by instantiating a <code class="docutils literal notranslate"><span class="pre">GuidedTour</span></code> object.
+This object has the mandatory attributes <code class="docutils literal notranslate"><span class="pre">settingsKey</span></code>, the identifier for the tutorial which will be stored in the database, and <code class="docutils literal notranslate"><span class="pre">steps</span></code>, which is an array that stores all tutorial steps.
+A tutorial can have different types of tutorial steps:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TextTourStep</span></code>: tutorial step with only text content</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImageTourStep</span></code>: tutorial step with text content and embedded image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VideoTourStep</span></code>: tutorial step with text content and embedded video</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UserInteractionTourStep</span></code>: tutorial step which requires a certain interaction from the user to proceed to the next step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ModelingTaskTourStep</span></code>: tutorial step with text content and modeling task for the Apollon editor that is assessed for the step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AssessmentTaskTourStep</span></code>: tutorial step with text content and a tutor assessment task for example submissions (currently only implemented for text assessments).</p></li>
+</ol>
+<div class="section" id="texttourstep-with-highlighted-element">
+<h3>TextTourStep with highlighted element<a class="headerlink" href="#texttourstep-with-highlighted-element" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id1">
+<img alt="TextTourStep with highlighted element" src="../../_images/text-tour-step.png" />
+<p class="caption"><span class="caption-text">TextTourStep with highlighted element</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="texttourstep-with-multiple-markdown-elements">
+<h3>TextTourStep with multiple markdown elements<a class="headerlink" href="#texttourstep-with-multiple-markdown-elements" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id2">
+<img alt="TextTourStep with multiple markdown elements" src="../../_images/text-tour-step-2.png" />
+<p class="caption"><span class="caption-text">TextTourStep with multiple markdown elements</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="imagetourstep">
+<h3>ImageTourStep<a class="headerlink" href="#imagetourstep" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id3">
+<img alt="ImageTourStep" src="../../_images/image-tour-step.png" />
+<p class="caption"><span class="caption-text">ImageTourStep</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="videotourstep">
+<h3>VideoTourStep<a class="headerlink" href="#videotourstep" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id4">
+<img alt="VideoTourStep" src="../../_images/video-tour-step.png" />
+<p class="caption"><span class="caption-text">VideoTourStep</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="userinteractiontourstep">
+<h3>UserInteractionTourStep<a class="headerlink" href="#userinteractiontourstep" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id5">
+<img alt="UserInteractionTourStep" src="../../_images/user-interaction-step.png" />
+<p class="caption"><span class="caption-text">UserInteractionTourStep</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="modelingtasktourstep">
+<h3>ModelingTaskTourStep<a class="headerlink" href="#modelingtasktourstep" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id6">
+<img alt="ModelingTaskTourStep" src="../../_images/modeling-task-tour-step.png" />
+<p class="caption"><span class="caption-text">ModelingTaskTourStep</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="assessmenttasktourstep">
+<h3>AssessmentTaskTourStep<a class="headerlink" href="#assessmenttasktourstep" title="Permalink to this headline">¶</a></h3>
+<div class="figure align-center" id="id7">
+<img alt="AssessmentTaskTourStep" src="../../_images/assessment-task-step.png" />
+<p class="caption"><span class="caption-text">AssessmentTaskTourStep</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="example-implementation-of-a-guidedtour-object">
+<h2>Example implementation of a GuidedTour object<a class="headerlink" href="#example-implementation-of-a-guidedtour-object" title="Permalink to this headline">¶</a></h2>
+<p>In this example, the <code class="docutils literal notranslate"><span class="pre">GuidedTour</span></code> object is created and assigned to the constant <code class="docutils literal notranslate"><span class="pre">exampleTutorial</span></code>, which one can use to embed the tutorial to a component of choice.</p>
+<div class="highlight-typescript notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Orientation</span><span class="p">,</span> <span class="nx">UserInteractionEvent</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../../src/main/webapp/app/guided-tour/guided-tour.constants&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">GuidedTour</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../../src/main/webapp/app/guided-tour/guided-tour.model&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ImageTourStep</span><span class="p">,</span> <span class="nx">ModelingTaskTourStep</span><span class="p">,</span> <span class="nx">TextTourStep</span><span class="p">,</span> <span class="nx">VideoTourStep</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../../src/main/webapp/app/guided-tour/guided-tour-step.model&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">GuidedTourModelingTask</span><span class="p">,</span> <span class="nx">personUML</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;../../src/main/webapp/app/guided-tour/guided-tour-task.model&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">exampleTutorial</span>: <span class="kt">GuidedTour</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">settingsKey</span><span class="o">:</span> <span class="s1">&#39;example_tutorial&#39;</span><span class="p">,</span>
+    <span class="nx">steps</span><span class="o">:</span> <span class="p">[</span>
+        <span class="k">new</span> <span class="nx">TextTourStep</span><span class="p">({</span>
+            <span class="nx">highlightSelector</span><span class="o">:</span> <span class="s1">&#39;.guided-tour-overview&#39;</span><span class="p">,</span>
+            <span class="nx">headlineTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseOverview.overviewMenu.headline&#39;</span><span class="p">,</span>
+            <span class="nx">contentTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseOverview.overviewMenu.content&#39;</span><span class="p">,</span>
+            <span class="nx">highlightPadding</span>: <span class="kt">10</span><span class="p">,</span>
+            <span class="nx">orientation</span>: <span class="kt">Orientation.BOTTOM</span><span class="p">,</span>
+        <span class="p">}),</span>
+        <span class="k">new</span> <span class="nx">ImageTourStep</span><span class="p">({</span>
+            <span class="nx">headlineTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseOverview.welcome.headline&#39;</span><span class="p">,</span>
+            <span class="nx">subHeadlineTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseOverview.welcome.subHeadline&#39;</span><span class="p">,</span>
+            <span class="nx">contentTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseOverview.welcome.content&#39;</span><span class="p">,</span>
+            <span class="nx">imageUrl</span><span class="o">:</span> <span class="s1">&#39;https://ase.in.tum.de/lehrstuhl_1/images/teaching/interactive/InteractiveLearning.png&#39;</span><span class="p">,</span>
+        <span class="p">}),</span>
+        <span class="k">new</span> <span class="nx">VideoTourStep</span><span class="p">({</span>
+            <span class="nx">headlineTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseExerciseOverview.installPrerequisites.sourceTreeSetup.headline&#39;</span><span class="p">,</span>
+            <span class="nx">contentTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseExerciseOverview.installPrerequisites.sourceTreeSetup.content&#39;</span><span class="p">,</span>
+            <span class="nx">hintTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.courseExerciseOverview.installPrerequisites.sourceTreeSetup.hint&#39;</span><span class="p">,</span>
+            <span class="nx">videoUrl</span><span class="o">:</span> <span class="s1">&#39;tour.courseExerciseOverview.installPrerequisites.sourceTreeSetup.videoUrl&#39;</span><span class="p">,</span>
+        <span class="p">}),</span>
+        <span class="k">new</span> <span class="nx">ModelingTaskTourStep</span><span class="p">({</span>
+            <span class="nx">highlightSelector</span><span class="o">:</span> <span class="s1">&#39;jhi-modeling-editor .guided-tour.modeling-editor .modeling-editor&#39;</span><span class="p">,</span>
+            <span class="nx">headlineTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.modelingExercise.executeTasks.headline&#39;</span><span class="p">,</span>
+            <span class="nx">contentTranslateKey</span><span class="o">:</span> <span class="s1">&#39;tour.modelingExercise.executeTasks.content&#39;</span><span class="p">,</span>
+            <span class="nx">highlightPadding</span>: <span class="kt">5</span><span class="p">,</span>
+            <span class="nx">orientation</span>: <span class="kt">Orientation.TOP</span><span class="p">,</span>
+            <span class="nx">userInteractionEvent</span>: <span class="kt">UserInteractionEvent.MODELING</span><span class="p">,</span>
+            <span class="nx">modelingTask</span>: <span class="kt">new</span> <span class="nx">GuidedTourModelingTask</span><span class="p">(</span><span class="nx">personUML</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="s1">&#39;tour.modelingExercise.executeTasks.personClass&#39;</span><span class="p">),</span>
+        <span class="p">}),</span>
+        <span class="c1">// ...</span>
+    <span class="p">],</span>
+<span class="p">};</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="mandatory-attributes">
+<h2>Mandatory attributes<a class="headerlink" href="#mandatory-attributes" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TextTourStep</span></code>: The mandatory fields are <code class="docutils literal notranslate"><span class="pre">headlineTranslateKey</span></code> and <code class="docutils literal notranslate"><span class="pre">contentTranslateKey</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ImageTourStep</span></code>: The ImageTourStep extends the TextTourStep and has <code class="docutils literal notranslate"><span class="pre">imageUrl</span></code> as an additional mandatory attribute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VideoTourStep</span></code>: The VideoTourStep extends the TextTourStep and has <code class="docutils literal notranslate"><span class="pre">videoUrl</span></code> as an additional mandatory attribute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">UserInterActionTourStep</span></code>: The UserInterActionTourStep extends the TextTourStep and is used to include interactions tasks for the user during the tour step. It has the additional mandatory attribute <code class="docutils literal notranslate"><span class="pre">userInteractionEvent</span></code>, which defines the interaction type, and the optional attribute <code class="docutils literal notranslate"><span class="pre">triggerNextStep</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ModelingTaskTourStep</span></code>: The ModelingTaskTourStep extends the UserInterActionTourStep and has <code class="docutils literal notranslate"><span class="pre">modelingTask</span></code> as an additional mandatory attribute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AssessmentTaskTourStep</span></code>: The AssessmentTaskTourStep extends the UserInterActionTourStep and has <code class="docutils literal notranslate"><span class="pre">assessmentTask</span></code> as an additional mandatory attribute.</p></li>
+</ol>
+</div>
+<div class="section" id="optional-attributes">
+<h2>Optional attributes<a class="headerlink" href="#optional-attributes" title="Permalink to this headline">¶</a></h2>
+<p>There are many optional attributes that can be defined for a tour step. These attributes and their definition can be found in the <code class="docutils literal notranslate"><span class="pre">abstract</span> <span class="pre">class</span> <span class="pre">TourStep</span></code>.
+Below, you can find a list of attributes that are used more often:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">highlightSelector</span></code>: For the <code class="docutils literal notranslate"><span class="pre">highlightSelector</span></code> you have to enter a CSS selector for the HTML element that you want to highlight for this step. For better maintainability of the guided tutorials, it is strongly advised to create new selectors with the prefix <code class="docutils literal notranslate"><span class="pre">guided-tour</span></code> within the DOM and use it as the highlight selector.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">orientation</span></code>: We can define an orientation for every tour step individually. The tour step orientation is used to define the position of the tour step next to highlighted element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">highlightPadding</span></code>: This attribute sets the additional padding around the highlight element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">userInteractionEvent</span></code>: Some steps require user interactions, e.g. certain click events, before the next tour step can be enabled. The supported user interactions are defined in the enum <code class="docutils literal notranslate"><span class="pre">UserInteractionEvent</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pageUrl</span></code>: If you want to create a multi-page tutorial, i.e. a tutorial that guides the user through multiple component pages, then you have to use this attribute. The <code class="docutils literal notranslate"><span class="pre">pageUrl</span></code> should be added to the first tutorial step of every page and if the URL has identifiers in the URL such as course or exercise ids then these numbers should be replaced with the regex <code class="docutils literal notranslate"><span class="pre">(\d+)+</span></code>. An example of multi-page tutorials can be found in the <code class="docutils literal notranslate"><span class="pre">tutor-assessment-tour.ts</span></code> file.</p></li>
+</ol>
+</div>
+<div class="section" id="add-translations">
+<h2>Add translations<a class="headerlink" href="#add-translations" title="Permalink to this headline">¶</a></h2>
+<p>In order to allow internationalization, the values for the attributes <code class="docutils literal notranslate"><span class="pre">headlineTranslateKey</span></code>, <code class="docutils literal notranslate"><span class="pre">subHeadlineTranslateKey</span></code>, <code class="docutils literal notranslate"><span class="pre">contentTranslateKey</span></code> and <code class="docutils literal notranslate"><span class="pre">hintTranslateKey</span></code> reference the text snippets which are stored in JSON translation document.
+Further attributes that need translations are <code class="docutils literal notranslate"><span class="pre">videoUrl</span></code> for <code class="docutils literal notranslate"><span class="pre">VideoTourStep</span></code> and <code class="docutils literal notranslate"><span class="pre">taskTranslateKey</span></code> for the <code class="docutils literal notranslate"><span class="pre">modelingTask</span></code> in the <code class="docutils literal notranslate"><span class="pre">ModelingTaskTourStep</span></code>.
+One JSON document that is used for the translations of guided tutorials is the file <code class="docutils literal notranslate"><span class="pre">guidedTour.json</span></code>.</p>
+</div>
+<div class="section" id="embed-in-component-file">
+<h2>Embed in component file<a class="headerlink" href="#embed-in-component-file" title="Permalink to this headline">¶</a></h2>
+<p>There are multiple service methods to embed a guided tutorial in an application component file.
+We use the GuidedTutorialService in the component through dependency injection and invoke the fitting method to enable the tutorial for the component:</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">enableTourForCourseOverview</span></code> method is used when the tutorial should be enabled for a certain course in a component, which displays a list of courses (e.g. <code class="docutils literal notranslate"><span class="pre">overview.component.ts</span></code>).
+It returns the course for which the tutorial is enabled, if available, otherwise null.</p>
+<div class="highlight-typescript notranslate"><div class="highlight"><pre><span></span><span class="kr">public</span> <span class="nx">enableTourForCourseOverview</span><span class="p">(</span><span class="nx">courses</span>: <span class="kt">Course</span><span class="p">[],</span> <span class="nx">guidedTour</span>: <span class="kt">GuidedTour</span><span class="p">,</span> <span class="nx">init</span>: <span class="kt">boolean</span><span class="p">)</span><span class="o">:</span> <span class="nx">Course</span> <span class="o">|</span> <span class="kc">null</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">enableTourForCourseExerciseComponent</span></code> method is used when the tutorial should be enabled for a certain course and exercise in a component, which displays a list of exercises for a course (e.g. <code class="docutils literal notranslate"><span class="pre">course-exercises.component.ts</span></code>).
+It returns the exercise for which the tutorial is enabled, if available, otherwise null.</p>
+<div class="highlight-typescript notranslate"><div class="highlight"><pre><span></span><span class="kr">public</span> <span class="nx">enableTourForCourseExerciseComponent</span><span class="p">(</span><span class="nx">course</span>: <span class="kt">Course</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">guidedTour</span>: <span class="kt">GuidedTour</span><span class="p">,</span> <span class="nx">init</span>: <span class="kt">boolean</span><span class="p">)</span><span class="o">:</span> <span class="nx">Exercise</span> <span class="o">|</span> <span class="kc">null</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">enableTourForExercise</span></code> method is used when the tutorial should be enabled for a certain exercise (e.g. <code class="docutils literal notranslate"><span class="pre">course-exercise-details.component.ts</span></code>).
+It returns the exercise for which the tutorial is enabled, if available, otherwise null.</p>
+<div class="highlight-typescript notranslate"><div class="highlight"><pre><span></span><span class="kr">public</span> <span class="nx">enableTourForExercise</span><span class="p">(</span><span class="nx">exercise</span>: <span class="kt">Exercise</span><span class="p">,</span> <span class="nx">guidedTour</span>: <span class="kt">GuidedTour</span><span class="p">,</span> <span class="nx">init</span>: <span class="kt">boolean</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+</div>
+<div class="section" id="example-of-integrating-the-guidedtour-exampletutorial-into-a-component-file">
+<h3>Example of integrating the GuidedTour <code class="docutils literal notranslate"><span class="pre">exampleTutorial</span></code> into a component file<a class="headerlink" href="#example-of-integrating-the-guidedtour-exampletutorial-into-a-component-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-typescript notranslate"><div class="highlight"><pre><span></span><span class="kr">constructor</span><span class="p">(</span> <span class="kr">private</span> <span class="nx">guidedTourService</span>: <span class="kt">GuidedTourService</span> <span class="p">)</span> <span class="p">{}</span>
+
+<span class="p">...</span>
+
+<span class="k">this</span><span class="p">.</span><span class="nx">courseForGuidedTour</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">guidedTourService</span><span class="p">.</span><span class="nx">enableTourForCourseOverview</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">courses</span><span class="p">,</span> <span class="nx">exampleTutorial</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="extend-configuration-file">
+<h2>Extend configuration file<a class="headerlink" href="#extend-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>The mapping of guided tutorials to certain courses and exercises is configured in the <code class="docutils literal notranslate"><span class="pre">application-dev.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">application-prod.yml</span></code> files.
+The yaml configuration below shows that the guided tutorials are only enabled for the course with the short name <code class="docutils literal notranslate"><span class="pre">artemistutorial</span></code>.
+The configuration for <code class="docutils literal notranslate"><span class="pre">tours</span></code> shows a list of mappings <code class="docutils literal notranslate"><span class="pre">tutorialSettingsKey</span></code> → <code class="docutils literal notranslate"><span class="pre">exerciseIdentifier</span></code>. The <code class="docutils literal notranslate"><span class="pre">exerciseIdentifier</span></code> for programming exercises is the exercise short name, otherwise it’s the exercise title.</p>
+<p>The optional <code class="docutils literal notranslate"><span class="pre">course-group-students</span></code> property is used to automatically add the given tutorial’s course group to all the new created users.
+This functionality can be extended to users with <em>instructor</em> or <em>teaching assistant</em> roles, adding the optional <code class="docutils literal notranslate"><span class="pre">course-group-instructors</span></code> and/or <code class="docutils literal notranslate"><span class="pre">course-group-tutors</span></code> properties.
+In this case, newly created users with <em>instructor</em> or <em>teaching assistant</em> roles will be assigned to their respectively tutorial’s course groups.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">info</span><span class="p">:</span>
+    <span class="nt">guided-tour</span><span class="p">:</span>
+        <span class="nt">course-group-students</span><span class="p">:</span> <span class="s">&#39;artemis-artemistutorial-students&#39;</span>
+        <span class="nt">courseShortName</span><span class="p">:</span> <span class="s">&#39;artemistutorial&#39;</span>
+        <span class="nt">tours</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="nt">cancel_tour</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">code_editor_tour</span><span class="p">:</span> <span class="s">&#39;tutorial&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">course_overview_tour</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">course_exercise_overview_tour</span><span class="p">:</span> <span class="s">&#39;tutorial&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">modeling_tour</span><span class="p">:</span> <span class="s">&#39;UML</span><span class="nv"> </span><span class="s">Class</span><span class="nv"> </span><span class="s">Diagram&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">programming_exercise_fail_tour</span><span class="p">:</span> <span class="s">&#39;tutorial&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">programming_exercise_success_tour</span><span class="p">:</span> <span class="s">&#39;tutorial&#39;</span>
+            <span class="p p-Indicator">-</span> <span class="nt">tutor_assessment_tour</span><span class="p">:</span> <span class="s">&#39;Patterns</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">Software</span><span class="nv"> </span><span class="s">Engineering&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-test-cases-for-guided-tutorials">
+<h2>Writing test cases for guided tutorials<a class="headerlink" href="#writing-test-cases-for-guided-tutorials" title="Permalink to this headline">¶</a></h2>
+<p>Through Jest client tests it is possible to start the guided tutorials and go through all the tutorial steps while checking for the highlight selectors.
+An example test suite for the <code class="docutils literal notranslate"><span class="pre">courseOverviewTour</span></code> can be found in the <code class="docutils literal notranslate"><span class="pre">overview.component.spec.ts</span></code> file.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../testservers/" class="btn btn-neutral float-right" title="Test Servers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../saml2-shibboleth/" class="btn btn-neutral float-left" title="Shibboleth/SAML2 Login &amp; Registration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

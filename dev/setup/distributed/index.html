@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup of Artemis with multiple instances &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Adjustments for programming exercises" href="../programming-exercises/" />
+    <link rel="prev" title="Setup for Programming Exercises with Jenkins and GitLab" href="../jenkins-gitlab/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../">Setup Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../#server-setup">Server Setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bamboo-bitbucket-jira/">Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jenkins-gitlab/">Jenkins and Gitlab</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Multiple instances</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-with-one-instance">Setup with one instance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#setup-with-multiple-instances">Setup with multiple instances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#additional-synchronization">Additional synchronization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database-cache">Database cache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discovery-service">Discovery service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#websockets">WebSockets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-system">File system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scheduling">Scheduling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginx-configuration">nginx configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/">Adjustments for programming exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/#caching-example-for-maven">Caching example for Maven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-service-configuration">Run the server via a service configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-run-configuration-in-intellij">Run the server via a run configuration in IntelliJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#typical-problems-with-liquibase-checksums">Typical problems with Liquibase checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-spring-boot-and-spring-profiles">Run the server with Spring Boot and Spring profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-the-command-line-gradle-wrapper">Run the server with the command line (Gradle wrapper)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../#client-setup">Client Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#customize-your-artemis-instance">Customize your Artemis instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#alternative-using-docker-compose">Alternative: Using docker-compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#athene-service">Athene Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Setup Guide</a> &raquo;</li>
+        
+      <li>Setup of Artemis with multiple instances</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/setup/distributed.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-of-artemis-with-multiple-instances">
+<h1>Setup of Artemis with multiple instances<a class="headerlink" href="#setup-of-artemis-with-multiple-instances" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setup-with-one-instance">
+<h2>Setup with one instance<a class="headerlink" href="#setup-with-one-instance" title="Permalink to this headline">¶</a></h2>
+<p>Artemis usually runs with one instance of the application server:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/deployment_before.drawio.png" src="../../../_images/deployment_before.drawio.png" />
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="setup-with-multiple-instances">
+<h2>Setup with multiple instances<a class="headerlink" href="#setup-with-multiple-instances" title="Permalink to this headline">¶</a></h2>
+<p>There are certain scenarios, where a setup with multiple instances of the application server is required.
+This can e.g. be due to special requirements regarding fault tolerance or performance.</p>
+<p>Artemis also supports this setup (which is also used at the Chair for Applied Software Engineering at TUM).</p>
+<p>Multiple instances of the application server are used to distribute the load:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/deployment_after_simple.drawio.png" src="../../../_images/deployment_after_simple.drawio.png" />
+</div>
+</div></blockquote>
+<p>A load balancer (typically a reverse proxy such as nginx) is added, that distributes the requests to the different instances.</p>
+<p><strong>Note:</strong> This documentation focuses on the practical setup of this distributed setup.
+More details regarding the theoretical aspects can be found in the Bachelor’s Thesis <cite>Securing and Scaling Artemis WebSocket Architecture</cite>, which can be found here: <a class="reference download internal" download="" href="../../../_downloads/85a97429e59a3aae61b9c1c46f32561e/thesis_securing_scaling_artemis.pdf"><code class="xref download docutils literal notranslate"><span class="pre">pdf</span></code></a>.</p>
+</div>
+<div class="section" id="additional-synchronization">
+<h2>Additional synchronization<a class="headerlink" href="#additional-synchronization" title="Permalink to this headline">¶</a></h2>
+<p>All instances of the application server use the same database, but other parts of the system also have to be synchronized:</p>
+<ol class="arabic simple">
+<li><p>Database cache</p></li>
+<li><p>WebSocket messages</p></li>
+<li><p>File system</p></li>
+</ol>
+<p>Each of these three aspects is synchronized using a different solution</p>
+</div>
+<div class="section" id="database-cache">
+<h2>Database cache<a class="headerlink" href="#database-cache" title="Permalink to this headline">¶</a></h2>
+<p>Artemis uses a cache provider that supports distributed caching: <a class="reference external" href="https://hazelcast.com/">Hazelcast</a>.</p>
+<p>All instances of Artemis form a so-called cluster that allows them to synchronize their cache.
+You can use the configuration argument <code class="docutils literal notranslate"><span class="pre">spring.hazelcast.interface</span></code> to configure the interface on which Hazelcast will listen.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/deployment_hazelcast.drawio.png" src="../../../_images/deployment_hazelcast.drawio.png" />
+</div>
+</div></blockquote>
+<p>One problem that arises with a distributed setup is that all instances have to know each other in order to create this cluster.
+This is problematic if the instances change dynamically.
+Artemis uses a discovery service to solve the issue (named <a class="reference external" href="https://www.jhipster.tech/jhipster-registry/">JHipster Registry</a>).</p>
+</div>
+<div class="section" id="discovery-service">
+<h2>Discovery service<a class="headerlink" href="#discovery-service" title="Permalink to this headline">¶</a></h2>
+<p>JHipster registry contains Eureka, the discovery service where all instances can register themselves and fetch the other registered instances.</p>
+<p>Eureka can be configured like this within Artemis:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Eureka configuration</span>
+<span class="nt">eureka</span><span class="p">:</span>
+    <span class="nt">client</span><span class="p">:</span>
+        <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">service-url</span><span class="p">:</span>
+            <span class="nt">defaultZone</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_eureka_urls</span> <span class="p p-Indicator">}}</span>
+<span class="nt">instance</span><span class="p">:</span>
+    <span class="nt">prefer-ip-address</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">ip-address</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_ip_address</span> <span class="p p-Indicator">}}</span>
+    <span class="nt">appname</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Artemis</span>
+    <span class="nt">instanceId</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Artemis:{{ artemis_eureka_instance_id }}</span>
+
+<span class="nt">logging</span><span class="p">:</span>
+    <span class="nt">file</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;/opt/artemis/artemis.log&#39;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">artemis_eureka_urls</span> <span class="pre">}}</span></code> must be the URL where Eureka is reachable, <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">artemis_ip_address</span> <span class="pre">}}</span></code> must be the IP under which this instance is reachable and <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">artemis_eureka_instance_id</span> <span class="pre">}}</span></code> must be a unique identifier for this instance.
+You also have to setup the value <code class="docutils literal notranslate"><span class="pre">jhipster.registry.password</span></code> to the password of the registry (which you will set later).</p>
+<p>Note that Hazelcast (which requires Eureka) is by default binding to <cite>127.0.0.1</cite> to prevent other instances to form a cluster without manual intervention.
+If you set up the cluster on multiple machines (which you should do for a production setup), you have to set the value <code class="docutils literal notranslate"><span class="pre">spring.hazelcast.interface</span></code> to the ip-address of the machine.
+Hazelcast will then bind on this interface rather than <cite>127.0.0.1</cite>, which allows other instances to establish connections to the instance.
+This setting must be set for every instance, but you have to make sure to adjust the ip-address correspondingly.</p>
+<div class="section" id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Installing</strong></p>
+<ol class="arabic simple">
+<li><p>Create the directory</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo mkdir /opt/registry/
+sudo mkdir /opt/registry/config-server
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Download the application</p></li>
+</ol>
+<p>Download the latest version of the jhipster-registry from GitHub, e.g. by using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo wget -O /opt/registry/registry.jar https://github.com/jhipster/jhipster-registry/releases/download/v6.2.0/jhipster-registry-6.2.0.jar
+</pre></div>
+</div>
+<p><strong>Service configuration</strong></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/etc/systemd/system/registry.service</span></code></p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">Description</span><span class="o">=</span>Registry
+<span class="nv">After</span><span class="o">=</span>syslog.target
+
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">User</span><span class="o">=</span>artemis
+<span class="nv">WorkingDirectory</span><span class="o">=</span>/opt/registry
+<span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/java <span class="se">\</span>
+    -Xmx256m <span class="se">\</span>
+    -jar registry.jar <span class="se">\</span>
+    --spring.profiles.active<span class="o">=</span>prod,native
+<span class="nv">SuccessExitStatus</span><span class="o">=</span><span class="m">143</span>
+<span class="nv">StandardOutput</span><span class="o">=</span>/opt/registry/registry.log
+<span class="c1">#StandardError=inherit</span>
+
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Set Permissions in Registry Folder</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo chown -R artemis:artemis /opt/registry
+sudo chmod g+rwx /opt/registry
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Enable the service</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl <span class="nb">enable</span> registry.service
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Start Service (only after performing steps 1-3 of the configuration)</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl start registry
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Logging</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo journalctl -f -n <span class="m">1000</span> -u registry
+</pre></div>
+</div>
+<p><strong>Configuration</strong></p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/opt/registry/application-prod.yml</span></code></p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">logging</span><span class="p">:</span>
+    <span class="nt">file</span><span class="p">:</span>
+        <span class="nt">name</span><span class="p">:</span> <span class="s">&#39;/opt/registry/registry.log&#39;</span>
+
+<span class="nt">jhipster</span><span class="p">:</span>
+    <span class="nt">security</span><span class="p">:</span>
+        <span class="nt">authentication</span><span class="p">:</span>
+        <span class="nt">jwt</span><span class="p">:</span>
+            <span class="nt">base64-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">THE-SAME-TOKEN-THAT-IS-USED-ON-THE-ARTEMIS-INSTANCES</span>
+    <span class="nt">registry</span><span class="p">:</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AN-ADMIN-PASSWORD-THAT-MUST-BE-CHANGED</span>
+<span class="nt">spring</span><span class="p">:</span>
+    <span class="nt">security</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AN-ADMIN-PASSWORD-THAT-MUST-BE-CHANGED</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/opt/registry/bootstrap-prod.yml</span></code></p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">jhipster</span><span class="p">:</span>
+    <span class="nt">security</span><span class="p">:</span>
+        <span class="nt">authentication</span><span class="p">:</span>
+        <span class="nt">jwt</span><span class="p">:</span>
+            <span class="nt">base64-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">THE-SAME-TOKEN-THAT-IS-USED-ON-THE-ARTEMIS-INSTANCES</span>
+            <span class="nt">secret</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+
+<span class="nt">spring</span><span class="p">:</span>
+    <span class="nt">cloud</span><span class="p">:</span>
+        <span class="nt">config</span><span class="p">:</span>
+        <span class="nt">server</span><span class="p">:</span>
+            <span class="nt">bootstrap</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">composite</span><span class="p">:</span>
+            <span class="p p-Indicator">-</span> <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">native</span>
+              <span class="nt">search-locations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">file:./config-server</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/opt/registry/config-server/application.yml</span></code></p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Common configuration shared between all applications</span>
+<span class="nt">configserver</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Artemis JHipster Registry</span>
+    <span class="nt">status</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Connected to the Artemis JHipster Registry</span>
+
+<span class="nt">jhipster</span><span class="p">:</span>
+    <span class="nt">security</span><span class="p">:</span>
+        <span class="nt">authentication</span><span class="p">:</span>
+        <span class="nt">jwt</span><span class="p">:</span>
+            <span class="nt">secret</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+            <span class="nt">base64-secret</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">THE-SAME-TOKEN-THAT-IS-USED-ON-THE-ARTEMIS-INSTANCES</span>
+
+<span class="nt">eureka</span><span class="p">:</span>
+    <span class="nt">client</span><span class="p">:</span>
+        <span class="nt">service-url</span><span class="p">:</span>
+            <span class="nt">defaultZone</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://admin:${jhipster.registry.password}@localhost:8761/eureka/</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>nginx config</strong></p>
+<p>You still have to make the registry available:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/etc/nginx/sites-available/registry.conf</span></code></p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
+    listen 443 ssl http2;
+    server_name REGISTRY_FQDN;
+    ssl_session_cache shared:RegistrySSL:10m;
+    include /etc/nginx/common/common_ssl.conf;
+    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubDomains; preload&quot;;
+    add_header X-Frame-Options DENY;
+    add_header Referrer-Policy same-origin;
+    client_max_body_size 10m;
+    client_body_buffer_size 1m;
+
+    location / {
+        proxy_pass              http://localhost:8761;
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_http_version      1.1;
+        proxy_redirect          http://         https://;
+
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+
+        gzip off;
+    }
+}
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/etc/nginx/sites-available/registry.conf</span> <span class="pre">/etc/nginx/sites-enabled/</span></code></p></li>
+</ol>
+<p>This enables the registry in nginx</p>
+<ol class="arabic simple" start="3">
+<li><p><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">nginx</span> <span class="pre">restart</span></code></p></li>
+</ol>
+<p>This will apply the config changes and the registry will be reachable.</p>
+</div>
+</div>
+<div class="section" id="websockets">
+<h2>WebSockets<a class="headerlink" href="#websockets" title="Permalink to this headline">¶</a></h2>
+<p>WebSockets should also be synchronized (so that a user connected to one instance can perform an action which causes an update to users on different instances, without having to reload the page - such as quiz starts).
+We use a so-called broker for this (named <a class="reference external" href="https://activemq.apache.org/components/artemis/">Apache ActiveMQ Artemis</a>).</p>
+<p>It relays message between instances:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/deployment_broker.drawio.png" src="../../../_images/deployment_broker.drawio.png" />
+</div>
+</div></blockquote>
+<p><strong>Setup</strong></p>
+<ol class="arabic simple">
+<li><p>Create a folder to store ActiveMQ</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo mkdir /opt/activemq-distribution
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Download ActiveMQ here: <a class="reference external" href="http://activemq.apache.org/components/artemis/download/">http://activemq.apache.org/components/artemis/download/</a></p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo wget -O /opt/activemq-distribution/activemq.tar.gz https://downloads.apache.org/activemq/activemq-artemis/2.13.0/apache-artemis-2.13.0-bin.tar.gz
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Extract the downloaded contents</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/activemq-distribution
+sudo tar -xf activemq.tar.gz
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><p>Navigate to the folder with the CLI</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /opt/activemq-distribution/apache-artemis-2.13.0/bin
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li><p>Create a broker in the /opt/broker/broker1 directory, replace USERNAME and PASSWORD accordingly</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ./artemis create --user USERNAME --password PASSWORD --require-login /opt/broker/broker1
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="6">
+<li><p>Adjust the permissions</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo chown -R artemis:artemis /opt/broker
+sudo chmod g+rwx /opt/broker
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="7">
+<li><p>Adjust the configuration of the broker: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/opt/broker/broker1/etc/broker.xml</span></code></p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39;?&gt;</span>
+<span class="nt">&lt;configuration</span> <span class="na">xmlns=</span><span class="s">&quot;urn:activemq&quot;</span>
+            <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+            <span class="na">xmlns:xi=</span><span class="s">&quot;http://www.w3.org/2001/XInclude&quot;</span>
+            <span class="na">xsi:schemaLocation=</span><span class="s">&quot;urn:activemq /schema/artemis-configuration.xsd&quot;</span><span class="nt">&gt;</span>
+
+<span class="nt">&lt;core</span> <span class="na">xmlns=</span><span class="s">&quot;urn:activemq:core&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+        <span class="na">xsi:schemaLocation=</span><span class="s">&quot;urn:activemq:core &quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;name&gt;</span>0.0.0.0<span class="nt">&lt;/name&gt;</span>
+
+    <span class="nt">&lt;journal-pool-files&gt;</span>10<span class="nt">&lt;/journal-pool-files&gt;</span>
+
+    <span class="nt">&lt;acceptors&gt;</span>
+        <span class="c">&lt;!-- STOMP Acceptor. --&gt;</span>
+        <span class="nt">&lt;acceptor</span> <span class="na">name=</span><span class="s">&quot;stomp&quot;</span><span class="nt">&gt;</span>tcp://0.0.0.0:61613?tcpSendBufferSize=1048576;tcpReceiveBufferSize=1048576;protocols=STOMP;useEpoll=true;heartBeatToConnectionTtlModifier=6<span class="nt">&lt;/acceptor&gt;</span>
+    <span class="nt">&lt;/acceptors&gt;</span>
+
+    <span class="nt">&lt;connectors&gt;</span>
+        <span class="nt">&lt;connector</span> <span class="na">name=</span><span class="s">&quot;netty-connector&quot;</span><span class="nt">&gt;</span>tcp://localhost:61616<span class="nt">&lt;/connector&gt;</span>
+    <span class="nt">&lt;/connectors&gt;</span>
+
+    <span class="nt">&lt;security-settings&gt;</span>
+        <span class="nt">&lt;security-setting</span> <span class="na">match=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;createNonDurableQueue&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;deleteNonDurableQueue&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;createDurableQueue&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;deleteDurableQueue&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;createAddress&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;deleteAddress&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;consume&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;browse&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;send&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+            <span class="c">&lt;!-- we need this otherwise ./artemis data imp wouldn&#39;t work --&gt;</span>
+            <span class="nt">&lt;permission</span> <span class="na">type=</span><span class="s">&quot;manage&quot;</span> <span class="na">roles=</span><span class="s">&quot;amq&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/security-setting&gt;</span>
+    <span class="nt">&lt;/security-settings&gt;</span>
+
+    <span class="nt">&lt;address-settings&gt;</span>
+        <span class="c">&lt;!--default for catch all--&gt;</span>
+        <span class="nt">&lt;address-setting</span> <span class="na">match=</span><span class="s">&quot;#&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;dead-letter-address&gt;</span>DLQ<span class="nt">&lt;/dead-letter-address&gt;</span>
+            <span class="nt">&lt;expiry-address&gt;</span>ExpiryQueue<span class="nt">&lt;/expiry-address&gt;</span>
+            <span class="nt">&lt;redelivery-delay&gt;</span>0<span class="nt">&lt;/redelivery-delay&gt;</span>
+            <span class="c">&lt;!-- with -1 only the global-max-size is in use for limiting --&gt;</span>
+            <span class="nt">&lt;max-size-bytes&gt;</span>-1<span class="nt">&lt;/max-size-bytes&gt;</span>
+            <span class="nt">&lt;message-counter-history-day-limit&gt;</span>10<span class="nt">&lt;/message-counter-history-day-limit&gt;</span>
+            <span class="nt">&lt;address-full-policy&gt;</span>PAGE<span class="nt">&lt;/address-full-policy&gt;</span>
+            <span class="nt">&lt;auto-create-queues&gt;</span>true<span class="nt">&lt;/auto-create-queues&gt;</span>
+            <span class="nt">&lt;auto-create-addresses&gt;</span>true<span class="nt">&lt;/auto-create-addresses&gt;</span>
+            <span class="nt">&lt;auto-create-jms-queues&gt;</span>true<span class="nt">&lt;/auto-create-jms-queues&gt;</span>
+            <span class="nt">&lt;auto-create-jms-topics&gt;</span>true<span class="nt">&lt;/auto-create-jms-topics&gt;</span>
+        <span class="nt">&lt;/address-setting&gt;</span>
+    <span class="nt">&lt;/address-settings&gt;</span>
+<span class="nt">&lt;/core&gt;</span>
+<span class="nt">&lt;/configuration&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="8">
+<li><p>Service configuration: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">vim</span> <span class="pre">/etc/systemd/system/broker1.service</span></code></p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">Description</span><span class="o">=</span>ActiveMQ-Broker
+<span class="nv">After</span><span class="o">=</span>network.target
+
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">User</span><span class="o">=</span>artemis
+<span class="nv">WorkingDirectory</span><span class="o">=</span>/opt/broker/broker1
+<span class="nv">ExecStart</span><span class="o">=</span>/opt/broker/broker1/bin/artemis run
+
+
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="9">
+<li><p>Enable the service</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl daemon-reload
+sudo systemctl <span class="nb">enable</span> broker1
+sudo systemctl start broker1
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>Configuration of Artemis</strong></p>
+<p>Add the following values to your Artemis config:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">spring</span><span class="p">:</span>
+    <span class="nt">websocket</span><span class="p">:</span>
+        <span class="nt">broker</span><span class="p">:</span>
+            <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">USERNAME</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PASSWORD</span>
+            <span class="nt">addresses</span><span class="p">:</span> <span class="s">&quot;localhost:61613&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">USERNAME</span></code> and <code class="docutils literal notranslate"><span class="pre">PASSWORD</span></code> are the values used in step 5. Replace localhost if the broker runs on a separate machine.</p>
+</div>
+<div class="section" id="file-system">
+<h2>File system<a class="headerlink" href="#file-system" title="Permalink to this headline">¶</a></h2>
+<p>The last (and also easiest) part to configure is the file system:
+You have to provide a folder that is shared between all instances of the application server (e.g. by using NFS).</p>
+<p>You then have to set the following values in the application config:</p>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">repo-clone-path</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_repo_basepath</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">/repos/</span>
+    <span class="nt">repo-download-clone-path</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_repo_basepath</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">/repos-download/</span>
+    <span class="nt">file-upload-path</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_repo_basepath</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">/uploads</span>
+    <span class="nt">submission-export-path</span><span class="p">:</span> <span class="p p-Indicator">{{</span> <span class="nv">artemis_repo_basepath</span> <span class="p p-Indicator">}}</span><span class="l l-Scalar l-Scalar-Plain">/exports</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Where <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">artemis_repo_basepath</span> <span class="pre">}}</span></code> is the path to the shared folder</p>
+<p>The file system stores (as its names suggests) files, these are e.g. submissions to file upload exercises, repositories that are checked out for the online editor, course icons, etc.</p>
+</div>
+<div class="section" id="scheduling">
+<h2>Scheduling<a class="headerlink" href="#scheduling" title="Permalink to this headline">¶</a></h2>
+<p>Artemis uses scheduled tasks in various scenarios: e.g. to lock repositories on due date, clean up unused resources, etc.
+As we now run multiple instances of Artemis, we have to ensure that the scheduled tasks are not executed multiple times.
+Artemis uses to approaches for this:</p>
+<ol class="arabic simple">
+<li><p>Tasks for quizzes (e.g. evaluation once the quiz is due) are automatically distributed (using Hazelcast)</p></li>
+<li><p>Tasks for other exercises are only scheduled on one instance:</p></li>
+</ol>
+<p>You must add the <code class="docutils literal notranslate"><span class="pre">Scheduling</span></code> profile to <strong>exactly one</strong> instance of your cluster. This instance will then perform scheduled tasks whereas the other instances will not.</p>
+</div>
+<div class="section" id="nginx-configuration">
+<h2>nginx configuration<a class="headerlink" href="#nginx-configuration" title="Permalink to this headline">¶</a></h2>
+<p>You have to change the nginx configuration (of Artemis) to ensure that the load is distributed between all instances.
+This can be done by defining an upstream (containing all instances) and forwarding all requests to this upstream.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>upstream artemis <span class="o">{</span>
+    server instance1:8080<span class="p">;</span>
+    server instance2:8080<span class="p">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>All instances can now communicate with each other on 3 different layers:</p>
+<ul class="simple">
+<li><p>Database cache</p></li>
+<li><p>WebSockets</p></li>
+<li><p>File system</p></li>
+</ul>
+<p>You can see the state of all connected instances within the registry:</p>
+<p>It relays message between instances:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/registry.png" src="../../../_images/registry.png" />
+</div>
+</div></blockquote>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../programming-exercises/" class="btn btn-neutral float-right" title="Adjustments for programming exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../jenkins-gitlab/" class="btn btn-neutral float-left" title="Setup for Programming Exercises with Jenkins and GitLab" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

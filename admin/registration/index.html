@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>User Registration &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="prev" title="Builds and Dependency Management" href="../../dev/docker/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev/docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>User Registration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/admin/registration.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="user-registration">
+<h1>User Registration<a class="headerlink" href="#user-registration" title="Permalink to this headline">¶</a></h1>
+<p>Artemis supports user registration. It has to be enabled in one <code class="docutils literal notranslate"><span class="pre">application-*.yml</span></code> file and can be customized.</p>
+<p>Example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">user-management</span><span class="p">:</span>
+        <span class="nt">use-external</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">registration</span><span class="p">:</span>
+            <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">allowed-email-pattern</span><span class="p">:</span> <span class="s">&#39;[a-zA-Z0-9_\-\.\+]+@(tum\.de|in\.tum\.de|mytum\.de)&#39;</span>
+            <span class="nt">allowed-email-pattern-readable</span><span class="p">:</span> <span class="s">&#39;@tum.de,</span><span class="nv"> </span><span class="s">@in.tum.de,</span><span class="nv"> </span><span class="s">@mytum.de&#39;</span>
+<span class="nt">spring</span><span class="p">:</span>
+    <span class="nt">mail</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;host&gt;</span>
+        <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+        <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+        <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">smtp</span>
+        <span class="nt">tls</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+        <span class="nt">properties.mail.smtp</span><span class="p">:</span>
+            <span class="nt">auth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">starttls</span><span class="p">:</span>
+                <span class="nt">enable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+            <span class="nt">ssl</span><span class="p">:</span>
+                <span class="nt">trust</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;host&gt;</span>
+<span class="nt">jhipster</span><span class="p">:</span>
+    <span class="nt">mail</span><span class="p">:</span>
+        <span class="nt">base-url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://artemis.ase.in.tum.de</span>
+        <span class="nt">from</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis.in@tum.de</span>
+<span class="nt">management</span><span class="p">:</span>
+    <span class="nt">health</span><span class="p">:</span>
+        <span class="nt">mail</span><span class="p">:</span>
+            <span class="nt">enabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+<p>Users can register a new account on the start page based on the regex defined in <code class="docutils literal notranslate"><span class="pre">allowed-email-pattern</span></code>.
+If no email pattern is defined, any email address can be used.
+Upon registration, users receive an email to activate their account.</p>
+<p>You can find more information on how to configure the email server on the official
+<a class="reference external" href="https://www.jhipster.tech/tips/011_tip_configuring_email_in_jhipster.html">Jhipster</a>
+documentation.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../../dev/docker/" class="btn btn-neutral float-left" title="Builds and Dependency Management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Shibboleth/SAML2 Login &amp; Registration &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Setup Guide for Guided Tutorials in Artemis" href="../guided-tour/" />
+    <link rel="prev" title="Using local user management" href="../use-local-user-management/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Shibboleth/SAML2 Login &amp; Registration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/saml2-shibboleth.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="shibboleth-saml2-login-registration">
+<h1>Shibboleth/SAML2 Login &amp; Registration<a class="headerlink" href="#shibboleth-saml2-login-registration" title="Permalink to this headline">¶</a></h1>
+<p>Artemis supports user login and registration using SAML2 / Shibboleth.
+The SAML2 feature is intended for use with Artemis’ internal user management and primarily serves as a registration mechanism.
+With the help of this feature it is possible to store not only the login, name and email, but also the <strong>student’s matriculation number</strong> directly in the database.
+For each user who registers in the system for the first time, a “normal” artemis user is created and the data is taken from the attributes of the Shibboleth request.</p>
+<ul class="simple">
+<li><p>The feature is activated by the <em>saml2</em> profile.</p></li>
+<li><p>If you use a <strong>reverse proxy</strong>, you have to redirect the following endpoints to the artemis backend: <strong>/login</strong> and <strong>/saml2</strong> .</p></li>
+<li><p>For testing you can use a <a class="reference external" href="https://github.com/kit-sdq/Artemis-SAML2-Test-Docker">preconfigured environment</a>.</p></li>
+</ul>
+<p>If you activate the SAML2 Feature an additional login button will be activated (you can set the text of the button as you like):</p>
+<div class="figure align-center">
+<img alt="SAML2 Login" src="../../_images/SAML2-Login.png" />
+</div>
+<p>The workflow of the SAML2 feature is shown in the following picture:</p>
+<div class="figure align-center">
+<img alt="SAML2 Workflow" src="../../_images/SAML2-Workflow.png" />
+</div>
+<p>The SAML2 library of Spring Boot is used to create a second security filter chain.
+The new (and old) security filter chain is presented in the following figure:</p>
+<div class="figure align-center">
+<img alt="SAML2 Filterchain" src="../../_images/SAML2-Filterchain.png" />
+</div>
+<p>The feature is configured by the application-saml2.yml file.
+You can configure multiple identity providers.
+In addition, the SAML2 feature allows to decide whether a user can obtain a password (see “info.saml2.enable-password”).
+This app password allows to use the connected servies as VCS and CI as usual with the local user credentials.</p>
+<p>You can see the structure of the saml2 configuration in the following:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">saml2</span><span class="p">:</span>
+        <span class="c1"># Define the patterns used when generating users. SAML2 Attributes can be substituted by surrounding them with</span>
+        <span class="c1"># curly brackets. E.g. username: &#39;{user_attribute}&#39;. Missing attributes get replaced with an empty string.</span>
+        <span class="c1"># This enables definition of alternative attribute keys when using multiple IdPs. E.g. username: &#39;{uid}{user_id}&#39;.</span>
+        <span class="c1"># User template pattern:</span>
+        <span class="nt">username-pattern</span><span class="p">:</span> <span class="s">&#39;{first_name}_{last_name}&#39;</span>
+        <span class="nt">first-name-pattern</span><span class="p">:</span> <span class="s">&#39;{first_name}&#39;</span>
+        <span class="nt">last-name-pattern</span><span class="p">:</span> <span class="s">&#39;{last_name}&#39;</span>
+        <span class="nt">email-pattern</span><span class="p">:</span> <span class="s">&#39;{email}&#39;</span>
+        <span class="nt">registration-number-pattern</span><span class="p">:</span> <span class="s">&#39;{uid}&#39;</span>
+        <span class="nt">lang-key-pattern</span><span class="p">:</span> <span class="s">&#39;en&#39;</span> <span class="c1"># can be a pattern or fixed to en/de</span>
+        <span class="c1"># A list of identity provides (IdP). Metadata location can be a local path (or classpath) or url.</span>
+        <span class="c1"># If your IdP does not publish its metadata you can generate it here: https://www.samltool.com/idp_metadata.php</span>
+        <span class="nt">identity-providers</span><span class="p">:</span>
+                <span class="c1">#- metadata: https://idp_host/.../metadata</span>
+                <span class="c1">#  registration-id: IdPName</span>
+                <span class="c1">#  entity-id: artemis</span>
+                <span class="c1">#  cert-file: # path-to-cert (optional) Set this path to the Certificate for encryption/signing or leave it blank</span>
+                <span class="c1">#  key-file: # path-to-key (optional) Set this path to the Key for encryption/signing or leave it blank (must be a PKCS#8 file!)</span>
+                <span class="c1"># Multiple IdPs can be configured</span>
+                <span class="c1"># - metadata: &lt;URL&gt;</span>
+                <span class="c1">#   registrationid: &lt;id&gt;</span>
+                <span class="c1">#   entityid: &lt;id&gt;</span>
+
+<span class="c1"># String used for the SAML2 login button. E.g. &#39;Shibboleth Login&#39;</span>
+<span class="nt">info.saml2.button-label</span><span class="p">:</span> <span class="s">&#39;SAML2</span><span class="nv"> </span><span class="s">Login&#39;</span>
+<span class="c1"># Sends a e-mail to the new user with a link to set the Artemis password. This password allows login to Artemis and its</span>
+<span class="c1"># services such as GitLab and Jenkins. This allows the users to use password-based Git workflows.</span>
+<span class="c1"># Enabled the password reset function in Artemis.</span>
+<span class="nt">info.saml2.enable-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../guided-tour/" class="btn btn-neutral float-right" title="Setup Guide for Guided Tutorials in Artemis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../use-local-user-management/" class="btn btn-neutral float-left" title="Using local user management" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Test Servers &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Builds and Dependency Management" href="../docker/" />
+    <link rel="prev" title="Setup Guide for Guided Tutorials in Artemis" href="../guided-tour/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Test Servers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#test-server-1-3">Test Server 1-3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-server-5">Test Server 5</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Test Servers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/testservers.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="test-servers">
+<span id="testservers"></span><h1>Test Servers<a class="headerlink" href="#test-servers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="test-server-1-3">
+<h2>Test Server 1-3<a class="headerlink" href="#test-server-1-3" title="Permalink to this headline">¶</a></h2>
+<p>Deployment via Bamboo. Only for branches of the <code class="docutils literal notranslate"><span class="pre">ls1intum/Artemis</span></code> repository, no forks.
+Guide available in the Artemis Developer Confluence Space: <a class="reference external" href="https://confluence.ase.in.tum.de/display/Artemis/Deploying+changes+to+test+server">Deploying changes to test server</a>.</p>
+</div>
+<div class="section" id="test-server-5">
+<h2>Test Server 5<a class="headerlink" href="#test-server-5" title="Permalink to this headline">¶</a></h2>
+<p>Pull requests on GitHub can be deployed to <a class="reference external" href="https://artemistest5.ase.in.tum.de">TS5</a>, including forks.
+To invoke a deployment, you need to be part of the <cite>ls1intum</cite> GitHub organization.</p>
+<p>Start the deployment using the <a class="reference external" href="https://github.com/ls1intum/Artemis/actions?query=workflow%3A%22Testserver+Deployment%22">Test Server Deployment Workflow</a>.
+(Refer to the <a class="reference external" href="https://docs.github.com/en/free-pro-team&#64;latest/actions/managing-workflow-runs/manually-running-a-workflow">GitHub documentation “Manually running a workflow”</a>.)
+Supply the pull request number to initiate the deployment (e.g. <code class="docutils literal notranslate"><span class="pre">42</span></code> for PR #42).
+TS5 is locked to a pull request using the <a class="reference external" href="https://github.com/ls1intum/Artemis/pulls?q=is%3Aopen+is%3Apr+label%3Alock%3Aartemistest5">lock:artemistest5</a> label.
+The workflow applies the lock label automatically on deployment.
+Remove the label from the PR once the test server is free to use by other developers.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../docker/" class="btn btn-neutral float-right" title="Builds and Dependency Management" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../guided-tour/" class="btn btn-neutral float-left" title="Setup Guide for Guided Tutorials in Artemis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

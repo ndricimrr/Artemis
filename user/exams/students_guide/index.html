@@ -1,0 +1,710 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Students’ Guide &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Setup Guide" href="../../../dev/setup/" />
+    <link rel="prev" title="Instructors’ Guide" href="../instructors_guide/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../exercises/">Exercises</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../exam_mode/">Exam Mode</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../instructors_guide/">Instructors’ Guide</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Students’ Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-information">General Information</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#offline-mode">Offline Mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#suggestions">Suggestions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#participating-in-the-artemis-online-exam">Participating in the Artemis Online Exam</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-the-exam">Accessing the Exam</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#welcome-screen">Welcome Screen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exam-conduction">Exam Conduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#participating-in-quiz-exercises">Participating in Quiz Exercises</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#participating-in-text-exercises">Participating in Text Exercises</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#participating-in-modeling-exercises">Participating in Modeling Exercises</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#participating-in-programming-exercises">Participating in Programming Exercises</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#end-screen">End Screen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../exam_mode/">Exam Mode</a> &raquo;</li>
+        
+      <li>Students’ Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/user/exams/students_guide.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="students-guide">
+<h1>Students’ Guide<a class="headerlink" href="#students-guide" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="content-of-this-document">
+<p class="topic-title">Content of this document</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#general-information" id="id13">General Information</a></p>
+<ul>
+<li><p><a class="reference internal" href="#prerequisites" id="id14">Prerequisites</a></p></li>
+<li><p><a class="reference internal" href="#offline-mode" id="id15">Offline Mode</a></p></li>
+<li><p><a class="reference internal" href="#suggestions" id="id16">Suggestions</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#participating-in-the-artemis-online-exam" id="id17">Participating in the Artemis Online Exam</a></p>
+<ul>
+<li><p><a class="reference internal" href="#accessing-the-exam" id="id18">Accessing the Exam</a></p></li>
+<li><p><a class="reference internal" href="#welcome-screen" id="id19">Welcome Screen</a></p></li>
+<li><p><a class="reference internal" href="#exam-conduction" id="id20">Exam Conduction</a></p></li>
+<li><p><a class="reference internal" href="#participating-in-quiz-exercises" id="id21">Participating in Quiz Exercises</a></p></li>
+<li><p><a class="reference internal" href="#participating-in-text-exercises" id="id22">Participating in Text Exercises</a></p></li>
+<li><p><a class="reference internal" href="#participating-in-modeling-exercises" id="id23">Participating in Modeling Exercises</a></p></li>
+<li><p><a class="reference internal" href="#participating-in-programming-exercises" id="id24">Participating in Programming Exercises</a></p></li>
+<li><p><a class="reference internal" href="#end-screen" id="id25">End Screen</a></p></li>
+<li><p><a class="reference internal" href="#summary" id="id26">Summary</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="general-information">
+<h2><a class="toc-backref" href="#id13">General Information</a><a class="headerlink" href="#general-information" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prerequisites">
+<h3><a class="toc-backref" href="#id14">Prerequisites</a><a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>Stable internet connection</strong></p>
+<blockquote>
+<div><p><strong>Recommendation:</strong> Use a LAN connection if possible.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Browser</strong></p>
+<blockquote>
+<div><p><strong>Recommendation:</strong> Chromium (based), e.g. Google Chrome, newest version.</p>
+</div></blockquote>
+</li>
+<li><p>The following prerequisites are only required if your exam contains programming exercises:</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Java IDE with JDK 16</strong></p>
+<blockquote>
+<div><p><strong>Recommendation:</strong> Eclipse IDE 2021‑03.</p>
+</div></blockquote>
+</li>
+<li><p><strong>Git Client</strong></p>
+<blockquote>
+<div><p><strong>Recommendation:</strong> SourceTree</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="offline-mode">
+<h3><a class="toc-backref" href="#id15">Offline Mode</a><a class="headerlink" href="#offline-mode" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>The exam mode in Artemis tolerates issues with the Internet connection.</p></li>
+<li><p>If you lose your connection, you can continue working on text-, quiz- and modeling exercises, but you might get warnings that your solutions cannot be saved.</p></li>
+<li><p>If your Internet connection recovers, Artemis will save your solution.</p></li>
+<li><p>Artemis tries to save your solution every 30 seconds, when you navigate between exercises, and when you click <img alt="save" src="../../../_images/save.png" /> or <img alt="save_continue" src="../../../_images/save_continue.png" />.</p></li>
+<li><p>Programming exercises have 2 modes.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p><strong>Online code editor:</strong> can only be used when you are online.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You have to click on <img alt="submit" src="../../../_images/submit.png" />! Otherwise your solution will <em>not</em> be pushed to the VC server and no build will be triggered.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p><strong>Local IDE:</strong> you only need to be online when you clone the repository and when you push your commits (i.e. submit your solution).</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>At the end of the online exam, you must be online within a given <code class="docutils literal notranslate"><span class="pre">grace</span> <span class="pre">period</span></code> and submit your exam, otherwise it will not be graded.</p></li>
+</ul>
+</div>
+<div class="section" id="suggestions">
+<h3><a class="toc-backref" href="#id16">Suggestions</a><a class="headerlink" href="#suggestions" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Do <strong>NOT</strong> reload the browser</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If you reload the browser, the <a class="reference internal" href="#welcome-screen">Welcome Screen</a> screen opens and you must enter your name and confirm the checkbox again.</p></li>
+<li><p>You should only reload if an error occurs that cannot be recovered otherwise!</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Participate in <strong>ONE</strong> browser window!</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Working in multiple browser windows at the same time is <strong>not</strong> allowed!</p></li>
+<li><p>It will lead to synchronization issues and is seen as suspicious behaviour that can be flagged as cheating.</p></li>
+</ul>
+<div class="figure align-center" id="id1">
+<img alt="Reload" src="../../../_images/reload.png" />
+<p class="caption"><span class="caption-text">Do not reload, you will receive a warning</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="participating-in-the-artemis-online-exam">
+<span id="participation-guide"></span><h2><a class="toc-backref" href="#id17">Participating in the Artemis Online Exam</a><a class="headerlink" href="#participating-in-the-artemis-online-exam" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accessing-the-exam">
+<h3><a class="toc-backref" href="#id18">Accessing the Exam</a><a class="headerlink" href="#accessing-the-exam" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Log in to Artemis with your account credentials.</p></li>
+<li><p>The current exam should be displayed at the top of the <em>Course Overview</em> screen.</p></li>
+<li><p>You can also access the exam by navigating to the course and then to the exams.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The exam will become visible shortly before the working time starts.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id2">
+<img alt="Access Exam" src="../../../_images/access_exam.png" />
+<p class="caption"><span class="caption-text">Access Exam</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="welcome-screen">
+<h3><a class="toc-backref" href="#id19">Welcome Screen</a><a class="headerlink" href="#welcome-screen" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>The welcome screen gives you an overview of all the important information you need about the exam.</p></li>
+<li><p>Carefully read through the instructions.</p></li>
+<li><p>Once you have read them, confirm that you will follow the rules, sign with your full name and click <img alt="start" src="../../../_images/start.png" />.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your full name represents your signature. You can find your full name as registered on Artemis below the input field.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>After you confirm, if the exam working time has started, the <a class="reference internal" href="#exam-conduction">Exam Conduction</a> screen will automatically appear.</p></li>
+<li><p>Otherwise, you must wait until the exam begins. A popup will appear which will notify you how much time is left before the planned start.</p></li>
+</ul>
+<div class="figure align-center" id="id3">
+<img alt="Welcome Screen" src="../../../_images/welcome_screen.png" />
+<p class="caption"><span class="caption-text">Welcome Screen, waiting for exam start</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="exam-conduction">
+<h3><a class="toc-backref" href="#id20">Exam Conduction</a><a class="headerlink" href="#exam-conduction" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Once the exam working time starts and you have confirmed your participation, the <em>Conduction</em> screen will appear.</p></li>
+<li><p>On the header, you will find the <em>Exam Navigation Bar</em>. You can use this bar to navigate between different exercises. For each exercise an icon will display your current status.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>When there are unsaved <strong>or</strong> unsubmitted changes, the exercise representation on the navigation bar becomes <img alt="unsaved" src="../../../_images/unsaved_changes.png" />.</p></li>
+<li><p>When your changes are saved <strong>and</strong> submitted, the exercise representation on the navigation bar becomes <img alt="saved" src="../../../_images/saved_changes.png" />.</p></li>
+<li><p><img alt="started" src="../../../_images/started.png" /> indicates that you have not started this exercise.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>You can also navigate through the exercises when you are done with one by clicking <img alt="save_continue" src="../../../_images/save_continue.png" />. This action will save and submit your changes and move to the next exercise.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For programming exercises, you must manually press <img alt="submit" src="../../../_images/submit.png" /> otherwise your solution will <strong>not</strong> be counted!</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>On the header, you will also find the <img alt="hand_in_early" src="../../../_images/hand_in_early.png" /> button. If you press this, you will be sent to the exam <a class="reference internal" href="#end-screen">End Screen</a>.</p></li>
+<li><p>The <em>time left</em> until the end of the exam is also shown next to the action buttons, or below, depending on your screen size.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the time is about to run out, the background of the timer will turn yellow to warn you.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id4">
+<img alt="Exam Navigation" src="../../../_images/exam_navigation.png" />
+<p class="caption"><span class="caption-text">Exam Navigation Bar</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="participating-in-quiz-exercises">
+<h3><a class="toc-backref" href="#id21">Participating in Quiz Exercises</a><a class="headerlink" href="#participating-in-quiz-exercises" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Various question types can be included in quiz exam exercises. These are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Multiple choice questions</p></li>
+<li><p>Short Answer questions</p></li>
+<li><p>Drag and Drop questions</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>All questions are listed in the main screen below one another.</p></li>
+<li><p>To navigate between them you can either scroll or use the <code class="docutils literal notranslate"><span class="pre">question</span> <span class="pre">overview</span></code> on the left. When you click on one of the question representations, your view will automatically scroll to the respective question.</p></li>
+<li><p>To submit your solution, simply press <img alt="save_continue" src="../../../_images/save_continue.png" />.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Your submission will automatically be saved every 30 seconds.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id5">
+<img alt="Participating in Quiz Exercises" src="../../../_images/quiz_exercises.png" />
+<p class="caption"><span class="caption-text">Participating in Quiz Exercises</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="participating-in-text-exercises">
+<h3><a class="toc-backref" href="#id22">Participating in Text Exercises</a><a class="headerlink" href="#participating-in-text-exercises" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>The text exercise view is divided into two sections, the text editor, and the problem statement. The problem statement is docked to the right.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On small screens, the problem statement is shown above the text editor.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>If you want to focus only on the text editor, you can collapse the problem statement by pressing on <img alt="right_arrow" src="../../../_images/right_arrow.png" />. This can be reverted by pressing the arrow again.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also choose to resize the problem statement by dragging the outline box <img alt="outline_box" src="../../../_images/outline_box.png" />.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>Within the editor you can type out your solution. The editor will automatically track your number of words and number of characters.</p></li>
+</ul>
+<div class="figure align-center" id="id6">
+<img alt="Participating in Text Exercises" src="../../../_images/text_exercises.png" />
+<p class="caption"><span class="caption-text">Participating in Text Exercises</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="participating-in-modeling-exercises">
+<h3><a class="toc-backref" href="#id23">Participating in Modeling Exercises</a><a class="headerlink" href="#participating-in-modeling-exercises" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>The modeling exercise view is divided into two sections, the modeling editor, and the problem statement. The problem statement is docked to the right.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On small screens, the problem statement is shown above the modeling editor.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>If you want to focus only on the modeling editor, you can collapse the problem statement by pressing on <img alt="right_arrow" src="../../../_images/right_arrow.png" />. This can be reverted by pressing the arrow again.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also choose to resize the problem statement by dragging the outline box <img alt="outline_box" src="../../../_images/outline_box.png" />.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>Within the editor you can model your solution. Depending on the diagram type, you will find the available elements on the right side of the editor. Simply drag and drop them into the editing field.</p></li>
+<li><p>When you click on a dropped element, you can configure it by setting it’s <code class="docutils literal notranslate"><span class="pre">name</span></code>, it’s <code class="docutils literal notranslate"><span class="pre">attributes</span></code>, <code class="docutils literal notranslate"><span class="pre">methods</span></code> etc.</p></li>
+<li><p>To connect elements you can simply drag an element’s edges to another element. The editor will then automatically connect those two.</p></li>
+<li><p>If you are unclear about how to use the modeling editor, you can click on <img alt="help" src="../../../_images/help.png" />. It will provide further information about how to use the modeling editor.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you need more space, you can work in fullscreen by clicking on <img alt="fullscreen" src="../../../_images/fullscreen.png" />. This mode will use your whole screen for the modeling exercise thereby giving you more space to model your solution. To exit the fullscreen mode simply click <img alt="exit_fullscreen" src="../../../_images/exit_fullscreen.png" />.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id7">
+<img alt="Participating in Modeling Exercises" src="../../../_images/modeling_exercises.png" />
+<p class="caption"><span class="caption-text">Participating in Modeling Exercises</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="participating-in-programming-exercises">
+<h3><a class="toc-backref" href="#id24">Participating in Programming Exercises</a><a class="headerlink" href="#participating-in-programming-exercises" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Depending on your exam, programming exercises can come in three forms:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Online Code Editor + support for local IDE</p></li>
+<li><p>Online Code Editor</p></li>
+<li><p>Support for local IDE</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>If your exercise allows the use of the code editor your screen will be divided into three sections, from left to right:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The file browser</p></li>
+<li><p>The code Editor</p></li>
+<li><p>The instructions</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>The file browser displays the file structure of the assignment. You can access any file within the assignment. Artemis will display the selected file’s content in the code editor where you can edit it.</p>
+<blockquote>
+<div><ul>
+<li><p>You can add new files and directories using the <img alt="add_file" src="../../../_images/add_file.png" />  and <img alt="add_folder" src="../../../_images/add_folder.png" /> buttons.</p></li>
+<li><p>You also have the ability to rename <img alt="rename" src="../../../_images/rename_file.png" /> and delete <img alt="delete" src="../../../_images/delete_file.png" /> files and folders, therefore <strong>caution</strong> is advised.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you accidentally delete or remove a file, you can use <img alt="refresh_files" src="../../../_images/refresh_files.png" />, to load the last saved version from the server.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>The code editor allows you to edit the content of specific files. It shows the line numbers and will also annotate the appropriate line, if a compilation error occurs.</p></li>
+<li><p>The instructions are docked to the right.</p></li>
+<li><p>If you want to focus only on the code editor, you can collapse the instructions by pressing on the <img alt="right_arrow" src="../../../_images/right_arrow.png" />. This can be reverted by pressing the arrow again. Similarly, if you want to collapse the file browser, you can press the <img alt="left_arrow" src="../../../_images/left_arrow.png" /> above the file browser.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also choose to resize any of the three sections by dragging the <img alt="outline_box" src="../../../_images/outline_box.png" />.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>When you press <img alt="save" src="../../../_images/save.png" />, your files are saved on the Artemis server. However, you must press <img alt="submit" src="../../../_images/submit.png" /> for your solution to be counted!</p></li>
+<li><p>When you press <img alt="submit" src="../../../_images/submit.png" />, your changes are pushed to the version control (VC) server and a build is started on the continuous integration (CI) server. This is indicated by the results changing from <img alt="no_results_found" src="../../../_images/no_results_found.png" /> to <img alt="building_and_testing" src="../../../_images/building_and_testing.png" />.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is no auto-submit!</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id8">
+<img alt="Participating in Programming Exercises" src="../../../_images/programming_exercises.png" />
+<p class="caption"><span class="caption-text">Participating in Programming Exercises with the online code editor and local IDE enabled</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+<ul>
+<li><p>If your exercise allows the use of the local IDE you will have access to the button <img alt="clone_repo" src="../../../_images/clone_repo.png" />.</p></li>
+<li><p>When you click it you can choose to clone the exercise via <code class="docutils literal notranslate"><span class="pre">HTTPS</span></code> or <code class="docutils literal notranslate"><span class="pre">SSH</span></code>, if you have configured your private key.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must link a public key to your account in advance if you want to use <code class="docutils literal notranslate"><span class="pre">SSH</span></code>.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>To work offline follow these steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Clone the Exercise</p></li>
+<li><p>Import the project in your IDE</p></li>
+<li><p>Work on the code</p></li>
+<li><p>Commit and push the code. A push is equivalent to pressing the <img alt="submit" src="../../../_images/submit.png" /> button.</p></li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id9">
+<img alt="Clone Repository" src="../../../_images/clone_repository.png" />
+<p class="caption"><span class="caption-text">Clone the Repository</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You are responsible for pushing/submitting your code. Your instructors <strong>cannot</strong> help you if you have saved, but did not submit.</p>
+</div>
+</div></blockquote>
+</div>
+</div>
+<ul>
+<li><p>Your instructors can decide to limit the real-time feedback in programming exercises during the online exam.</p></li>
+<li><p>In that case, you will only see if your code compiles or not:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><img alt="build_failed" src="../../../_images/build_failed.png" /> means that your code does <strong>not</strong> compile!</p></li>
+<li><p><img alt="build_passed" src="../../../_images/hidden.png" /> means that your code compiles but provides no further information about your final score.</p></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Edit a programming exercise <strong>EITHER</strong> in the online editor <strong>OR</strong> in your local IDE! Otherwise, conflicts can occur that are hard to resolve.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="end-screen">
+<h3><a class="toc-backref" href="#id25">End Screen</a><a class="headerlink" href="#end-screen" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>When you are finished with the exercises, or the time runs out you navigate to the <em>End Screen</em>.</p></li>
+<li><p>This is done either by clicking on <img alt="hand_in_early" src="../../../_images/hand_in_early.png" /> or automatically when the exam conduction time is over.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you navigated to this screen via <img alt="hand_in_early" src="../../../_images/hand_in_early.png" />, you have the option to return to the conduction by clicking on <img alt="continue" src="../../../_images/continue.png" />.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>In this screen you should confirm that you followed all the rules and sign with your full name, similar to the <a class="reference internal" href="#welcome-screen">Welcome Screen</a>.</p></li>
+<li><p>You are given an additional <code class="docutils literal notranslate"><span class="pre">grace</span> <span class="pre">period</span></code> to submit the exam after the conduction is over. This additional time is added to the timer shown on the top right.</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Your exam will not be graded, should you fail to submit!</p>
+</div>
+</div></blockquote>
+</li>
+<li><p>Once you submit your exam, no further changes can be made to any exercise.</p></li>
+</ul>
+<div class="figure align-center" id="id10">
+<img alt="End Screen" src="../../../_images/end_screen.png" />
+<p class="caption"><span class="caption-text">End Screen after Early Hand in</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="summary">
+<span id="summary-guide"></span><h3><a class="toc-backref" href="#id26">Summary</a><a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>After you hand in, you can view the summary of your exam.</p></li>
+<li><p>You always have access to the summary. You can find it by following the steps displayed in: <a class="reference internal" href="#accessing-the-exam">Accessing the Exam</a>.</p></li>
+<li><p>Further you have the opportunity to export the summary as a PDF file by clicking on <img alt="export_pdf" src="../../../_images/export_pdf.png" />.</p></li>
+<li><p>The summary contains an aggregated view of all your submissions. For programming exercises, it also contains the latest commit hash and repository URL so you can review your code.</p></li>
+</ul>
+<div class="figure align-center" id="id11">
+<img alt="Summary" src="../../../_images/summary1.png" />
+<p class="caption"><span class="caption-text">Summary before the results are published</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</div>
+<ul>
+<li><p>Once the results have been published, you can view your score in the summary.</p></li>
+<li><p>Additionally, if within the student review period, you have the option to complain about manual assessments made. To do this, simply click on <img alt="complain" src="../../../_images/complain.png" /> and explain your rationale.</p></li>
+<li><p>A second assessor, different from the original one will have the opportunity to review your complaint and respond to it.</p></li>
+<li><p>The complaint response will become visible to you as soon as it has been assessed.</p></li>
+<li><p>Again, you can export the summary including your score as a PDF file by clicking on <img alt="export_pdf" src="../../../_images/export_pdf.png" />. The PDF will also contain any complaints and complaint assessments.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The results will automatically be updated, if your complaint was successful.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="figure align-center" id="id12">
+<img alt="Complaint" src="../../../_images/complaint.png" />
+<p class="caption"><span class="caption-text">Complaining about the Assessment of a Text Exercise</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../../dev/setup/" class="btn btn-neutral float-right" title="Setup Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../instructors_guide/" class="btn btn-neutral float-left" title="Instructors’ Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

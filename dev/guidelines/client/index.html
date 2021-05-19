@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Client &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Database Relationships" href="../database/" />
+    <link rel="prev" title="Server" href="../server/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../">Coding and design guidelines</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../server/">Server</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general">0. General</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#names">1. Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#components">2. Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#types">3. Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#null-and-undefined">4. <code class="docutils literal notranslate"><span class="pre">null</span></code> and <code class="docutils literal notranslate"><span class="pre">undefined</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#general-assumptions">5. General Assumptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments">6. Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strings">7. Strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#style">8. Style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing">9. Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preventing-memory-leaks">10. Preventing Memory Leaks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-memory-leaks">What are memory leaks?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-common-reasons-for-memory-leaks">What are common reasons for memory leaks?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-ways-to-identify-memory-leaks">What are ways to identify memory leaks?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#defining-routes-and-breadcrumbs">11. Defining Routes and Breadcrumbs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strict-template-check">12. Strict Template Check</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#use-artemistranslatepipe-instead-of-translatepipe">Use ArtemisTranslatePipe instead of TranslatePipe</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#use-artemistimeagopipe-instead-of-timeagopipe">Use ArtemisTimeAgoPipe instead of TimeAgoPipe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../database/">Database Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code-review/">Code Review</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Coding and design guidelines</a> &raquo;</li>
+        
+      <li>Client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/guidelines/client.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="client">
+<h1>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h1>
+<p>WORK IN PROGRESS</p>
+<div class="section" id="general">
+<h2>0. General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>The Artemis client is an Angular project. Keep <a class="reference external" href="https://angular.io/guide/styleguide">https://angular.io/guide/styleguide</a> in mind.</p>
+<p>Some general aspects:</p>
+<ul class="simple">
+<li><p>Never invoke methods from the html template. The automatic change tracking in Angular will kill the application performance</p></li>
+<li><p>The Artemis client uses lazy loading to keep the initial bundle size below 2 MB.</p></li>
+<li><p>Code quality and test coverage are important. Try to reuse code and avoid code duplication. Write meaningful tests!</p></li>
+</ul>
+</div>
+<div class="section" id="names">
+<h2>1. Names<a class="headerlink" href="#names" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Use PascalCase for type names.</p></li>
+<li><p>Do not use “I” as a prefix for interface names.</p></li>
+<li><p>Use PascalCase for enum values.</p></li>
+<li><p>Use camelCase for function names.</p></li>
+<li><p>Use camelCase for property names and local variables.</p></li>
+<li><p>Do not use “_” as a prefix for private properties.</p></li>
+<li><p>Use whole words in names when possible.</p></li>
+</ol>
+</div>
+<div class="section" id="components">
+<h2>2. Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>1 file per logical component (e.g. parser, scanner, emitter, checker).</p></li>
+<li><p>Do not add new files. :)</p></li>
+<li><p>files with “.generated.*” suffix are auto-generated, do not hand-edit them.</p></li>
+</ol>
+</div>
+<div class="section" id="types">
+<h2>3. Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Do not export types/functions unless you need to share it across multiple components.</p></li>
+<li><p>Do not introduce new types/values to the global namespace.</p></li>
+<li><p>Shared types should be defined in ‘types.ts’.</p></li>
+<li><p>Within a file, type definitions should come first.</p></li>
+</ol>
+</div>
+<div class="section" id="null-and-undefined">
+<h2>4. <code class="docutils literal notranslate"><span class="pre">null</span></code> and <code class="docutils literal notranslate"><span class="pre">undefined</span></code><a class="headerlink" href="#null-and-undefined" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Use <strong>undefined</strong>. Do not use null.</p></li>
+</ol>
+</div>
+<div class="section" id="general-assumptions">
+<h2>5. General Assumptions<a class="headerlink" href="#general-assumptions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Consider objects like Nodes, Symbols, etc. as immutable outside the component that created them. Do not change them.</p></li>
+<li><p>Consider arrays as immutable by default after creation.</p></li>
+</ol>
+</div>
+<div class="section" id="comments">
+<h2>6. Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Use JSDoc style comments for functions, interfaces, enums, and classes.</p></li>
+</ol>
+</div>
+<div class="section" id="strings">
+<h2>7. Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Use single quotes for strings.</p></li>
+<li><p>All strings visible to the user need to be localized (make an entry in the corresponding <code class="docutils literal notranslate"><span class="pre">*.json</span></code> file).</p></li>
+</ol>
+</div>
+<div class="section" id="style">
+<h2>8. Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Use arrow functions over anonymous function expressions.</p></li>
+<li><dl class="simple">
+<dt>Always surround arrow function parameters.</dt><dd><p>For example, <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span></code> is wrong but the following are correct:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">(x)</span> <span class="pre">=&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">x</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">(x,y)</span> <span class="pre">=&gt;</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;T&gt;(x:</span> <span class="pre">T,</span> <span class="pre">y:</span> <span class="pre">T)</span> <span class="pre">=&gt;</span> <span class="pre">x</span> <span class="pre">===</span> <span class="pre">y</span></code></p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><p>Always surround loop and conditional bodies with curly braces. Statements on the same line are allowed to omit braces.</p></li>
+<li><p>Open curly braces always go on the same line as whatever necessitates them.</p></li>
+<li><dl class="simple">
+<dt>Parenthesized constructs should have no surrounding whitespace.</dt><dd><p>A single space follows commas, colons, and semicolons in those constructs. For example:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">(var</span> <span class="pre">i</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">n</span> <span class="pre">=</span> <span class="pre">str.length;</span> <span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">10;</span> <span class="pre">i++)</span> <span class="pre">{</span> <span class="pre">}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(x</span> <span class="pre">&lt;</span> <span class="pre">10)</span> <span class="pre">{</span> <span class="pre">}</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">f(x:</span> <span class="pre">number,</span> <span class="pre">y:</span> <span class="pre">string):</span> <span class="pre">void</span> <span class="pre">{</span> <span class="pre">}</span></code></p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><p>Use a single declaration per variable statement (i.e. use <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">1;</span> <span class="pre">var</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">2;</span></code> over <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">1,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">2;</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">else</span></code> goes on the same line from the closing curly brace.</p></li>
+<li><p>Use 4 spaces per indentation.</p></li>
+</ol>
+<p>We use <code class="docutils literal notranslate"><span class="pre">prettier</span></code> to style code automatically and <code class="docutils literal notranslate"><span class="pre">eslint</span></code> to find additional issues.
+You can find the corresponding commands to invoked those tools in <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</p>
+</div>
+<div class="section" id="testing">
+<h2>9. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p><strong>If you are new to client testing, it is highly recommended that you work through the testing part of the angular tutorial:</strong> <a class="reference external" href="https://angular.io/guide/testing">https://angular.io/guide/testing</a></p>
+<p>We use Jest (<a class="reference external" href="https://jestjs.io/">https://jestjs.io/</a>) as our client testing framework.</p>
+<p>There are different tools available to support client testing. A common combination you can see in our codebase is:</p>
+<ul class="simple">
+<li><p>Sinon (<a class="reference external" href="https://sinonjs.org/">https://sinonjs.org/</a>) for creating test spies, stubs and mocks</p></li>
+<li><p>Chai (<a class="reference external" href="https://www.chaijs.com/">https://www.chaijs.com/</a>) with Sinon Chai (<a class="reference external" href="https://github.com/domenic/sinon-chai">https://github.com/domenic/sinon-chai</a>) for assertions.</p></li>
+<li><p>NgMocks (<a class="reference external" href="https://www.npmjs.com/package/ng-mocks">https://www.npmjs.com/package/ng-mocks</a>) for mocking the dependencies of an angular component.</p></li>
+</ul>
+<p>The most basic test looks similar to this:</p>
+<blockquote>
+<div><div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">sinonChai</span> <span class="nx">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">ComponentFixture</span><span class="p">,</span> <span class="nx">TestBed</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/core/testing&#39;</span><span class="p">;</span>
+
+<span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;SomeComponent&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">someComponentFixture</span>: <span class="kt">ComponentFixture</span><span class="o">&lt;</span><span class="nx">SomeComponent</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">someComponent</span>: <span class="kt">SomeComponent</span><span class="p">;</span>
+
+    <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">TestBed</span><span class="p">.</span><span class="nx">configureTestingModule</span><span class="p">({</span>
+            <span class="nx">imports</span><span class="o">:</span> <span class="p">[],</span>
+            <span class="nx">declarations</span><span class="o">:</span> <span class="p">[</span>
+                <span class="nx">SomeComponent</span><span class="p">,</span>
+                <span class="nx">MockPipe</span><span class="p">(</span><span class="nx">SomePipeUsedInTemplate</span><span class="p">),</span>
+                <span class="nx">MockComponent</span><span class="p">(</span><span class="nx">SomeComponentUsedInTemplate</span><span class="p">),</span>
+                <span class="nx">MockDirective</span><span class="p">(</span><span class="nx">SomeDirectiveUsedInTemplate</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="nx">providers</span><span class="o">:</span> <span class="p">[</span>
+                <span class="nx">MockProvider</span><span class="p">(</span><span class="nx">SomeServiceUsedInComponent</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="nx">schemas</span><span class="o">:</span> <span class="p">[],</span>
+        <span class="p">})</span>
+            <span class="p">.</span><span class="nx">compileComponents</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">someComponentFixture</span> <span class="o">=</span> <span class="nx">TestBed</span><span class="p">.</span><span class="nx">createComponent</span><span class="p">(</span><span class="nx">SomeComponent</span><span class="p">);</span>
+                <span class="nx">someComponent</span> <span class="o">=</span> <span class="nx">someComponentFixture</span><span class="p">.</span><span class="nx">componentInstance</span><span class="p">;</span>
+            <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="nx">afterEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">sinon</span><span class="p">.</span><span class="nx">restore</span><span class="p">();</span>
+    <span class="p">});</span>
+
+    <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should initialize&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">someComponentFixture</span><span class="p">.</span><span class="nx">detectChanges</span><span class="p">();</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">SomeComponent</span><span class="p">).</span><span class="nx">to</span><span class="p">.</span><span class="nx">be</span><span class="p">.</span><span class="nx">ok</span><span class="p">;</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Some guidelines:</p>
+<ol class="arabic">
+<li><p>A component should be tested in isolation without any dependencies if possible. Do not simply import the whole production module. Only import real dependencies if it is essential for the test
+that the real dependency is used. Instead mock pipes, directives and components that the component under test depends upon. A very useful technique is writing stubs for child components: <a class="reference external" href="https://angular.io/guide/testing-components-scenarios#stubbing-unneeded-components">https://angular.io/guide/testing-components-scenarios#stubbing-unneeded-components</a>.
+This has the benefit of being able to test the interaction with the child components.</p>
+<ul class="simple">
+<li><p>Services should be mocked if they simply return some data from the server. However, if the service has some form of logic included (for exampling converting dates to moments),
+and this logic is important for the component, do not mock the service methods, but mock the http requests and responses from the api. This allows us to test the interaction
+of the component with the service and in addition test that the service logic works correctly. A good explanation can be found in the official angular documentation: <a class="reference external" href="https://angular.io/guide/http#testing-http-requests">https://angular.io/guide/http#testing-http-requests</a></p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">HttpClientTestingModule</span><span class="p">,</span> <span class="nx">HttpTestingController</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@angular/common/http/testing&#39;</span><span class="p">;</span>
+<span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;SomeComponent&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">TestBed</span><span class="p">.</span><span class="nx">configureTestingModule</span><span class="p">({</span>
+          <span class="nx">imports</span><span class="o">:</span> <span class="p">[</span><span class="nx">HttpClientTestingModule</span><span class="p">],</span>
+      <span class="p">});</span>
+
+      <span class="p">...</span>
+      <span class="nx">httpMock</span> <span class="o">=</span> <span class="nx">injector</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">HttpTestingController</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">afterEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="p">...</span>
+      <span class="nx">httpMock</span><span class="p">.</span><span class="nx">verify</span><span class="p">();</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should make get request&#39;</span><span class="p">,</span> <span class="nx">fakeAsync</span><span class="p">(</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="nx">returnedFromApi</span> <span class="o">=</span> <span class="p">{</span><span class="nx">some</span><span class="o">:</span> <span class="s1">&#39;data&#39;</span><span class="p">};</span>
+
+      <span class="nx">component</span><span class="p">.</span><span class="nx">callServiceMethod</span><span class="p">()</span>
+          <span class="p">.</span><span class="nx">subscribe</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">expect</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">toEqual</span><span class="p">(</span><span class="nx">returnedFromApi</span><span class="p">));</span>
+
+      <span class="kr">const</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">httpMock</span><span class="p">.</span><span class="nx">expectOne</span><span class="p">({</span> <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;urlThatMethodCalls&#39;</span> <span class="p">});</span>
+      <span class="nx">req</span><span class="p">.</span><span class="nx">flush</span><span class="p">(</span><span class="nx">returnedFromApi</span><span class="p">);</span>
+      <span class="nx">tick</span><span class="p">();</span>
+  <span class="p">}));</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Do not overuse <code class="docutils literal notranslate"><span class="pre">NO_ERRORS_SCHEMA</span></code> (<a class="reference external" href="https://angular.io/guide/testing-components-scenarios#no_errors_schema">https://angular.io/guide/testing-components-scenarios#no_errors_schema</a>).
+This tells angular to ignore the attributes and unrecognized elements, prefer to use component stubs as mentioned above.</p></li>
+<li><p>When using sinon, use sandboxes (<a class="reference external" href="https://sinonjs.org/releases/latest/sandbox/">https://sinonjs.org/releases/latest/sandbox/</a>).
+Sandboxes remove the need to keep track of every fake created, which greatly simplifies cleanup and improves readability.
+Since <code class="docutils literal notranslate"><span class="pre">sinon&#64;5.0.0</span></code>, the sinon object is a default sandbox. Unless you have a very advanced setup or need a special configuration, you probably want to only use that one.</p></li>
+<li><p>Make sure to have at least 80% test coverage. Running <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">test</span> <span class="pre">--coverage</span></code> to create a coverage report. You can also simply run the tests in IntelliJ IDEA with coverage activated.</p></li>
+<li><p>It is preferable to test a component through the interaction of the user with the template. This decouples the test from the concrete implementation used in the component.
+For example if you have a component that loads and displays some data when the user clicks a button, you should query for that button, simulate a click and then assert that the data has been loaded and that the expected
+template changes have occurred.</p></li>
+<li><p>Do not remove the template during tests. The template is a crucial part of a component and should not be removed during test. Do not do this:</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">chai</span> <span class="nx">from</span> <span class="s1">&#39;chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">sinonChai</span> <span class="nx">from</span> <span class="s1">&#39;sinon-chai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="o">*</span> <span class="kr">as</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+
+<span class="nx">chai</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">sinonChai</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">expect</span> <span class="o">=</span> <span class="nx">chai</span><span class="p">.</span><span class="nx">expect</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;SomeComponent&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">someComponentFixture</span>: <span class="kt">ComponentFixture</span><span class="o">&lt;</span><span class="nx">SomeComponent</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">someComponent</span>: <span class="kt">SomeComponent</span><span class="p">;</span>
+
+    <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">TestBed</span><span class="p">.</span><span class="nx">configureTestingModule</span><span class="p">({</span>
+            <span class="nx">imports</span><span class="o">:</span> <span class="p">[],</span>
+            <span class="nx">declarations</span><span class="o">:</span> <span class="p">[</span>
+                <span class="nx">SomeComponent</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="nx">providers</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">],</span>
+            <span class="nx">schemas</span><span class="o">:</span> <span class="p">[],</span>
+        <span class="p">})</span>
+            <span class="p">.</span><span class="nx">overrideTemplate</span><span class="p">(</span><span class="nx">SomeComponent</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1">// DO NOT DO THIS</span>
+            <span class="p">.</span><span class="nx">compileComponents</span><span class="p">()</span>
+            <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="nx">someComponentFixture</span> <span class="o">=</span> <span class="nx">TestBed</span><span class="p">.</span><span class="nx">createComponent</span><span class="p">(</span><span class="nx">SomeComponent</span><span class="p">);</span>
+                <span class="nx">someComponent</span> <span class="o">=</span> <span class="nx">someComponentFixture</span><span class="p">.</span><span class="nx">componentInstance</span><span class="p">;</span>
+            <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="preventing-memory-leaks">
+<h2>10. Preventing Memory Leaks<a class="headerlink" href="#preventing-memory-leaks" title="Permalink to this headline">¶</a></h2>
+<p>It is crucial that you try to prevent memory leaks in both your components and your tests.</p>
+<div class="section" id="what-are-memory-leaks">
+<h3>What are memory leaks?<a class="headerlink" href="#what-are-memory-leaks" title="Permalink to this headline">¶</a></h3>
+<p>A very good explanation that you should definitely read to understand the problem: <a class="reference external" href="https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/">https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/</a></p>
+<p>In essence:</p>
+<ul class="simple">
+<li><p>JS is a garbage collected language</p></li>
+<li><p>Modern garbage collectors improve on this algorithm in different ways, but the essence is the same: <strong>reachable pieces of memory are marked as such and the rest is considered garbage.</strong></p></li>
+<li><p>Unwanted references are references to pieces of memory that the developer knows he or she won’t be needing
+anymore but that for some reason are kept inside the tree of an active root. <strong>In the context of JavaScript, unwanted references are variables kept somewhere in the code that will not be used anymore and point to a piece of memory that could otherwise be freed.</strong></p></li>
+</ul>
+</div>
+<div class="section" id="what-are-common-reasons-for-memory-leaks">
+<h3>What are common reasons for memory leaks?<a class="headerlink" href="#what-are-common-reasons-for-memory-leaks" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/">https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/</a>:</p>
+<ul class="simple">
+<li><p>Accidental global variables</p></li>
+<li><p>Forgotten timers or callbacks</p></li>
+<li><p>Out of DOM references</p></li>
+<li><p>Closures</p></li>
+</ul>
+<p><a class="reference external" href="https://making.close.com/posts/finding-the-cause-of-a-memory-leak-in-jest">https://making.close.com/posts/finding-the-cause-of-a-memory-leak-in-jest</a>
+Mocks not being restored after the end of a test, especially when it involves global objects.</p>
+<p><a class="reference external" href="https://www.twilio.com/blog/prevent-memory-leaks-angular-observable-ngondestroy">https://www.twilio.com/blog/prevent-memory-leaks-angular-observable-ngondestroy</a>
+RXJS subscriptions not being unsubscribed.</p>
+</div>
+<div class="section" id="what-are-ways-to-identify-memory-leaks">
+<h3>What are ways to identify memory leaks?<a class="headerlink" href="#what-are-ways-to-identify-memory-leaks" title="Permalink to this headline">¶</a></h3>
+<p><strong>Number 1:</strong> Manually checking the heap usage and identifying heap dumps for causes of memory leaks
+<a class="reference external" href="https://chanind.github.io/javascript/2019/10/12/jest-tests-memory-leak.html">https://chanind.github.io/javascript/2019/10/12/jest-tests-memory-leak.html</a></p>
+<p>Corresponding commands from the article for our project (enter in the root directory of the project):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage --config ./src/test/javascript/jest.config.js --env=jsdom
+</pre></div>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>node --inspect-brk --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage --config ./src/test/javascript/jest.config.js --env=jsdom
+</pre></div>
+</div>
+<p>A live demonstration of this technique to find the reason for memory leaks in the GitLab repository: <a class="reference external" href="https://www.youtube.com/watch?v=GOYmouFrGrE">https://www.youtube.com/watch?v=GOYmouFrGrE</a></p>
+<p><strong>Number 2:</strong> Using the experimental leak detection feature from jest</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span> --detectLeaks **EXPERIMENTAL**: Detect memory leaks in tests.
+                                 After executing a test, it will try to garbage collect the global object used,
+                                 and fail if it was leaked [boolean] [default: false]
+
+--runInBand, -i Run all tests serially in the current process
+  (rather than creating a worker pool of child processes that run tests). This is sometimes useful for debugging, but such use cases are pretty rare.
+</pre></div>
+</div>
+<p>Navigate into src/test/javascript and run either</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>jest --detectLeaks --runInBand
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>jest --detectLeaks
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="defining-routes-and-breadcrumbs">
+<h2>11. Defining Routes and Breadcrumbs<a class="headerlink" href="#defining-routes-and-breadcrumbs" title="Permalink to this headline">¶</a></h2>
+<p>The ideal schema for routes is that every variable in a path is preceeded by a unique path segment: <code class="docutils literal notranslate"><span class="pre">\entityA\:entityIDA\entityB\:entityIDB</span></code></p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">\courses\:courseId\:exerciseId</span></code> is not a good path and should be written as <code class="docutils literal notranslate"><span class="pre">\courses\:courseId\exercises\:exerciseId</span></code>.
+Doubling textual segments like <code class="docutils literal notranslate"><span class="pre">\lectures\statistics\:lectureId</span></code> should be avoided and instead formulated as <code class="docutils literal notranslate"><span class="pre">\lectures\:lectureId\statistics</span></code>.</p>
+<p>When creating a completely new route you will have to register the new paths in <code class="docutils literal notranslate"><span class="pre">navbar.ts</span></code>. A static/textual url segment gets a translation string assigned in the <code class="docutils literal notranslate"><span class="pre">mapping</span></code> table. Due to our code-style guidelines any <code class="docutils literal notranslate"><span class="pre">-</span></code> in the segment has to be replaced by a <code class="docutils literal notranslate"><span class="pre">_</span></code>. If your path includes a variable, you will have to add the preceeding path segment to the <code class="docutils literal notranslate"><span class="pre">switch</span></code> statement inside the <code class="docutils literal notranslate"><span class="pre">addBreadcrumbForNumberSegment</span></code> method.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">courses</span><span class="o">:</span> <span class="s1">&#39;artemisApp.course.home.title&#39;</span><span class="p">,</span>
+        <span class="nx">lectures</span><span class="o">:</span> <span class="s1">&#39;artemisApp.lecture.home.title&#39;</span><span class="p">,</span>
+        <span class="c1">// put your new directly translated url segments here</span>
+        <span class="c1">// the index is the path segment in which &#39;-&#39; have to be replaced by &#39;_&#39;</span>
+        <span class="c1">// the value is the translation string</span>
+        <span class="nx">your_case</span><span class="o">:</span> <span class="s1">&#39;artemisApp.cases.title&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">addBreadcrumbForNumberSegment</span><span class="p">(</span><span class="nx">currentPath</span>: <span class="kt">string</span><span class="p">,</span> <span class="nx">segment</span>: <span class="kt">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">lastRouteUrlSegment</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">case</span> <span class="s1">&#39;course-management&#39;</span><span class="o">:</span>
+                        <span class="c1">// handles :courseId</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">&#39;lectures&#39;</span><span class="o">:</span>
+                        <span class="c1">// handles :lectureId</span>
+                        <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="s1">&#39;your-case&#39;</span><span class="o">:</span>
+                        <span class="c1">// add a case here for your :variable which is preceeded in the path by &#39;your-case&#39;</span>
+                        <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strict-template-check">
+<h2>12. Strict Template Check<a class="headerlink" href="#strict-template-check" title="Permalink to this headline">¶</a></h2>
+<p>To prevent errors for strict template rule in TypeScript, Artemis uses following approaches.</p>
+<div class="section" id="use-artemistranslatepipe-instead-of-translatepipe">
+<h3>Use ArtemisTranslatePipe instead of TranslatePipe<a class="headerlink" href="#use-artemistranslatepipe-instead-of-translatepipe" title="Permalink to this headline">¶</a></h3>
+<p>Do not use <code class="docutils literal notranslate"><span class="pre">placeholder=&quot;{{</span> <span class="pre">'global.form.newpassword.placeholder'</span> <span class="pre">|</span> <span class="pre">translate</span> <span class="pre">}}&quot;</span></code></p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">placeholder=&quot;{{</span> <span class="pre">'global.form.newpassword.placeholder'</span> <span class="pre">|</span> <span class="pre">artemisTranslate</span> <span class="pre">}}&quot;</span></code></p>
+</div>
+<div class="section" id="use-artemistimeagopipe-instead-of-timeagopipe">
+<h3>Use ArtemisTimeAgoPipe instead of TimeAgoPipe<a class="headerlink" href="#use-artemistimeagopipe-instead-of-timeagopipe" title="Permalink to this headline">¶</a></h3>
+<p>Do not use <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">[ngbTooltip]=&quot;submittedDate</span> <span class="pre">|</span> <span class="pre">artemisDate&quot;&gt;{{</span> <span class="pre">submittedDate</span> <span class="pre">|</span> <span class="pre">amTimeAgo</span> <span class="pre">}}&lt;/span&gt;</span></code></p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">&lt;span</span> <span class="pre">[ngbTooltip]=&quot;submittedDate</span> <span class="pre">|</span> <span class="pre">artemisDate&quot;&gt;{{</span> <span class="pre">submittedDate</span> <span class="pre">|</span> <span class="pre">artemisTimeAgo</span> <span class="pre">}}&lt;/span&gt;</span></code></p>
+<p>Some parts of these guidelines are adapted from <a class="reference external" href="https://github.com/microsoft/TypeScript-wiki/blob/master/Coding-guidelines.md">https://github.com/microsoft/TypeScript-wiki/blob/master/Coding-guidelines.md</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../database/" class="btn btn-neutral float-right" title="Database Relationships" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../server/" class="btn btn-neutral float-left" title="Server" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

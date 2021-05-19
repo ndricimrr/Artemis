@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adjustments for programming exercises &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Coding and design guidelines" href="../../guidelines/" />
+    <link rel="prev" title="Setup of Artemis with multiple instances" href="../distributed/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../">Setup Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../#server-setup">Server Setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bamboo-bitbucket-jira/">Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jenkins-gitlab/">Jenkins and Gitlab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed/">Multiple instances</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Adjustments for programming exercises</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#path-variables">Path variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#templates">Templates</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#caching-example-for-maven">Caching example for Maven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-service-configuration">Run the server via a service configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-run-configuration-in-intellij">Run the server via a run configuration in IntelliJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#typical-problems-with-liquibase-checksums">Typical problems with Liquibase checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-spring-boot-and-spring-profiles">Run the server with Spring Boot and Spring profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-the-command-line-gradle-wrapper">Run the server with the command line (Gradle wrapper)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../#client-setup">Client Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#customize-your-artemis-instance">Customize your Artemis instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#alternative-using-docker-compose">Alternative: Using docker-compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#athene-service">Athene Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Setup Guide</a> &raquo;</li>
+        
+      <li>Adjustments for programming exercises</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/setup/programming-exercises.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adjustments-for-programming-exercises">
+<h1>Adjustments for programming exercises<a class="headerlink" href="#adjustments-for-programming-exercises" title="Permalink to this headline">¶</a></h1>
+<p>There are several variables that can be configured when using programming exercises.
+They are presented in this separate page to keep the ‘normal’ setup guide shorter.</p>
+<div class="section" id="path-variables">
+<h2>Path variables<a class="headerlink" href="#path-variables" title="Permalink to this headline">¶</a></h2>
+<p>There are variables for several paths:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">artemis.repo-clone-path</span></code></p>
+<p>Repositories that the Artemis server needs are stored in this folder.
+This e.g. affects repositories from students which use the online code editor or the template/solution repositories of new exercises, as they are pushed to the VCS after modification.</p>
+<p>Files in this directory are usually not critical, as the latest pushed version of these repositories are also stored at the VCS.
+However, changed that are saved in the online code editor but not yet commited will be lost when this folder is deleted.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">artemis.repo-download-clone-path</span></code></p>
+<p>Repositories that were downloaded from Artemis are stored in this directory.</p>
+<p>Files in this directory can be removed without loss of data, if the downloaded repositories are still present at the VCS.
+No changes to the data in the VCS are stored in this directory (or they can be retrieved by performing the download-action again).</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">artemis.template-path</span></code></p>
+<p>Templates are available within Artemis. The templates should fit to most environments, but there might be cases where one wants to change the templates.</p>
+<p>This value specifies the path to the templates which should overwrite the default ones.
+Note that this is the path to the folder where the <cite>templates</cite> folder is located, not the path to the <cite>templates</cite> folder itself.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>Templates are shipped with Artemis (they can be found within the <code class="docutils literal notranslate"><span class="pre">src/main/resources/templates</span></code> folder in Github).
+These templates should fit well for many deployments, but one might want to change some of them for special deployments.</p>
+<p>As of now, you can overwrite the <code class="docutils literal notranslate"><span class="pre">jenkins</span></code> folders that is present within the <code class="docutils literal notranslate"><span class="pre">src/main/resources/templates</span></code> folder.
+Files that are present in the file system will be used, if a file is not present in the file system, it is loaded from the classpath (e.g. the .war archive).</p>
+<p>We plan to make other folders configurable as well, but this is not supported yet.</p>
+<div class="section" id="jenkins-template">
+<h3>Jenkins template<a class="headerlink" href="#jenkins-template" title="Permalink to this headline">¶</a></h3>
+<p>The build process in Jenkins is stored in a <code class="docutils literal notranslate"><span class="pre">config.xml</span></code>-file (<code class="docutils literal notranslate"><span class="pre">src/main/resources/templates/jenkins</span></code>) that shares common steps for all programming languages (e.g. triggering a build when a push to GitLab occurred).
+It is extended by a <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code> that is dependent on the used programming language which will be included in the generic <code class="docutils literal notranslate"><span class="pre">config.xml</span></code> file.
+The builds steps (including used docker images, the checkout process, the actual build steps, and the reporting of the results to Artemis) is included in the <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code>.</p>
+<p>A sample <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code> can be found at <code class="docutils literal notranslate"><span class="pre">src/main/resources/templates/jenkins/java/Jenkinsfile</span></code>.
+Note that the <code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code> <strong>must</strong> start either</p>
+<ul class="simple">
+<li><p>with <code class="docutils literal notranslate"><span class="pre">pipeline</span></code> (there must not be a comment before pipeline, but there can be one at any other position, if the Jenkinsfile-syntax allows it)</p></li>
+<li><p>or the special comment <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">ARTEMIS:</span> <span class="pre">JenkinsPipeline</span></code> in the first line.</p></li>
+</ul>
+<p>The variables <cite>#dockerImage</cite>, <cite>#testRepository</cite>, <cite>#assignmentRepository</cite>, <cite>#jenkinsNotificationToken</cite> and <cite>#notificationsUrl</cite> will automatically be replaced (for the normal Jenkinsfile, within the Jenkinsfile-staticCodeAnalysis, #staticCodeAnalysisScript is also replaced).</p>
+<p>You should not need to touch any of these variables, except the <cite>#dockerImage</cite> variable, if you want to use a different agent setup (e.g. a Kubernetes setup).</p>
+</div>
+</div>
+</div>
+<div class="section" id="caching-example-for-maven">
+<h1>Caching example for Maven<a class="headerlink" href="#caching-example-for-maven" title="Permalink to this headline">¶</a></h1>
+<p>The Docker image used to run the maven-tests already contains a set of commonly used dependencies (see <a class="reference external" href="https://github.com/ls1intum/artemis-maven-docker">artemis-maven-docker</a>).
+This significantly speeds up builds as the dependencies do not have to be downloaded every time a build is started.
+However, the dependencies included in the Docker image might not match the dependencies required in your tests (e.g. because you added new dependencies or the Docker image is outdated).</p>
+<p>You can cache the maven-dependencies also on the machine that runs the builds (that means, outside the docker container) using the following steps:</p>
+<p>Adjust the agent-args and add the environment block.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>agent <span class="o">{</span>
+    docker <span class="o">{</span>
+        image <span class="s1">&#39;#dockerImage&#39;</span>
+        label <span class="s1">&#39;docker&#39;</span>
+        args <span class="s1">&#39;-v $HOME/maven-cache-docker:/var/maven&#39;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+environment <span class="o">{</span>
+  <span class="nv">JAVA_TOOL_OPTIONS</span> <span class="o">=</span> <span class="s1">&#39;-Duser.home=/var/maven&#39;</span>
+<span class="o">}</span>
+stages <span class="o">{</span>
+    stage<span class="o">(</span><span class="s1">&#39;Checkout&#39;</span><span class="o">)</span> <span class="o">{</span>
+</pre></div>
+</div>
+<p>You have to add permissions to the folder (which will be located at the $HOME folder of the user that jenkins uses), e.g. with <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">777</span> <span class="pre">maven-cache-docker</span> <span class="pre">-R</span></code>.</p>
+<p>Note that this might allow students to access shared resources (e.g. jars used by Maven), and they might be able to overwrite them.
+You can use <a class="reference external" href="https://github.com/ls1intum/artemis-java-test-sandbox">Artemis-java-testing-sandbox</a> to prevent this by restricting the resources the student’s code can access.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../guidelines/" class="btn btn-neutral float-right" title="Coding and design guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../distributed/" class="btn btn-neutral float-left" title="Setup of Artemis with multiple instances" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

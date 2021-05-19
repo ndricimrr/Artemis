@@ -1,0 +1,1995 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Programming Exercise &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Quiz exercise" href="../quiz/" />
+    <link rel="prev" title="Exercises" href="../" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../">Exercises</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Programming Exercise</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-creation">Exercise Creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exercise-import">Exercise Import</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#static-code-analysis-default-configuration">Static Code Analysis Default Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#java">Java</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#online-editor">Online Editor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#display-of-hidden-files">Display of hidden files</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-with-artemis-java-test-sandbox">Testing with Artemis Java Test Sandbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices-for-writing-test-cases">Best practices for writing test cases</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-best-practices">General best practices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#java-best-practices">Java best practices</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sending-feedback-back-to-artemis">Sending Feedback back to Artemis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jenkins">Jenkins</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quiz/">Quiz exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../modeling/">Modeling exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../textual/">Textual exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../file-upload/">File Upload Exercise</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dev/docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Exercises</a> &raquo;</li>
+        
+      <li>Programming Exercise</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/user/exercises/programming.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="programming-exercise">
+<h1>Programming Exercise<a class="headerlink" href="#programming-exercise" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="content-of-this-document">
+<p class="topic-title">Content of this document</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#overview" id="id3">Overview</a></p></li>
+<li><p><a class="reference internal" href="#setup" id="id4">Setup</a></p>
+<ul>
+<li><p><a class="reference internal" href="#features" id="id5">Features</a></p></li>
+<li><p><a class="reference internal" href="#exercise-creation" id="id6">Exercise Creation</a></p></li>
+<li><p><a class="reference internal" href="#exercise-import" id="id7">Exercise Import</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#static-code-analysis-default-configuration" id="id8">Static Code Analysis Default Configuration</a></p>
+<ul>
+<li><p><a class="reference internal" href="#java" id="id9">Java</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#online-editor" id="id10">Online Editor</a></p>
+<ul>
+<li><p><a class="reference internal" href="#display-of-hidden-files" id="id11">Display of hidden files</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#testing-with-artemis-java-test-sandbox" id="id12">Testing with Artemis Java Test Sandbox</a></p></li>
+<li><p><a class="reference internal" href="#best-practices-for-writing-test-cases" id="id13">Best practices for writing test cases</a></p>
+<ul>
+<li><p><a class="reference internal" href="#general-best-practices" id="id14">General best practices</a></p></li>
+<li><p><a class="reference internal" href="#java-best-practices" id="id15">Java best practices</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#sending-feedback-back-to-artemis" id="id16">Sending Feedback back to Artemis</a></p>
+<ul>
+<li><p><a class="reference internal" href="#jenkins" id="id17">Jenkins</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#id3">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Conducting a programming exercise consists of 7 steps distributed among
+instructor, Artemis and students:</p>
+<ol class="arabic simple">
+<li><p><strong>Instructor prepares exercise:</strong> Set up a repository containing the
+exercise code and test cases, build instructions on the CI server,
+and configures the exercise in Artemis.</p></li>
+<li><p><strong>Student starts exercise:</strong> Click on start exercise on Artemis which
+automatically generates a copy of the repository with the exercise
+code and configures a build plan accordingly.</p></li>
+<li><p><strong>Optional: Student clones repository:</strong> Clone the personalized
+repository from the remote VCS to the local machine.</p></li>
+<li><p><strong>Student solves exercise:</strong> Solve the exercise with an IDE of choice
+on the local computer or in the online editor.</p></li>
+<li><p><strong>Student uploads solution:</strong> Upload changes of the source code to
+the VCS by committing and pushing them to the remote server (or by
+clicking submit in the online editor).</p></li>
+<li><p><strong>CI server verifies solution:</strong> verify the student’s submission by
+executing the test cases (see step 1) and provide feedback which
+parts are correct or wrong.</p></li>
+<li><p><strong>Student reviews personal result:</strong> Reviews build result and
+feedback using Artemis. In case of a failed build, reattempt to solve
+the exercise (step 4).</p></li>
+<li><p><strong>Instructor reviews course results:</strong> Review overall results of all
+students, and react to common errors and problems.</p></li>
+</ol>
+<p>The following activity diagram shows this exercise workflow.</p>
+<div class="figure align-center" id="id1">
+<img alt="Exercise Workflow" src="../../../_images/ExerciseWorkflow.png" />
+<p class="caption"><span class="caption-text">Exercise Workflow</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="setup">
+<h2><a class="toc-backref" href="#id4">Setup</a><a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The following sections describe the supported features and the process of creating a new programming exercise.</p>
+<div class="section" id="features">
+<span id="programming-features"></span><h3><a class="toc-backref" href="#id5">Features</a><a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+<p>Artemis and its version control and continuous integration infrastructure is independent of the programming language and thus supports
+teaching and learning with any programming language that can be compiled and tested on the command line.
+Instructors have a lot of freedom in defining the environment (e.g. using build agents and Docker images) in which student code is executed and tested.
+To simplify the setup of programming exercises, Artemis supports several <code class="docutils literal notranslate"><span class="pre">templates</span></code> that show how the setup works.
+Instructors can still use those templates to generate programming exercises and then adapt and customize the settings in the repositories and build plans.</p>
+<ul>
+<li><p>The support for a specific programming language <code class="docutils literal notranslate"><span class="pre">templates</span></code> depends on the used <code class="docutils literal notranslate"><span class="pre">continuous</span> <span class="pre">integration</span></code> system. The table below gives an overview:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 21%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Programming Language</p></th>
+<th class="head"><p>Bamboo</p></th>
+<th class="head"><p>Jenkins</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Java</p></td>
+<td colspan="2"><p>yes   | yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Python</p></td>
+<td colspan="2"><p>yes   | yes</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td colspan="2"><p>yes   | yes</p></td>
+</tr>
+<tr class="row-odd"><td><p>Haskell</p></td>
+<td colspan="2"><p>yes   | yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Kotlin</p></td>
+<td colspan="2"><p>yes   | no</p></td>
+</tr>
+<tr class="row-odd"><td><p>VHDL</p></td>
+<td colspan="2"><p>yes   | no</p></td>
+</tr>
+<tr class="row-even"><td><p>Assembler</p></td>
+<td colspan="2"><p>yes   | no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Swift</p></td>
+<td colspan="2"><p>yes   | no</p></td>
+</tr>
+<tr class="row-even"><td><p>OCaml</p></td>
+<td colspan="2"><p>yes   | no</p></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p>Not all <code class="docutils literal notranslate"><span class="pre">templates</span></code> support the same feature set.
+Depending on the feature set, some options might not be available during the creation of the programming exercise.
+The table below provides an overview of the supported features:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 13%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Programming Language</p></th>
+<th class="head"><p>Sequential Test Runs</p></th>
+<th class="head"><p>Static Code Analysis</p></th>
+<th class="head"><p>Plagiarism Check</p></th>
+<th class="head"><p>Package Name</p></th>
+<th class="head"><p>Project Type</p></th>
+<th class="head"><p>Solution Repository Checkout</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Java</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Python</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>C</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Haskell</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>yes</p></td>
+</tr>
+<tr class="row-even"><td><p>Kotlin</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>yes</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>VHDL</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>Assembler</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-odd"><td><p>Swift</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+<tr class="row-even"><td><p>OCaml</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+<td><p>no</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><em>Sequential Test Runs</em>: <code class="docutils literal notranslate"><span class="pre">Artemis</span></code> can generate a build plan which first executes structural and then behavioral tests. This feature can help students to better concentrate on the immediate challenge at hand.</p></li>
+<li><p><em>Static Code Analysis</em>: <code class="docutils literal notranslate"><span class="pre">Artemis</span></code> can generate a build plan which additionally executes static code analysis tools.
+<code class="docutils literal notranslate"><span class="pre">Artemis</span></code> categorizes the found issues and provides them as feedback for the students. This feature makes students aware of code quality issues in their submissions.</p></li>
+<li><p><em>Plagiarism Checks</em>: <code class="docutils literal notranslate"><span class="pre">Artemis</span></code> is able to automatically calculate the similarity between student submissions. A side-by-side view of similar submissions is available to confirm the plagiarism suspicion.</p></li>
+<li><p><em>Package Name</em>: A package name has to be provided</p></li>
+<li><p><em>Solution Repository Checkout</em>: Instructors are able to compare a student submission against a sample solution in the solution repository</p></li>
+</ul>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only some <code class="docutils literal notranslate"><span class="pre">templates</span></code> for <code class="docutils literal notranslate"><span class="pre">Bamboo</span></code> support <code class="docutils literal notranslate"><span class="pre">Sequential</span> <span class="pre">Test</span> <span class="pre">Runs</span></code> at the moment.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instructors are still able to extend the generated programming exercises with additional features that are not available in one specific template.</p>
+</div>
+<p>We encourage instructors to contribute improvements to the existing <code class="docutils literal notranslate"><span class="pre">templates</span></code> or to provide new templates. Please contact Stephan Krusche and/or create Pull Requests in the Github repository.</p>
+</div>
+<div class="section" id="exercise-creation">
+<h3><a class="toc-backref" href="#id6">Exercise Creation</a><a class="headerlink" href="#exercise-creation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Open Course Management</strong></p></li>
+</ol>
+<ul>
+<li><p>Open <img alt="course-management" src="../../../_images/course-management.png" /></p></li>
+<li><p>Navigate into <strong>Exercises</strong> of your preferred course</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-management-course-dashboard.png" src="../../../_images/course-management-course-dashboard.png" />
+</div>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Generate programming exercise</strong></p></li>
+</ol>
+<ul>
+<li><p>Click on <strong>Generate new programming exercise</strong></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-management-exercise-dashboard.png" src="../../../_images/course-management-exercise-dashboard.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>Artemis provides various options to customize programming exercises:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/programming-options-naming.png" src="../../../_images/programming-options-naming.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Title:</strong> The title of the exercise. It is used to create a project on the VCS server for the exercise.
+Instructors can change the title of the exercise after its creation.</p></li>
+<li><p><strong>Short Name:</strong> Together with the course short name, the exercise short name is used as a unique identifier for
+the exercise across Artemis (incl. repositories and build plans). The short name <strong>cannot</strong> be changed after the
+creation of the exercise.</p></li>
+<li><p><strong>Preview</strong>: Given the short name of the exercise and the short name of the course, Artemis displays a preview of the
+generated repositories and build plans.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-general-information.png" src="../../../_images/programming-options-general-information.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Categories:</strong> Instructors can freely define up to two categories per exercise. The categories are visible to students
+and should be used consistently to group similar kinds of exercises.</p></li>
+<li><p><strong>Difficulty:</strong> Instructors can give students information about the difficulty of the exercise.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-mode.png" src="../../../_images/programming-options-mode.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Mode:</strong> The mode determines whether students work on the exercise alone or in teams. <strong>Cannot</strong> be changed after the exercise creation.</p></li>
+<li><p><strong>Team size:</strong> If <code class="docutils literal notranslate"><span class="pre">Team</span></code> mode is chosen, instructors can additionally give recommendations for the team size. Instructors/Tutors define the teams after
+the exercise creation.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-programming-language.png" src="../../../_images/programming-options-programming-language.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Programming Language:</strong> The programming language for the exercise. Artemis chooses the template accordingly.
+Refer to the <a class="reference internal" href="#programming-features"><span class="std std-ref">programming exercise features</span></a> for an overview of the supported features for each template.</p></li>
+<li><p><strong>Project Type:</strong> Determines the project structure of the template. Not available for all programming languages.</p></li>
+<li><p><strong>Package Name:</strong> The package name used for this exercise. Not available for all programming languages.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-timeline.png" src="../../../_images/programming-options-timeline.png" />
+</div>
+<ul>
+<li><p><strong>Release Date:</strong> Release date of the exercise. Students will only be able to participate in the exercise after this date.</p></li>
+<li><p><strong>Automatic Tests:</strong> Every commit of a participant triggers the execution of the tests in the <strong>Test</strong> repository.
+Excluded are tests, which are specified to run after the due date. This is only possible if <strong>Run Tests once after Due Date</strong> has been activated.
+The tests that only run after the due date are chosen in the <a class="reference internal" href="#configure-grading"><span class="std std-ref">grading configuration</span></a>.</p></li>
+<li><p><strong>Due Date:</strong> The deadline for the exercise. Commits made after this date are not graded.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Students can still commit code and receive feedback after the exercise due date, if manual review is not activated.
+The results for these submissions will not be rated.</p>
+</div>
+</li>
+<li><p><strong>Run Tests once after Due Date:</strong> Activate this option to build and test the latest in-time submission of each student on this date.
+This date must be after the due date. The results created by this test run will be rated.</p></li>
+<li><p><strong>Manual Review:</strong> Instructors/Tutors have to manually review the latest student submissions after the automatic tests were executed.</p></li>
+<li><p><strong>Assessment Due Date:</strong> The deadline for the manual reviews. On this date, all manual assessments will be released to the students.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-score.png" src="../../../_images/programming-options-score.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Should this exercise be included in the course / exam score calculation?</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Yes</span></code>: Instructors can define the maximum achievable <strong>Points</strong> and <strong>Bonus points</strong> for the exercise.
+The achieved total points will count towards the total course/exam score</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Bonus</span></code>: The achieved <strong>Points</strong> will count towards the total course/exam score as a bonus.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">No</span></code>: The achieved <strong>Points</strong> will <strong>not</strong> count towards the total course/exam score.</p></li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-sca.png" src="../../../_images/programming-options-sca.png" />
+</div>
+<ul>
+<li><p><strong>Enable Static Code Analysis:</strong> Enable static code analysis for the exercise.
+The build plans will additionally execute static code analysis tools to find code quality issues in the submissions.
+This option cannot be changed after the exercise creation. Artemis provides a default configuration for the static code analysis tools
+but instructors are free to <a class="reference internal" href="#configure-static-code-analysis-tools"><span class="std std-ref">configure the static code analysis tools</span></a>.
+Refer to the <a class="reference internal" href="#programming-features"><span class="std std-ref">programming exercise features</span></a> to see which programming languages support static code analysis.</p></li>
+<li><p><strong>Max Static Code Analysis Penalty:</strong> Available if static code analysis is active.
+Determines the maximum amount of points that can be deducted for code quality issues found in a submission as a percentage (between 0% and 100%) of <strong>Points</strong>.
+Defaults to 100% if left empty. Further options to configure the grading of code quality issues are available in the <a class="reference internal" href="#configure-grading"><span class="std std-ref">grading configuration</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Given an exercise with 10 <strong>Points</strong>. If <strong>Max Static Code Analysis Penalty</strong> is 20%, at most 2 points will be deducted
+from the points achieved by passing test cases for code quality issues in the submission.</p>
+</div>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-instructions.png" src="../../../_images/programming-options-instructions.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Problem Statement:</strong> The problem statement of the exercise. Refer to <a class="reference internal" href="#interactive-problem-statement"><span class="std std-ref">interactive problem statement</span></a> for more information.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-grading-instructions.png" src="../../../_images/programming-options-grading-instructions.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Grading Instructions:</strong> Available if <strong>Manual Review</strong> is active. Create instructions for the manual assessment of the exercise.</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-options-advanced-configuration.png" src="../../../_images/programming-options-advanced-configuration.png" />
+</div>
+<ul>
+<li><p><strong>Sequential Test Runs:</strong> Activate this option to first run structural and then behavior tests.
+This feature allows students to better concentrate on the immediate challenge at hand.
+Not supported together with static code analysis. Cannot be changed after the exercise creation.</p></li>
+<li><p><strong>Check out repository of sample solution:</strong> Activate this option to checkout the solution into the ‘solution’ path.
+This option is useful to compare the student’s submission with the sample solution. This option is not available for all programming languages.</p></li>
+<li><p><strong>Allow Offline IDE:</strong> Allow students to clone their personal repository and work on the exercise with their preferred IDE.</p></li>
+<li><p><strong>Allow Online Editor:</strong> Allow students to work on the exercise using the Artemis Online Code Editor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At least one of the options <strong>Allow Offline IDE:</strong> and <strong>Allow Online Editor:</strong> must be active</p>
+</div>
+</li>
+<li><p><strong>Show Test Names to Students:</strong> Activate this option to show the names of the automated test cases to the students.
+If this option is disabled, students will not be able to visually differentiate between automatic and manual feedback.</p></li>
+<li><p><strong>Publish Build Plan:</strong> Allow students to access and edit their personal build plan. Useful for exercises where students should
+configure parts of the build plan themselves.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Click on <img alt="generate" src="../../../_images/generate-button.png" /> to create the exercise</p>
+<p>Result: <strong>Programming Exercise</strong></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-dashboard-exercise-programming.png" src="../../../_images/course-dashboard-exercise-programming.png" />
+</div>
+</div></blockquote>
+<p>Artemis creates the repositories:</p>
+<ul class="simple">
+<li><p><strong>Template:</strong> template code, can be empty, all students receive this code at the beginning of the exercises</p></li>
+<li><p><strong>Test:</strong> contains all test cases, e.g. based on JUnit and optionally static code analysis configuration files. The repository is hidden for students</p></li>
+<li><p><strong>Solution:</strong> solution code, typically hidden for students, can be made available after the exercise</p></li>
+</ul>
+<p>Artemis creates two build plans</p>
+<ul class="simple">
+<li><p><strong>Template:</strong> also called BASE, basic configuration for the test + template repository, used to create student build plans</p></li>
+<li><p><strong>Solution:</strong> also called SOLUTION, configuration for the test + solution repository, used to manage test cases and to verify the exercise configuration</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/programming-view-1.png" src="../../../_images/programming-view-1.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-view-2.png" src="../../../_images/programming-view-2.png" />
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/programming-view-3.png" src="../../../_images/programming-view-3.png" />
+</div>
+</li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p><strong>Update exercise code in repositories</strong></p></li>
+</ol>
+<ul>
+<li><p><strong>Alternative 1:</strong> Clone the 3 repositories and adapt the code on your local computer in your preferred development environment (e.g. Eclipse).</p>
+<ul>
+<li><p>To execute tests, copy the template (or solution) code into a folder <strong>assignment</strong> in the test repository and execute the tests (e.g. using maven clean test)</p></li>
+<li><p>Commit and push your changes <img alt="submit" src="../../../_images/submit2.png" /></p></li>
+<li><p><strong>Notes for Haskell:</strong> In addition to the assignment folder, the executables of the build file expect the solution repository checked out in the <strong>solution</strong> subdirectory of the test folder and also allow for a <strong>template</strong> subdirectory to easily test the template on your local machine.
+You can use the following script to conveniently checkout an exercise and create the right folder structure:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="c1"># Arguments:</span>
+<span class="c1"># $1: exercise short name as specified on Artemis</span>
+<span class="c1"># $2: (optional) output folder name</span>
+<span class="c1">#</span>
+<span class="c1"># Note: you might want to adapt the `BASE` variable below according to your needs</span>
+
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">echo</span> <span class="s2">&quot;No exercise short name supplied.&quot;</span>
+  <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">EXERCISE</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+
+<span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="c1"># use the exercise name if no output folder name is specified</span>
+  <span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+  <span class="nv">NAME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># default base URL to repositories; change this according to your needs</span>
+<span class="nv">BASE</span><span class="o">=</span><span class="s2">&quot;ssh://git@bitbucket.ase.in.tum.de:7999/</span><span class="nv">$EXERCISE</span><span class="s2">/</span><span class="nv">$EXERCISE</span><span class="s2">&quot;</span>
+
+<span class="c1"># clone the test repository</span>
+git clone <span class="s2">&quot;</span><span class="nv">$BASE</span><span class="s2">-tests.git&quot;</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="c1"># clone the template repository</span>
+  git clone <span class="s2">&quot;</span><span class="nv">$BASE</span><span class="s2">-exercise.git&quot;</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">/template&quot;</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="c1"># clone the solution repository</span>
+  git clone <span class="s2">&quot;</span><span class="nv">$BASE</span><span class="s2">-solution.git&quot;</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">/solution&quot;</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="c1"># create an assignment folder from the template repository</span>
+  cp -R <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">/template&quot;</span> <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">/assignment&quot;</span> <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="c1"># remove the .git folder from the assignment folder</span>
+  rm -r <span class="s2">&quot;</span><span class="nv">$NAME</span><span class="s2">/assignment/.git/&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Alternative 2:</strong> Open <img alt="edit-in-editor" src="../../../_images/edit-in-editor.png" /> in Artemis (in the browser) and adapt the code in online code editor</p>
+<ul class="simple">
+<li><p>You can change between the different repos and submit the code when needed</p></li>
+</ul>
+</li>
+<li><p><strong>Alternative 3:</strong> Use IntelliJ with the Orion plugin and change the code directly in IntelliJ</p>
+<p><strong>Edit in Editor</strong></p>
+<div class="figure align-center">
+<img alt="../../../_images/instructor-editor.png" src="../../../_images/instructor-editor.png" />
+</div>
+</li>
+<li><p>Check the results of the template and the solution build plan</p></li>
+<li><p>They should not have the status <img alt="build_failed" src="../../../_images/build_failed1.png" /></p></li>
+<li><p>In case of a <img alt="build_failed" src="../../../_images/build_failed1.png" /> result, some configuration is wrong, please check the build errors on the corresponding build plan.</p></li>
+<li><p><strong>Hints:</strong> Test cases should only reference code, that is available in the template repository. In case this is <strong>not</strong> possible, please try out the option <strong>Sequential Test Runs</strong></p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p><strong>Optional:</strong> Adapt the build plans</p></li>
+</ol>
+<ul class="simple">
+<li><p>The build plans are preconfigured and typically do not need to be adapted</p></li>
+<li><p>However, if you have additional build steps or different configurations, you can adapt the BASE and SOLUTION build plan as needed</p></li>
+<li><p>When students start the programming exercise, the current version of the BASE build plan will be copied. All changes in the configuration will be considered</p></li>
+</ul>
+<ol class="arabic simple" id="configure-static-code-analysis-tools" start="5">
+<li><p><strong>Optional:</strong> Configure static code analysis tools</p></li>
+</ol>
+<ul class="simple">
+<li><p>The <strong>Test</strong> repository contains files for the configuration of static code analysis tools, if static code analysis was activated during the creation/import of the exercise</p></li>
+<li><p>The folder <em>staticCodeAnalysisConfig</em> contains configuration files for each used static code analysis tool</p></li>
+<li><p>On exercise creation, Artemis generates a default configuration for each tool, which contains a predefined set of parameterized activated/excluded rules. The configuration files serve as a documented template that instructors can freely tailor to their needs.</p></li>
+<li><p>On exercise import, Artemis copies the configuration files from the imported exercise</p></li>
+<li><p>The following table depicts the supported static code analysis tools for each programming language, the dependency mechanism used to execute the tools and the name of their respective configuration files</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 23%" />
+<col style="width: 29%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Programming Language</p></th>
+<th class="head"><p>Execution Mechanism</p></th>
+<th class="head"><p>Supported Tools</p></th>
+<th class="head"><p>Configuration File</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="4"><p>Java</p></td>
+<td rowspan="4"><p>Maven plugins (pom.xml)</p></td>
+<td><p>Spotbugs</p></td>
+<td><p>spotbugs-exclusions.xml</p></td>
+</tr>
+<tr class="row-odd"><td><p>Checkstyle</p></td>
+<td><p>checkstyle-configuration.xml</p></td>
+</tr>
+<tr class="row-even"><td><p>PMD</p></td>
+<td><p>pmd-configuration.xml</p></td>
+</tr>
+<tr class="row-odd"><td><p>PMD Copy/Paste Detector (CPD)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Swift</p></td>
+<td><p>Script</p></td>
+<td><p>SwiftLint</p></td>
+<td><p>.swiftlint.yml</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Maven plugins for the Java static code analysis tools provide additional configuration options.</p>
+</div>
+<ul class="simple">
+<li><p>The build plans use a special task/script for the execution of the tools</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instructors are able to completely disable the usage of a specific static code analysis tool by removing the plugin/dependency from the execution mechanism.
+In case of Maven plugins, instructors can remove the unwanted tools from the <em>pom.xml</em>.
+Alternatively, instructors can alter the task/script that executes the tools in the build plan.
+PMD and PMD CPD are a special case as both tools share a common plugin. To disable one or the other, instructors must delete the execution of a tool from the build plan.</p>
+</div>
+<ol class="arabic simple" id="interactive-problem-statement" start="6">
+<li><p>Adapt the interactive problem statement</p></li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-dashboard-programming-edit.png" src="../../../_images/course-dashboard-programming-edit.png" />
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p>Click the <img alt="edit" src="../../../_images/edit1.png" /> button of the programming exercise or navigate into <img alt="edit-in-editor" src="../../../_images/edit-in-editor.png" /> and adapt the interactive problem statement.</p></li>
+<li><p>The initial example shows how to integrate tasks, link tests and integrate interactive UML diagrams</p></li>
+</ul>
+<ol class="arabic simple" id="configure-grading" start="7">
+<li><p>Configure Grading</p></li>
+</ol>
+<ul>
+<li><p><strong>General Actions</strong></p>
+<ul class="simple">
+<li><p><img alt="grading-save" src="../../../_images/configure-grading-save.png" /> Save the current grading configuration of the open tab</p></li>
+<li><p><img alt="grading-reset" src="../../../_images/configure-grading-reset.png" /> Reset the current grading configuration of the open tab to the default values. For <strong>Test Case Tab</strong>, all test cases are set to weight 1, bonus multiplier 1 and bonus points 0. For the <strong>Code Analysis Tab</strong>, the default configuration depends on the selected programming language.</p></li>
+<li><p><img alt="grading-reevaluate-all" src="../../../_images/configure-grading-reevaluate-all.png" /> Re-evaluates all scores according to the currently saved settings using the individual feedback stored in the database</p></li>
+<li><p><img alt="grading-trigger-all" src="../../../_images/configure-grading-trigger-all.png" /> Trigger all build plans. This leads to the creation of new results using the updated grading configuration</p></li>
+<li><p>Two badges display if the current configuration has been saved yet and if the grading was changed. The following graphic visualizes how each action affects the grading page state:</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/configure-grading-update-information.png" src="../../../_images/configure-grading-update-information.png" />
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Artemis always grades new submissions with the latest configuration but existing submissions might have been graded with an outdated configuration. Artemis warns instructors about grading inconsistencies with the <strong>Updated grading</strong> badge.</p>
+</div>
+</li>
+<li><p><strong>Test Case Tab</strong>: Adapt the contribution of each test case to the overall score</p>
+<div class="figure align-center">
+<img alt="../../../_images/configure-grading-test-cases.png" src="../../../_images/configure-grading-test-cases.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Artemis registers the test cases defined in the <strong>Test</strong> repository using the results generated by <strong>Solution</strong> build plan. The test cases are only shown after the first execution of the <strong>Solution</strong> build plan.</p>
+</div>
+<ul>
+<li><p>On the left side of the page, instructors can configure the test case settings:</p>
+<ul class="simple">
+<li><p><strong>Test Name</strong>: Name of the test case as defined in <strong>Test</strong> repository</p></li>
+<li><p><strong>Weight</strong>: The points for a test case are proportional to the weight (sum of all weights as the denominator) and are calculated as a fraction of the maximum points</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Bonus points for an exercise (implied by a score higher than 100%) are only achievable if at least one bonus multiplier is greater than 1 or bonus points are given for a test case</p>
+</div>
+<ul class="simple">
+<li><p><strong>Bonus multiplier</strong>: Allows instructors to multiply the points for passing a test case without affecting the points rewarded for passing other test cases</p></li>
+<li><p><strong>Bonus points</strong>: Adds a flat point bonus for passing a test case</p></li>
+<li><p><strong>Visibility</strong>: Select the visibility of feedbacks to students for this test case.</p>
+<ul>
+<li><p><strong>Always</strong>: Feedback associated with this test case is visible to students directly after the automatic grading process for their submission.</p></li>
+<li><p><strong>After Due Date</strong>: Feedback associated with this test case is visible to students only after the due date for this exercise has passed.
+Tutors and Instructors are able to see the feedback before the due date.</p></li>
+<li><p><strong>Never</strong>: Feedback associated with this test case is <em>never</em> visible to students even after the due date for this exercise has passed.
+Tutors and Instructors are able to see the feedback before and after the due date, e.g. when manually assessing submissions.
+Additionally, results of this test case are <em>not</em> considered in the student score calculation.</p></li>
+</ul>
+</li>
+<li><p><strong>Is Active</strong>: Displays whether the test case is currently part of the grading configuration. The <em>Show inactivate test cases</em> controls whether inactive test cases are displayed</p></li>
+<li><p><strong>Passed %</strong>: Displays statistics about the percentage of participating students that passed or failed the test case</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Example 1</strong>: Given an exercise with 3 test cases, maximum points of 10 and 10 achievable bonus points. The highest achievable score is <span class="math notranslate nohighlight">\(\frac{10+10}{10}*100=200\%\)</span>. Test Case (TC) A has weight 2, TC B and TC C have weight 1 (bonus multipliers 1 and bonus points 0 for all test cases). A student that only passes TC A will receive 50% of the maximum points (5 points).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Example 2</strong>: Given the configuration of <strong>Example 1</strong> with an additional bonus multiplier of 2 for TC A. Passing TC A accounts for <span class="math notranslate nohighlight">\(\frac{2*2}{2+1+1}*100=100\%\)</span> of the maximum points (10). Passing TC B or TC C accounts for <span class="math notranslate nohighlight">\(\frac{1}{4}*100=25\%\)</span> of the maximum points (2.5). If the student passes all test cases he will receive a score of 150%, which amounts to 10 points and 5 bonus points.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Example 3</strong>: Given the configuration of <strong>Example 2</strong> with additional bonus points of 5 for TC B. The points achieved for passing TC A and TC C do not change. Passing TC B now accounts for 2.5 points plus 5 bonus points (7.5). If the student passes all test cases he will receive 10 (TC A) + 7.5 (TC B) + 2.5 (TC C) points, which amounts to 10 points and 10 bonus points and a score of 200%.</p>
+</div>
+</li>
+<li><p>On the right side of the page, charts display statistics about the current test case configuration. If changes are made to the configuration, a <img alt="grading-preview" src="../../../_images/configure-grading-preview.png" /> of the statistics is shown.</p>
+<ul class="simple">
+<li><p><strong>Weight Distribution</strong>: The distribution of test case weights. Visualizes the impact of each test case for the score calculation</p></li>
+<li><p><strong>Total Points</strong>: The percentage of points given to students according to a specific test case. 100% in the chart represents full scores (100%) of <strong>all</strong> students</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Code Analysis Tab</strong>: Configure the visibility and grading of code quality issues on a category-level</p>
+<div class="figure align-center">
+<img alt="../../../_images/configure-grading-code-analysis.png" src="../../../_images/configure-grading-code-analysis.png" />
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Code Analysis Tab is only available if static code analysis was activated for the exercise.</p>
+</div>
+<ul class="simple">
+<li><p>Code quality issues found during the automatic assessment of a submission are grouped into categories. Artemis maps categories defined by the static code analysis tools to Artemis categories according to the following table:</p></li>
+</ul>
+</li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 38%" />
+<col style="width: 25%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"></th>
+<th class="head" colspan="2"><p>Mapping</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Category</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Java</p></th>
+<th class="head"><p>Swift</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td rowspan="3"><p>Bad Practice</p></td>
+<td rowspan="3"><p>Code that violates recommended
+and essential coding practices</p></td>
+<td><p>Spotbugs BAD_PRACTICE</p></td>
+<td rowspan="3"></td>
+</tr>
+<tr class="row-even"><td><p>Spotbugs I18N</p></td>
+</tr>
+<tr class="row-odd"><td><p>PMD Best Practices</p></td>
+</tr>
+<tr class="row-even"><td rowspan="5"><p>Code Style</p></td>
+<td rowspan="5"><p>Code that is confusing
+and hard to maintain</p></td>
+<td><p>Spotbugs STYLE</p></td>
+<td rowspan="5"><p>Swiftlint (all rules)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Checkstyle blocks</p></td>
+</tr>
+<tr class="row-even"><td><p>Checkstyle coding</p></td>
+</tr>
+<tr class="row-odd"><td><p>Checkstyle modifier</p></td>
+</tr>
+<tr class="row-even"><td><p>PMD Code Style</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Potential Bugs</p></td>
+<td rowspan="4"><p>Coding mistakes, error-prone
+code or threading errors</p></td>
+<td><p>Spotbugs CORRECTNESS</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Spotbugs MT_CORRECTNESS</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PMD Error Prone</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PMD Multithreading</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Duplicated Code</p></td>
+<td><p>Code clones</p></td>
+<td><p>PMD CPD</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>Security</p></td>
+<td rowspan="3"><p>Vulnerable code, unchecked
+inputs and security flaws</p></td>
+<td><p>Spotbugs MALICIOUS_CODE</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Spotbugs SECURITY</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PMD Security</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Performance</p></td>
+<td rowspan="2"><p>Inefficient code</p></td>
+<td><p>Spotbugs PERFORMANCE</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PMD Performance</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Design</p></td>
+<td rowspan="2"><p>Program structure/architecture
+and object design</p></td>
+<td><p>Checkstyle design</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>PMD Design</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Code Metrics</p></td>
+<td rowspan="2"><p>Violations of code complexity
+metrics or size limitations</p></td>
+<td><p>Checkstyle metrics</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Checkstyle sizes</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Documentation</p></td>
+<td rowspan="3"><p>Code with missing or flawed
+documentation</p></td>
+<td><p>Checkstyle javadoc</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Checkstyle annotation</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>PMD Documentation</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>Naming &amp; Format</p></td>
+<td rowspan="4"><p>Rules that ensure the readability
+of the source code (name conventions,
+imports, indentation, annotations,
+white spaces)</p></td>
+<td><p>Checkstyle imports</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Checkstyle indentation</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Checkstyle naming</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Checkstyle whitespace</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Miscellaneous</p></td>
+<td><p>Uncategorized rules</p></td>
+<td><p>Checkstyle miscellaneous</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For Swift, only the category Code Style can contain code quality issues currently. All other categories displayed on the grading page are dummies.</p>
+</div>
+<ul class="simple">
+<li><p>On the left side of the page, instructors can configure the static code analysis categories.</p>
+<ul>
+<li><p><strong>Category</strong>: The name of category defined by Artemis</p></li>
+<li><p><strong>State</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">INACTIVE</span></code>: Code quality issues of an inactive category are not shown to students and do not influence the score calculation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FEEDBACK</span></code>: Code quality issues of a feedback category are shown to students but do not influence the score calculation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GRADED</span></code>: Code quality issues of a graded category are shown to students and deduct points according to the Penalty and Max Penalty configuration</p></li>
+</ul>
+</li>
+<li><p>Penalty: Artemis deducts the selected amount of points for each code quality issue from points achieved by passing test cases</p></li>
+<li><p>Max Penalty: Limits the amount of points deducted for code quality issues belonging to this category</p></li>
+<li><p>Detected Issues: Visualizes how many students encountered a specific number of issues in this category</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="8">
+<li><p>Verify the exercise configuration</p></li>
+</ol>
+<ul>
+<li><p>Open the <img alt="view" src="../../../_images/view.png" /> page of the programming exercise</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/solution-template-result.png" src="../../../_images/solution-template-result.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>The template result should have a score of <strong>0%</strong> with <strong>0 of X passed</strong> or <strong>0 of X passed, 0 issues</strong> (if static code analysis is enabled)</p></li>
+<li><p>The solution result should have a score of <strong>100%</strong> with <strong>X of X passed</strong> or <strong>X of X passed, 0 issues</strong> (if static code analysis is enabled)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If static code analysis is enabled and issues are found in the template/solution result, instructors should improve the template/solution or disable the rule, which produced the unwanted/unimportant issue.</p>
+</div>
+<ul>
+<li><p>Click on <img alt="edit" src="../../../_images/edit1.png" /></p>
+<ul class="simple">
+<li><p>Below the problem statement, you should see <strong>Test cases</strong> ok and <strong>Hints</strong> ok</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="../../../_images/programming-edit-status.png" src="../../../_images/programming-edit-status.png" />
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="exercise-import">
+<h3><a class="toc-backref" href="#id7">Exercise Import</a><a class="headerlink" href="#exercise-import" title="Permalink to this headline">¶</a></h3>
+<p>On exercise import, Artemis copies the repositories, build plans, interactive problem statement and grading configuration from the imported exercise.</p>
+<ol class="arabic simple">
+<li><p><strong>Open Course Management</strong></p></li>
+</ol>
+<ul>
+<li><p>Open <img alt="course-management" src="../../../_images/course-management.png" /></p></li>
+<li><p>Navigate into <strong>Exercises</strong> of your preferred course</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-management-course-dashboard.png" src="../../../_images/course-management-course-dashboard.png" />
+</div>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Import programming exercise</strong></p></li>
+</ol>
+<ul>
+<li><p>Click on <strong>Import Programming Exercise</strong></p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-management-exercise-dashboard-import.png" src="../../../_images/course-management-exercise-dashboard-import.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>Select an exercise to import</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/course-management-exercise-dashboard-import-modal.png" src="../../../_images/course-management-exercise-dashboard-import-modal.png" />
+</div>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instructors can import exercises from courses, where they are registered as instructors</p>
+</div>
+<ul>
+<li><p>Artemis provides special options to update the assessment process</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/programming-import-options.png" src="../../../_images/programming-import-options.png" />
+</div>
+<ul class="simple">
+<li><p><strong>Recreate Build Plans</strong>: Create new build plans instead of copying them from the imported exercise</p></li>
+<li><p><strong>Update Template</strong>: Update the template files in the repositories. This can be useful if the imported exercise is old and contains outdated dependencies.
+For Java, Artemis replaces JUnit4 by Ares (which includes JUnit5) and updates the dependencies and plugins with the versions found in the latest template. Afterwards you might need to adapt the test cases.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Instructors are able to activate/deactivate static code analysis. Changing this option from the original value, requires the activation of <strong>Recreate Build Plans</strong> and <strong>Update Template</strong>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Recreate Build Plans</strong> and <strong>Update Template</strong> are automatically set if the static code analysis option changes compared to the imported exercise. The plugins, dependencies and static code analysis tool configurations are added/deleted/copied depending on the new and the original state of this option.</p>
+</div>
+<ul class="simple">
+<li><p>Fill out all mandatory values and click on <img alt="import" src="../../../_images/programming-exercise-import-button.png" /></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The interactive problem statement can be edited after finishing the import. Some options such as <strong>Sequential Test Runs</strong> cannot be changed on exercise import.</p>
+</div>
+</div>
+</div>
+<div class="section" id="static-code-analysis-default-configuration">
+<h2><a class="toc-backref" href="#id8">Static Code Analysis Default Configuration</a><a class="headerlink" href="#static-code-analysis-default-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The following sections list the rules that are active for the default static code analysis configuration.</p>
+<div class="section" id="java">
+<h3><a class="toc-backref" href="#id9">Java</a><a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Spotbugs</strong></p></li>
+</ol>
+<p>All tool categories and their rules are active by default except for the NOISE and EXPERIMENTAL category.
+Refer to the <a class="reference external" href="https://spotbugs.readthedocs.io/en/stable/bugDescriptions.html#">Spotbugs documentation</a> for a description of all rules.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Checkstyle</strong></p></li>
+</ol>
+<p>For a description of the rules refer to the <a class="reference external" href="https://checkstyle.sourceforge.io/checks.html">Checkstyle documentation</a>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 21%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category (Tool/Artemis)</p></th>
+<th class="head"><p>Rule</p></th>
+<th class="head"><p>Properties</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="12"><p>Coding/Code Style</p></td>
+<td><p>EmptyStatement</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>EqualsHashCode</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>HiddenField</p></td>
+<td><p>ignoreConstructorParameter=”true”</p></td>
+</tr>
+<tr class="row-odd"><td><p>ignoreSetter=”true”</p></td>
+</tr>
+<tr class="row-even"><td><p>setterCanReturnItsClass=”true”</p></td>
+</tr>
+<tr class="row-odd"><td><p>IllegalInstantiation</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>InnerAssignment</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MagicNumber</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>MissingSwitchDefault</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MultipleVariableDeclarations</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>SimplifyBooleanExpression</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>SimplifyBooleanReturn</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><p>Class Design/Design</p></td>
+<td><p>FinalClass</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>HideUtilityClassConstructor</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>InterfaceIsType</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>VisibilityModifier</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>Block Checks/Code Style</p></td>
+<td><p>AvoidNestedBlocks</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>EmptyBlock</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>NeedBraces</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="2"><p>Modifiers/Code Style</p></td>
+<td><p>ModifierOrder</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RedundantModifier</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Size Violations/Code Metrics</p></td>
+<td><p>MethodLength</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ParameterNumber</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>FileLength</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>LineLength</p></td>
+<td><p>max=”120”</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Imports/Naming &amp; Formatting</p></td>
+<td><p>IllegalImport</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>RedundantImport</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>UnusedImports</p></td>
+<td><p>processJavadoc=”false”</p></td>
+</tr>
+<tr class="row-even"><td rowspan="7"><p>Naming Conventions/Naming &amp; Formatting</p></td>
+<td><p>ConstantName</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>LocalFinalVariableName</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>LocalVariableName</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MemberName</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>MethodName</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ParameterName</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>TypeName</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td rowspan="11"><p>Whitespace/Naming &amp; Formatting</p></td>
+<td><p>EmptyForIteratorPad</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>GenericWhitespace</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>MethodParamPad</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>NoWhitespaceAfter</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>NoWhitespaceBefore</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>OperatorWrap</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ParenPad</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>TypecastParenPad</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>WhitespaceAfter</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>WhitespaceAround</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>FileTabCharacter</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="7"><p>Javadoc Comments/Documentation</p></td>
+<td><p>InvalidJavadocPosition</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>JavadocMethod</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>JavadocType</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>JavadocStyle</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>MissingJavadocMethod</p></td>
+<td><p>allowMissingPropertyJavadoc=”true”</p></td>
+</tr>
+<tr class="row-odd"><td><p>allowedAnnotations=”Override,Test”</p></td>
+</tr>
+<tr class="row-even"><td><p>tokens=”METHOD_DEF,ANNOTATION_FIELD_DEF,COMPACT_CTOR_DEF”</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><p>Miscellaneous/Miscellaneous</p></td>
+<td><p>ArrayTypeStyle</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>UpperEll</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>NewlineAtEndOfFile</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Translation</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="3">
+<li><p><strong>PMD</strong></p></li>
+</ol>
+<p>For a description of the rules refer to the <a class="reference external" href="https://pmd.github.io/latest/pmd_rules_java.html">PMD documentation</a>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category (Tool/Artemis)</p></th>
+<th class="head"><p>Rule</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="7"><p>Best Practices/Bad Practice</p></td>
+<td><p>AvoidUsingHardCodedIP</p></td>
+</tr>
+<tr class="row-odd"><td><p>CheckResultSet</p></td>
+</tr>
+<tr class="row-even"><td><p>UnusedImports</p></td>
+</tr>
+<tr class="row-odd"><td><p>UnusedFormalParameter</p></td>
+</tr>
+<tr class="row-even"><td><p>UnusedLocalVariable</p></td>
+</tr>
+<tr class="row-odd"><td><p>UnusedPrivateField</p></td>
+</tr>
+<tr class="row-even"><td><p>UnusedPrivateMethod</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="10"><p>Code Style/Code Style</p></td>
+<td><p>DontImportJavaLang</p></td>
+</tr>
+<tr class="row-even"><td><p>DuplicateImports</p></td>
+</tr>
+<tr class="row-odd"><td><p>ExtendsObject</p></td>
+</tr>
+<tr class="row-even"><td><p>ForLoopShouldBeWhileLoop</p></td>
+</tr>
+<tr class="row-odd"><td><p>TooManyStaticImports</p></td>
+</tr>
+<tr class="row-even"><td><p>UnnecessaryFullyQualifiedName</p></td>
+</tr>
+<tr class="row-odd"><td><p>UnnecessaryModifier</p></td>
+</tr>
+<tr class="row-even"><td><p>UnnecessaryReturn</p></td>
+</tr>
+<tr class="row-odd"><td><p>UselessParentheses</p></td>
+</tr>
+<tr class="row-even"><td><p>UselessQualifiedThis</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Design/Design</p></td>
+<td><p>CollapsibleIfStatements</p></td>
+</tr>
+<tr class="row-even"><td><p>SimplifiedTernary</p></td>
+</tr>
+<tr class="row-odd"><td><p>UselessOverridingMethod</p></td>
+</tr>
+<tr class="row-even"><td rowspan="27"><p>Error Prone/Potential Bugs</p></td>
+<td><p>AvoidBranchingStatementAsLastInLoop</p></td>
+</tr>
+<tr class="row-odd"><td><p>AvoidDecimalLiteralsInBigDecimalConstructor</p></td>
+</tr>
+<tr class="row-even"><td><p>AvoidMultipleUnaryOperators</p></td>
+</tr>
+<tr class="row-odd"><td><p>AvoidUsingOctalValues</p></td>
+</tr>
+<tr class="row-even"><td><p>BrokenNullCheck</p></td>
+</tr>
+<tr class="row-odd"><td><p>CheckSkipResult</p></td>
+</tr>
+<tr class="row-even"><td><p>ClassCastExceptionWithToArray</p></td>
+</tr>
+<tr class="row-odd"><td><p>DontUseFloatTypeForLoopIndices</p></td>
+</tr>
+<tr class="row-even"><td><p>EmptyCatchBlock</p></td>
+</tr>
+<tr class="row-odd"><td><p>EmptyFinallyBlock</p></td>
+</tr>
+<tr class="row-even"><td><p>EmptyIfStmt</p></td>
+</tr>
+<tr class="row-odd"><td><p>EmptyInitializer</p></td>
+</tr>
+<tr class="row-even"><td><p>EmptyStatementBlock</p></td>
+</tr>
+<tr class="row-odd"><td><p>EmptyStatementNotInLoop</p></td>
+</tr>
+<tr class="row-even"><td><p>EmptySwitchStatements</p></td>
+</tr>
+<tr class="row-odd"><td><p>EmptySynchronizedBlock</p></td>
+</tr>
+<tr class="row-even"><td><p>EmptyTryBlock</p></td>
+</tr>
+<tr class="row-odd"><td><p>EmptyWhileStmt</p></td>
+</tr>
+<tr class="row-even"><td><p>ImportFromSamePackage</p></td>
+</tr>
+<tr class="row-odd"><td><p>JumbledIncrementer</p></td>
+</tr>
+<tr class="row-even"><td><p>MisplacedNullCheck</p></td>
+</tr>
+<tr class="row-odd"><td><p>OverrideBothEqualsAndHashcode</p></td>
+</tr>
+<tr class="row-even"><td><p>ReturnFromFinallyBlock</p></td>
+</tr>
+<tr class="row-odd"><td><p>UnconditionalIfStatement</p></td>
+</tr>
+<tr class="row-even"><td><p>UnnecessaryConversionTemporary</p></td>
+</tr>
+<tr class="row-odd"><td><p>UnusedNullCheckInEquals</p></td>
+</tr>
+<tr class="row-even"><td><p>UselessOperationOnImmutable</p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Multithreading/Potential Bugs</p></td>
+<td><p>AvoidThreadGroup</p></td>
+</tr>
+<tr class="row-even"><td><p>DontCallThreadRun</p></td>
+</tr>
+<tr class="row-odd"><td><p>DoubleCheckedLocking</p></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><p>Performance/Performance</p></td>
+<td><p>BigIntegerInstantiation</p></td>
+</tr>
+<tr class="row-odd"><td><p>BooleanInstantiation</p></td>
+</tr>
+<tr class="row-even"><td><p>Security/Security</p></td>
+<td><p>All rules</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="4">
+<li><p><strong>PMD CPD</strong></p></li>
+</ol>
+<p>Artemis uses the following default configuration to detect code duplications for the category <strong>Copy/Paste Detection</strong>.
+For a description of the various PMD CPD configuration parameters refer to the <a class="reference external" href="https://pmd.github.io/latest/pmd_userdocs_cpd.html">PMD CPD documentation</a>.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="c">&lt;!-- Minimum amount of duplicated tokens triggering the copy-paste detection --&gt;</span>
+<span class="nt">&lt;minimumTokens&gt;</span>60<span class="nt">&lt;/minimumTokens&gt;</span>
+<span class="c">&lt;!-- Ignore literal value differences when evaluating a duplicate block.</span>
+<span class="c">If true, foo=42; and foo=43; will be seen as equivalent --&gt;</span>
+<span class="nt">&lt;ignoreLiterals&gt;</span>true<span class="nt">&lt;/ignoreLiterals&gt;</span>
+<span class="c">&lt;!-- Similar to ignoreLiterals but for identifiers, i.e. variable names, methods names.</span>
+<span class="c">If activated, most tokens will be ignored so minimumTokens must be lowered significantly --&gt;</span>
+<span class="nt">&lt;ignoreIdentifiers&gt;</span>false<span class="nt">&lt;/ignoreIdentifiers&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="online-editor">
+<h2><a class="toc-backref" href="#id10">Online Editor</a><a class="headerlink" href="#online-editor" title="Permalink to this headline">¶</a></h2>
+<p>The following screenshot shows the online code editor with interactive
+and dynamic exercise instructions on the right side. Tasks and UML
+diagram elements are referenced by test cases and update their color
+from red to green after students submit a new version and all test cases
+associated with a task or diagram element pass. This allows the students
+to immediately recognize which tasks are already fulfilled and is
+particularly helpful for programming beginners.</p>
+<div class="figure align-center" id="id2">
+<img alt="Online Editor" src="../../../_images/CodeEditor.png" />
+<p class="caption"><span class="caption-text">Online Editor</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="display-of-hidden-files">
+<h3><a class="toc-backref" href="#id11">Display of hidden files</a><a class="headerlink" href="#display-of-hidden-files" title="Permalink to this headline">¶</a></h3>
+<p>The online editor displays only visible files, to avoid showing for example <code class="docutils literal notranslate"><span class="pre">.git</span></code> and <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> config files.
+This also means that other config files, like SwiftLint’s <code class="docutils literal notranslate"><span class="pre">.swiftlint.yml</span></code> file, are not shown. Those files currently
+can only be accessed via your own IDE.</p>
+</div>
+</div>
+<div class="section" id="testing-with-artemis-java-test-sandbox">
+<h2><a class="toc-backref" href="#id12">Testing with Artemis Java Test Sandbox</a><a class="headerlink" href="#testing-with-artemis-java-test-sandbox" title="Permalink to this headline">¶</a></h2>
+<p>Artemis Java Test Sandbox <em>(abbr. AJTS)</em> is a JUnit 5 extension for easy and secure Java testing
+on Artemis.</p>
+<p>Its main features are</p>
+<ul class="simple">
+<li><p>a security manager to prevent students crashing the tests or cheating</p></li>
+<li><p>more robust tests and builds due to limits on time, threads and io</p></li>
+<li><p>support for public and hidden Artemis tests, where hidden ones obey a custom deadline</p></li>
+<li><p>utilities for improved feedback in Artemis like processing multiline error messages
+or pointing to a possible location that caused an Exception</p></li>
+<li><p>utilities to test exercises using System.out and System.in comfortably</p></li>
+</ul>
+<p><strong>For more information see</strong> <a class="reference external" href="https://github.com/ls1intum/artemis-java-test-sandbox">AJTS GitHub</a></p>
+</div>
+<div class="section" id="best-practices-for-writing-test-cases">
+<h2><a class="toc-backref" href="#id13">Best practices for writing test cases</a><a class="headerlink" href="#best-practices-for-writing-test-cases" title="Permalink to this headline">¶</a></h2>
+<p>The following sections describe best practices for writing test cases.
+The examples and explanations are specifically written for Java (using AJTS/JUnit5), but the practices can also be generalized
+for other programming languages.</p>
+<div class="section" id="general-best-practices">
+<h3><a class="toc-backref" href="#id14">General best practices</a><a class="headerlink" href="#general-best-practices" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>Write Meaningful Comments for your Tests</strong></p>
+<p>These comments should contain information about what is tested specifically, which task from the problem statement
+is addressed or which TODO (if there are numbered TODOs in the template), how many points this test is worth when
+passed and more if necessary. But make sure to keep the information consistent with the settings on Artemis like the weight of each testcase.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Tests that borrow() in Book successfully sets the available attribute to false</span>
+<span class="cm"> * Problem Statement Task 2.1</span>
+<span class="cm"> * Worth 1.5 Points (Weight: 1)</span>
+<span class="cm"> */</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Better yet, for manual correction, use these comments in the display name of the test. This allows the assessors, who execute the
+tests in the IDE, to have more meaningful names displayed. The following example would make counting points easier.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@DisplayName</span><span class="p">(</span><span class="s">&quot;1.5 P | Books can be borrowed successfully&quot;</span><span class="p">)</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Use Appropriate and Descriptive Names for Test Cases</strong></p>
+<p>After exercises and exams, test names will be used to create statistics. If the tests are called <em>test1</em>, <em>test2</em>, <em>test3</em>,
+it will be hard to read those statistics. This is the same reason as to why you should not name your variables <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">a</span></code>,
+<code class="docutils literal notranslate"><span class="pre">double</span> <span class="pre">b</span></code>, <code class="docutils literal notranslate"><span class="pre">String</span> <span class="pre">c</span></code>. For example, if you want to test the method <code class="docutils literal notranslate"><span class="pre">borrow</span></code> in the class <code class="docutils literal notranslate"><span class="pre">Book</span></code>,
+<code class="docutils literal notranslate"><span class="pre">testBorrowInBook()</span></code> would be an appropriate name for the test case.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have many tests in different (nested) classes that are not completely distinct, add the name of the tested
+class to the test to avoid having two tests with the same names. For example, if you test both <code class="docutils literal notranslate"><span class="pre">add</span></code> methods of a
+LinkedList and an ArrayList. Having the same test name will lead to errors on Artemis.
+Clearer test names also makes it easier to read and configure the grading in Artemis.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test_LinkedList_add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>For Java exercises: If all test methods are in a single class this is not necessary, because the Java compiler
+won’t allow multiple methods with override-equivalent signatures.</p>
+</div>
+</li>
+<li><p><strong>Use Appropriate Timeouts for Test Cases</strong></p>
+<p>For regular test cases, using a <code class="docutils literal notranslate"><span class="pre">&#64;StrictTimeout(1)</span></code>  annotation is enough. This represents a strict timeout of one
+second. The value type of the strict timeout annotation defaults to seconds. If you need a shorter timeout, you can use
+<code class="docutils literal notranslate"><span class="pre">&#64;StrictTimeout(value</span> <span class="pre">=</span> <span class="pre">500,</span> <span class="pre">unit</span> <span class="pre">=</span> <span class="pre">TimeUnit.MILLISECONDS)</span></code>. This annotation can also be added over a test class.
+In that case the timeout applies individually to every test in that class.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="nd">@StrictTimeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When defining timeouts, you should take into account that the tests are run on a Continuous Integration Server
+(using build agents). The tests will most likely execute a lot faster on your local machine.</p>
+</div>
+</li>
+<li><p><strong>Avoiding Assert Statements</strong></p>
+<p>Instead use conditional <code class="docutils literal notranslate"><span class="pre">fail()</span></code> calls to hide confusing information from the students. This could be considered a
+bad practice in regular testing but it helps to create fail messages that are less confusing, especially for beginners.
+Additionally, this also hides information about test implementation details, if the specific inputs or expected outputs
+should stay unknown to students.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Object</span> <span class="n">book</span> <span class="o">=</span> <span class="n">newInstance</span><span class="p">(</span><span class="s">&quot;Book&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Some title&quot;</span><span class="p">);</span>
+    <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;borrow&quot;</span><span class="p">);</span>
+    <span class="n">assertFalse</span><span class="p">((</span><span class="n">Boolean</span><span class="p">)</span> <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;isAvailable&quot;</span><span class="p">),</span> <span class="s">&quot;A borrowed book must be unavailable!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the student fails the test, Artemis will display something like <em>org.opentest4j.AssertionFailedError: A borrowed book must be unavailable! ==&gt; Expected &lt;false&gt; but was &lt;true&gt;</em>.
+The part after ‘==&gt;’ should not be shown to the student as it contains implementation detail.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Object</span> <span class="n">book</span> <span class="o">=</span> <span class="n">newInstance</span><span class="p">(</span><span class="s">&quot;Book&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Some title&quot;</span><span class="p">);</span>
+    <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;borrow&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">Boolean</span><span class="p">)</span> <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;isAvailable&quot;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s">&quot;A borrowed book is not available anymore!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This will just display the message ‘org.opentest4j.AssertionFailedError: A borrowed book is not available anymore!’, which focuses, except for the first part, on the actual error instead of test internals.</p>
+</li>
+<li><p><strong>Write Tests that are as Independent of the Student’s Code as Possible</strong></p>
+<p>Students can break everything and will break everything. Avoid direct code references and use reflective operations
+instead. That way if a student modifies the template by accident and the test code would normally not compile,
+they still get more meaningful feedback than a simple build error.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Book</span> <span class="n">book</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Book</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Some title&quot;</span><span class="p">);</span>
+    <span class="n">book</span><span class="p">.</span><span class="na">borrow</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">isAvailable</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s">&quot;A borrowed book must be unavailable!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above will lead to a build error, if the student accidentally changes the <code class="docutils literal notranslate"><span class="pre">Book</span></code> class. Test code build errors
+usually have a cryptic fail messages and it should be avoided that students see those confusing error messages.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Object</span> <span class="n">book</span> <span class="o">=</span> <span class="n">newInstance</span><span class="p">(</span><span class="s">&quot;Book&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Some title&quot;</span><span class="p">);</span>
+    <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;borrow&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">Boolean</span><span class="p">)</span> <span class="n">invokeMethod</span><span class="p">(</span><span class="n">book</span><span class="p">,</span> <span class="s">&quot;isAvailable&quot;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s">&quot;A borrowed book must be unavailable!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code above will lead to an error message like <em>The class ‘Book’ was not found within the submission. Make sure to implement it properly.</em>
+The message is clear and tells the student exactly what is wrong with their code.</p>
+</li>
+<li><p><strong>Check for Hard-Coded Student Solutions</strong></p>
+<p>It is possible that students hardcode values to pass a certain set of tests. Therefore, you should check whether this
+is the case or not. This is especially important in an exam setting, so students don’t get awarded points for a
+solution that does not fulfill the requirements described in the problem statement.</p>
+</li>
+<li><p><strong>Avoid Relying on a Specific Order in which Students Solve the Tasks</strong></p>
+<p>Tests should successfully cover one aspect of the submission without requiring the implementation of a different part
+of the exercise, even if those aspects are heavily coupled.</p>
+<p>In this example, the student is supposed to expand the <code class="docutils literal notranslate"><span class="pre">translate</span></code> method first and after that the
+<code class="docutils literal notranslate"><span class="pre">runService</span></code> method:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">String</span> <span class="nf">translate</span><span class="p">(</span><span class="n">String</span> <span class="n">word</span><span class="p">,</span> <span class="n">String</span> <span class="n">language</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">switch</span> <span class="p">(</span><span class="n">language</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">TranslationService</span><span class="p">.</span><span class="na">LANGUAGE_GERMAN</span> <span class="o">-&gt;</span> <span class="n">translateToGerman</span><span class="p">(</span><span class="n">word</span><span class="p">);</span>
+        <span class="c1">// TODO: Add a case for the French language</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;Illegal language requested: &quot;</span> <span class="o">+</span> <span class="n">language</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">String</span> <span class="nf">runService</span><span class="p">(</span><span class="n">String</span> <span class="n">serviceName</span><span class="p">,</span> <span class="n">String</span> <span class="n">parameter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">serviceName</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">TranslationService</span><span class="p">.</span><span class="na">SERVICE_NAME_TRANSLATION_GERMAN</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">translate</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">TranslationService</span><span class="p">.</span><span class="na">LANGUAGE_GERMAN</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// TODO: Add a case for the French language</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Can&#39;t offer service &quot;</span> <span class="o">+</span> <span class="n">serviceName</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are two separate tests, one testing the <code class="docutils literal notranslate"><span class="pre">translation</span></code> and the other one testing the <code class="docutils literal notranslate"><span class="pre">runService</span></code> method.
+The test for <code class="docutils literal notranslate"><span class="pre">runService</span></code> must not assume that the <code class="docutils literal notranslate"><span class="pre">translate</span></code> method is already implemented correctly.
+A possible solution for this problem could look like this:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testRunServiceInTranslationServer</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">TranslationServer</span> <span class="n">testTranslationServer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TranslationServer</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">translate</span><span class="p">(</span><span class="n">String</span> <span class="n">word</span><span class="p">,</span> <span class="n">String</span> <span class="n">language</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">word</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span> <span class="o">+</span> <span class="n">language</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">String</span> <span class="n">expected</span> <span class="o">=</span> <span class="s">&quot;Dog:French&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">actual</span> <span class="o">=</span> <span class="n">testTranslationServer</span><span class="p">.</span><span class="na">runService</span><span class="p">(</span><span class="s">&quot;Dog&quot;</span><span class="p">,</span> <span class="s">&quot;French&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">expected</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">actual</span><span class="p">))</span> <span class="n">fail</span><span class="p">(</span><span class="s">&quot;Descriptive fail message&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This test correctly checks, if the student added the case for the French language and called the appropriate method
+with the appropriate parameters. Because the translation method was overridden, it doesn’t matter whether the student
+has already completed the previous task or not.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use the this technique, you should have some way to deal with students that make the class or method final, either via
+problem statement or test. Otherwise students get compilation errors in the test code.</p>
+</div>
+</li>
+<li><p><strong>Catch Possible Student Errors</strong></p>
+<p>Handle possible student mistakes appropriately in the test case. For example, if a method of the student returns null
+and this is not handled appropriately in the test, this might produce a <code class="docutils literal notranslate"><span class="pre">NullPointerException</span></code>, which will lead to a
+cryptic fail message. A null check in the test case allows providing a more clear fail message to the student.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="java-best-practices">
+<h3><a class="toc-backref" href="#id15">Java best practices</a><a class="headerlink" href="#java-best-practices" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p><strong>Use Constant String Attributes to Represent the Base Package</strong></p>
+<p>Some courses use long package identifiers like <code class="docutils literal notranslate"><span class="pre">de.tum.in.ase.pse</span></code>. When instantiating objects with reflections,
+the instantiation method usually takes the full canonical name of a class, which is <code class="docutils literal notranslate"><span class="pre">de.tum.in.ase.pse.Book</span></code> for example.
+To avoid writing out this full canonical name all the time, you can add a constant String attribute representing the
+base package name to the top of your test class.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BASE_PACKAGE</span> <span class="o">=</span> <span class="s">&quot;de.tum.in.ase.pse.&quot;</span><span class="p">;</span>
+
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBorrowInBook</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Object</span> <span class="n">book</span> <span class="o">=</span> <span class="n">newInstance</span><span class="p">(</span><span class="n">BASE_PACKAGE</span> <span class="o">+</span> <span class="s">&quot;Book&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Some title&quot;</span><span class="p">);</span>
+  <span class="c1">// Test Code</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Use JUnit5 and Ares Features</strong></p>
+<p>More information can be found in the <a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests">JUnit5</a> and
+<a class="reference external" href="https://github.com/ls1intum/artemis-java-test-sandbox#readme">Ares</a> documentation. The following list adds some
+useful notes:</p>
+<ul>
+<li><p>Use <a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-nested">Nested Tests</a> to group tests</p>
+<p>In combination with display names for both tests and the nested classes, this allows to structure grading with
+tests and the grouping is also helpful when executing the test in the IDE. One example would be to structure the
+tests by exercise sub-tasks or to group tests that all check a single more complicated method. You can also do this
+by using static nested classes instead of inner classes annotated with <code class="docutils literal notranslate"><span class="pre">&#64;Nested</span></code> (decide depending on your scenario).</p>
+</li>
+<li><p>Define a custom, well-structured and predictable test execution order with <code class="docutils literal notranslate"><span class="pre">&#64;Order</span></code></p></li>
+<li><p>If you test multiple cases in a single test (e.g. because you want “all or nothing” grading for those cases or simply
+check with multiple inputs), you can use <a class="reference external" href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html#assertDoesNotThrow(org.junit.jupiter.api.function.Executable)">assertDoesNotThrow</a>
+to pass a message that is displayed in Artemis, in case an exception occurs in the student code.</p></li>
+<li><p>If you want to test multiple assertions that are fairly independent in a single test (e.g. because you want
+“all or nothing” grading for those cases or simply check with multiple inputs) you should consider if
+<a class="reference external" href="https://junit.org/junit5/docs/current/api/org.junit.jupiter.api/org/junit/jupiter/api/Assertions.html#assertAll(java.lang.String,org.junit.jupiter.api.function.Executable...)">assertAll</a>
+is what you need. This will execute all passed executables and aggregate the failures, which allows showing students
+multiple wrong aspects of their solution directly.</p></li>
+<li><p>If you have special needs, consider using <a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#writing-tests-dynamic-tests">Dynamic Tests</a>
+and/or write your own <a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#extensions">extension</a>.</p></li>
+<li><p>If you need to test tests, use the <a class="reference external" href="https://junit.org/junit5/docs/current/user-guide/#testkit">JUnit Platform Test Kit</a>.
+For providing wrong implementations that students need to test, consider</p>
+<ul class="simple">
+<li><p>passing interface implementations (easiest and safe) → pure Java</p></li>
+<li><p>pass mocked objects (flexible and safe, students don’t need to know) → EasyMock/Mockito</p></li>
+<li><p>mock single methods of tested objects (partial mock) or mock constructors → one of the above plus PowerMock</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Define your own Annotations</strong></p>
+<p>Own annotations are an easy and powerful tool that keeps your code readable. This example defines an annotation
+that combines both test and strict timeout.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+<span class="nd">@StrictTimeout</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">METHOD</span><span class="p">})</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">LongTest</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Consider using jqwik for Property-Based Testing</strong></p>
+<p><a class="reference external" href="https://jqwik.net">Jqwik</a> allows testing with arbitrary inputs and shrinks the test errors, resulting in excellent
+counter examples when student code fails (usually exactly the edge case).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ares currently only supports jqwik 1.3.4.</p>
+</div>
+</li>
+<li><p><strong>Eclipse Compiler and Best-Effort Compilation</strong></p>
+<p>Use the Eclipse Java Compiler for partial, best-effort compilation. This is particularly useful for exam exercises and
+other more “dirty” programming work. It is also useful for testing complicated generics (you really don’t want to do
+that with java reflection). This causes compilation errors to be transformed into errors that are thrown where code
+does not compile. This is done on method and class level (essentially replacing the body of the class/method with
+<code class="docutils literal notranslate"><span class="pre">throw</span> <span class="pre">new</span> <span class="pre">Error(&quot;Unresolved</span> <span class="pre">compilation</span> <span class="pre">problems:</span> <span class="pre">...&quot;)</span></code>, which is then thrown whenever the class/method is used).</p>
+<p>If you intend to write tests that exploit that, make sure that only the body of the test methods does not compile
+(e.g. if a student didn’t implement something from a task). If your complete test class does not compile, this causes
+the complete test class initialization to fail, which results in cryptic feedback in Artemis. Anything in the test class
+that is not a method body or nested class body must compile. This includes method return types and parameter types,
+and therefore also lambdas! You can avoid that by using e.g. the <code class="docutils literal notranslate"><span class="pre">Object</span></code> class and cast inside / at the call site.
+Use e.g. a nested class for Fields, Field types and Methods with student class return/parameter types that could
+potentially not compile. Because the nested class is a separate class which is loaded separately, the top level test
+class will still load successfully and only methods using that nested class will fail due to the error from the nested
+class initialization.</p>
+<p>You can choose to use the Eclipse compiler for both student and test code, or for test code only, depending on whether
+you want to grade not fully compiling code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Eclipse Compiler released under this maven coordinate does not always support the latest Java version. You can
+still compile student code with the latest Java version and only the test code with the previous.</p>
+</div>
+<ul>
+<li><p><strong>Variant: Test Code Only</strong></p>
+<details>
+<summary><a>Test Code Only</a></summary><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;source&gt;</span>16<span class="nt">&lt;/source&gt;</span>
+        <span class="nt">&lt;target&gt;</span>16<span class="nt">&lt;/target&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>default-testCompile<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>process-test-sources<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>testCompile<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+            <span class="nt">&lt;configuration&gt;</span>
+                <span class="nt">&lt;source&gt;</span>16<span class="nt">&lt;/source&gt;</span>
+                <span class="nt">&lt;target&gt;</span>16<span class="nt">&lt;/target&gt;</span>
+                <span class="nt">&lt;compilerId&gt;</span>jdt<span class="nt">&lt;/compilerId&gt;</span>
+                <span class="nt">&lt;optimize&gt;</span>true<span class="nt">&lt;/optimize&gt;</span>
+                <span class="nt">&lt;failOnError&gt;</span>false<span class="nt">&lt;/failOnError&gt;</span>
+                <span class="nt">&lt;compilerArguments&gt;</span>
+                    <span class="nt">&lt;proceedOnError</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;/compilerArguments&gt;</span>
+            <span class="nt">&lt;/configuration&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.eclipse.tycho<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>tycho-compiler-jdt<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.1.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre></div>
+</div>
+</details></li>
+<li><p><strong>Variant Student and Test Code:</strong></p>
+<details>
+<summary><a>Variant Student and Test Code</a></summary><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;source&gt;</span>16<span class="nt">&lt;/source&gt;</span>
+        <span class="nt">&lt;target&gt;</span>16<span class="nt">&lt;/target&gt;</span>
+        <span class="nt">&lt;compilerId&gt;</span>jdt<span class="nt">&lt;/compilerId&gt;</span>
+        <span class="nt">&lt;optimize&gt;</span>true<span class="nt">&lt;/optimize&gt;</span>
+        <span class="nt">&lt;failOnError&gt;</span>false<span class="nt">&lt;/failOnError&gt;</span>
+        <span class="nt">&lt;compilerArguments&gt;</span>
+            <span class="nt">&lt;proceedOnError</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/compilerArguments&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>org.eclipse.tycho<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>tycho-compiler-jdt<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>2.1.0<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</pre></div>
+</div>
+</details></li>
+</ul>
+</li>
+<li><p><strong>Common Pitfalls / Problems:</strong></p>
+<ul class="simple">
+<li><p>The Reflection API is limited when it comes to constant attributes. Constant attributes are static final attributes
+with a primitive or <code class="docutils literal notranslate"><span class="pre">String</span></code> type. Java inlines such attributes during compile-time, which makes it more or less
+impossible to change the value during runtime.</p></li>
+<li><p>Interface methods are always <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">abstract</span></code>, so you shouldn’t explicitly declare them as either <code class="docutils literal notranslate"><span class="pre">public</span></code> or
+<code class="docutils literal notranslate"><span class="pre">abstract</span></code>. This is especially important when creating/writing structural tests.</p></li>
+<li><p>Be careful with long output, arrays or <code class="docutils literal notranslate"><span class="pre">Strings</span></code>. This might be unreadable in Artemis or even cut of after 5000 characters.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="sending-feedback-back-to-artemis">
+<h2><a class="toc-backref" href="#id16">Sending Feedback back to Artemis</a><a class="headerlink" href="#sending-feedback-back-to-artemis" title="Permalink to this headline">¶</a></h2>
+<p>Per default the results of all unit tests are extracted and sent back to Artemis without any further manual interaction needed.
+Only for some custom setups a semi-automatic approach might be necessary.</p>
+<div class="section" id="jenkins">
+<h3><a class="toc-backref" href="#id17">Jenkins</a><a class="headerlink" href="#jenkins" title="Permalink to this headline">¶</a></h3>
+<p>In the Jenkins CI-System the test case feedbacks are extracted from XML-Files in the JUnit format.
+The Jenkins plugins reads all such files from a folder <code class="docutils literal notranslate"><span class="pre">results</span></code> in the top level of the Jenkins workspace.
+The files resulting from the execution of regular executed unit tests are copied to this folder automatically.</p>
+<p>To add additional custom test case feedbacks another mechanism is provided by creating a folder
+<code class="docutils literal notranslate"><span class="pre">customFeedbacks</span></code> also on the top level of the workspace.
+In this folder an arbitrary number of JSON-Files can be created.
+Each one represents a single test case feedback and should have the format:
+<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;name&quot;:</span> <span class="pre">string,</span> <span class="pre">&quot;successful&quot;:</span> <span class="pre">boolean,</span> <span class="pre">&quot;message&quot;:</span> <span class="pre">string</span> <span class="pre">}</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: This is the name of the test case as it will be shown for example on the ‘Configure Grading’ page.
+It should therefore have a for this exercise uniquely identifiable name and <strong>has to be non-null and not empty</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">successful</span></code>: Indicates if the test case execution for this submission should be marked as successful or failed.
+Defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code> if not present.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message</span></code>: The message shown as additional information to the student.
+<strong>Required for non-successful tests/feedback</strong>, optional otherwise.</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../quiz/" class="btn btn-neutral float-right" title="Quiz exercise" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../" class="btn btn-neutral float-left" title="Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

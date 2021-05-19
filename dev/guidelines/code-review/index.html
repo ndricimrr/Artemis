@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Code Review &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="System Design" href="../../system-design/" />
+    <link rel="prev" title="Database Relationships" href="../database/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../">Coding and design guidelines</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../server/">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../client/">Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../database/">Database Relationships</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Code Review</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#steps">STEPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#precondition-only-developer">0. Precondition -&gt; only Developer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#start-implementation-only-developer">1. Start Implementation -&gt; only Developer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-is-done-only-developer">2. Implementation is “done” -&gt; only Developer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#review-only-reviewer">3. Review -&gt; only Reviewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#respond-to-review-developer-reviewer">4. Respond to review -&gt; Developer &amp; Reviewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#developer">Developer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reviewer">Reviewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iterate-steps-3-4-until-ready-for-merge-all-reviewers-approve-thumbs-up">Iterate steps 3 &amp; 4 until ready for merge (= all reviewers approve (thumbs up) )</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge">4. Merge</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Coding and design guidelines</a> &raquo;</li>
+        
+      <li>Code Review</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/guidelines/code-review.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="code-review">
+<h1>Code Review<a class="headerlink" href="#code-review" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="steps">
+<h2>STEPS<a class="headerlink" href="#steps" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="precondition-only-developer">
+<h2>0. Precondition -&gt; only Developer<a class="headerlink" href="#precondition-only-developer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Limit yourself to one functionality per pull request</p></li>
+<li><p>Split up your task in multiple branches &amp; pull requests if necessary</p></li>
+<li><p><a class="reference external" href="https://speakerdeck.com/lemiorhan/10-git-anti-patterns-you-should-be-aware-of">Commit Early, Commit Often, Perfect Later, Publish Once</a></p></li>
+</ul>
+</div>
+<div class="section" id="start-implementation-only-developer">
+<h2>1. Start Implementation -&gt; only Developer<a class="headerlink" href="#start-implementation-only-developer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request">Open draft pull request.</a> Allows for code related questions and discussions</p></li>
+</ul>
+</div>
+<div class="section" id="implementation-is-done-only-developer">
+<h2>2. Implementation is “done” -&gt; only Developer<a class="headerlink" href="#implementation-is-done-only-developer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Make sure all steps in the <a class="reference external" href="https://github.com/ls1intum/Artemis/blob/develop/.github/PULL_REQUEST_TEMPLATE.md">Checklist</a> are completed</p></li>
+<li><p>Add or update the “Steps for Testing” in the description of your pull request</p></li>
+<li><p>Mark the pull request as <a class="reference external" href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/changing-the-stage-of-a-pull-request">ready for review</a></p></li>
+<li><p>Make sure that the changes in the pull request are only the ones necessary</p></li>
+</ul>
+</div>
+<div class="section" id="review-only-reviewer">
+<h2>3. Review -&gt; only Reviewer<a class="headerlink" href="#review-only-reviewer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Perform the “Steps for Testing” and verify that the new functionality is working as expected</p></li>
+<li><p>Verify that related functionality is still working as expected</p></li>
+<li><p>Check the Changes to conform with the code style</p></li>
+<li><p>Make sure you can easily understand the code</p></li>
+<li><p>Make sure that (extensive) comments are present where deemed necessary</p></li>
+<li><p>Performance is reasonable (e.g. Number of database queries or HTTP calls)</p></li>
+<li><p>Submit your comments and status (Approve or Request Changes) using GitHub</p></li>
+</ul>
+</div>
+<div class="section" id="respond-to-review-developer-reviewer">
+<h2>4. Respond to review -&gt; Developer &amp; Reviewer<a class="headerlink" href="#respond-to-review-developer-reviewer" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="developer">
+<h2>Developer<a class="headerlink" href="#developer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Use the pull request to discuss comments or ask questions</p></li>
+<li><p>Update your code where necessary</p></li>
+<li><p>Notify the reviewer(s) once your revised version is ready for the next review</p></li>
+<li><p>Comment on “inline comments” (e.g. “Done”)</p></li>
+</ul>
+</div>
+<div class="section" id="reviewer">
+<h2>Reviewer<a class="headerlink" href="#reviewer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Respond to questions raised by the reviewer</p></li>
+<li><p>Mark Conversations as Resolved if the change is sufficient</p></li>
+</ul>
+</div>
+<div class="section" id="iterate-steps-3-4-until-ready-for-merge-all-reviewers-approve-thumbs-up">
+<h2>Iterate steps 3 &amp; 4 until ready for merge (= all reviewers approve (thumbs up) )<a class="headerlink" href="#iterate-steps-3-4-until-ready-for-merge-all-reviewers-approve-thumbs-up" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="merge">
+<h2>4. Merge<a class="headerlink" href="#merge" title="Permalink to this headline">¶</a></h2>
+<p>A Project Maintainer merges your changes to develop</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../system-design/" class="btn btn-neutral float-right" title="System Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../database/" class="btn btn-neutral float-left" title="Database Relationships" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

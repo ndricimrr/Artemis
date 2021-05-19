@@ -1,0 +1,616 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup for Programming Exercises with Bamboo, Bitbucket and Jira &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Setup for Programming Exercises with Jenkins and GitLab" href="../jenkins-gitlab/" />
+    <link rel="prev" title="Setup Guide" href="../" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../">Setup Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../#server-setup">Server Setup</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bamboo, Bitbucket and Jira</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-compose">Docker-Compose</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-bamboo-bitbucket-and-jira">Configure Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-artemis">Configure Artemis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-verify-the-connection-works">How to verify the connection works?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../jenkins-gitlab/">Jenkins and Gitlab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed/">Multiple instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/">Adjustments for programming exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/#caching-example-for-maven">Caching example for Maven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-service-configuration">Run the server via a service configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-run-configuration-in-intellij">Run the server via a run configuration in IntelliJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#typical-problems-with-liquibase-checksums">Typical problems with Liquibase checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-spring-boot-and-spring-profiles">Run the server with Spring Boot and Spring profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-the-command-line-gradle-wrapper">Run the server with the command line (Gradle wrapper)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../#client-setup">Client Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#customize-your-artemis-instance">Customize your Artemis instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#alternative-using-docker-compose">Alternative: Using docker-compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#athene-service">Athene Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Setup Guide</a> &raquo;</li>
+        
+      <li>Setup for Programming Exercises with Bamboo, Bitbucket and Jira</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/setup/bamboo-bitbucket-jira.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-for-programming-exercises-with-bamboo-bitbucket-and-jira">
+<h1>Setup for Programming Exercises with Bamboo, Bitbucket and Jira<a class="headerlink" href="#setup-for-programming-exercises-with-bamboo-bitbucket-and-jira" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how to set up a programming exercise environment
+based on Bamboo, Bitbucket and Jira.</p>
+<div class="line-block">
+<div class="line">Please note that this setup will create a deployment that is very
+similiar to the one used in production but has one difference:</div>
+<div class="line">In production, the builds are performed within Docker containers that
+are created by Bamboo (or its build agents). As we run Bamboo in a
+Docker container in this setup, creating new Docker containers within
+that container is not recommended (e.g. see <a class="reference external" href="https://itnext.io/docker-in-docker-521958d34efd">this
+article</a>). There
+are some solution where one can pass the Docker socket to the Bamboo
+container, but none of these approachs work quite well here as Bamboo
+uses mounted directories that cause issues.</div>
+</div>
+<p>Therefore, a check is included within the BambooBuildPlanService that
+ensures that builds are not started in Docker agents if the development
+setup is present.</p>
+<p><strong>Prerequisites:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.docker.com/install">Docker</a></p></li>
+<li><p><a class="reference external" href="https://docs.docker.com/compose/install/">Docker-Compose</a></p></li>
+</ul>
+<div class="contents local topic" id="content-of-this-document">
+<p class="topic-title">Content of this document</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#docker-compose" id="id7">Docker-Compose</a></p></li>
+<li><p><a class="reference internal" href="#configure-bamboo-bitbucket-and-jira" id="id8">Configure Bamboo, Bitbucket and Jira</a></p></li>
+<li><p><a class="reference internal" href="#configure-artemis" id="id9">Configure Artemis</a></p></li>
+<li><p><a class="reference internal" href="#how-to-verify-the-connection-works" id="id10">How to verify the connection works?</a></p></li>
+</ul>
+</div>
+<div class="section" id="docker-compose">
+<h2><a class="toc-backref" href="#id7">Docker-Compose</a><a class="headerlink" href="#docker-compose" title="Permalink to this headline">¶</a></h2>
+<p>Before you start the docker-compose, check if the bamboo version in the
+<code class="docutils literal notranslate"><span class="pre">build.gradle</span></code> (search for <code class="docutils literal notranslate"><span class="pre">com.atlassian.bamboo:bamboo-specs</span></code>) is
+equal to the bamboo version number in the Dockerfile of bamboo stored in
+<code class="docutils literal notranslate"><span class="pre">src/main/docker/bamboo/Dockerfile</span></code> or <code class="docutils literal notranslate"><span class="pre">src/main/docker/bamboo/swift/Dockerfile</span></code>.
+If the version number is not equal adjust the version number in the Dockerfile.</p>
+<p>In case you want to enable Swift programming exercises, you need to change
+the specified Dockerfile in the docker-compose file <code class="docutils literal notranslate"><span class="pre">atlassian.yml</span></code> stored in <code class="docutils literal notranslate"><span class="pre">src/main/docker</span></code>.
+To use the Swift Dockerfile, change the following:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bamboo</span><span class="p">:</span>
+        <span class="n">container_name</span><span class="p">:</span> <span class="n">artemis_bamboo</span>
+        <span class="n">build</span><span class="p">:</span> <span class="n">bamboo</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>to:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bamboo</span><span class="p">:</span>
+        <span class="n">container_name</span><span class="p">:</span> <span class="n">artemis_bamboo</span>
+        <span class="n">build</span><span class="p">:</span> <span class="n">bamboo</span><span class="o">/</span><span class="n">swift</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Execute the docker-compose file e.g. with
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">src/main/docker/atlassian.yml</span> <span class="pre">up</span> <span class="pre">-d</span></code></p>
+<p>Error Handling: It can happen that there is an overload with other
+docker networks
+<code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">Pool</span> <span class="pre">overlaps</span> <span class="pre">with</span> <span class="pre">other</span> <span class="pre">one</span> <span class="pre">on</span> <span class="pre">this</span> <span class="pre">address</span> <span class="pre">space</span></code>. Use the
+command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">network</span> <span class="pre">prune</span></code> to resolve this issue.</p>
+<p>Make also sure that docker has enough memory (~ 6GB). To adapt it, go to <code class="docutils literal notranslate"><span class="pre">Preferecences</span> <span class="pre">-&gt;</span> <span class="pre">Resources</span></code></p>
+</div>
+<div class="section" id="configure-bamboo-bitbucket-and-jira">
+<h2><a class="toc-backref" href="#id8">Configure Bamboo, Bitbucket and Jira</a><a class="headerlink" href="#configure-bamboo-bitbucket-and-jira" title="Permalink to this headline">¶</a></h2>
+<p>By default, the Jira instance is reachable under <code class="docutils literal notranslate"><span class="pre">localhost:8081</span></code>, the
+Bamboo instance under <code class="docutils literal notranslate"><span class="pre">localhost:8085</span></code> and the Bitbucket instance
+under <code class="docutils literal notranslate"><span class="pre">localhost:7990</span></code>.</p>
+<p><strong>Get evaluation licenses for Atlassian products:</strong> <a class="reference external" href="https://my.atlassian.com/license/evaluation">Atlassian Licenses</a></p>
+<ol class="arabic">
+<li><p>Get licenses for Bamboo, Bitbucket and Jira Service Management.</p>
+<ul class="simple">
+<li><p>Bamboo: Select Bamboo (Server) and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">installed</span> <span class="pre">yet</span></code></p></li>
+<li><p>Bitbucket: Select Bitbucket (Data Center) and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">installed</span> <span class="pre">yet</span></code></p></li>
+<li><p>Jira: Select Jira Service Management (Data Center) and <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">installed</span> <span class="pre">yet</span></code></p></li>
+</ul>
+</li>
+<li><p>Provide the just created license key during the setup and create an admin user with the same credentials in all 3 applications.
+Also, you can select the evaluation/internal/test/dev setups if you are asked.
+Follow the additional steps for Jira and Bitbucket.</p>
+<ul class="simple">
+<li><p>Jira:</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p>On startup select <code class="docutils literal notranslate"><span class="pre">I'll</span> <span class="pre">set</span> <span class="pre">it</span> <span class="pre">up</span> <span class="pre">myself</span></code></p></li>
+<li><p>Select Build In Database Connection</p></li>
+<li><p>Create a sample project</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Bitbucket: Do not connect Bitbucket with Jira yet</p></li>
+</ul>
+</li>
+<li><p>Execute the shell script <code class="docutils literal notranslate"><span class="pre">atlassian-setup.sh</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">src/main/docker</span></code> directory (e.g. with
+<code class="docutils literal notranslate"><span class="pre">src/main/docker/./atlassian-setup.sh</span></code>). This script creates
+groups, users ([STRIKEOUT:and adds them to the created groups] NOT
+YET) and disabled application links between the 3 applications. Make sure that <a class="reference external" href="https://www.howtoinstall.me/ubuntu/18-04/xdg-utils/">xdg-utils</a> is installed before running the script.</p></li>
+<li><p>Enable the created <a class="reference external" href="https://confluence.atlassian.com/doc/linking-to-another-application-360677690.html">application
+links</a>
+between all 3 application (OAuth Impersonate). The links should open automatically after the shell script
+has finished. If not open them manually:</p>
+<ul class="simple">
+<li><p>Bitbucket: <a class="reference external" href="http://localhost:7990/plugins/servlet/applinks/listApplicationLinks">http://localhost:7990/plugins/servlet/applinks/listApplicationLinks</a></p></li>
+<li><p>Bamboo: <a class="reference external" href="http://localhost:8085/plugins/servlet/applinks/listApplicationLinks">http://localhost:8085/plugins/servlet/applinks/listApplicationLinks</a></p></li>
+<li><p>Jira: <a class="reference external" href="http://localhost:8081/plugins/servlet/applinks/listApplicationLinks">http://localhost:8081/plugins/servlet/applinks/listApplicationLinks</a></p></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<div><p><strong>You manually have to adjust the Display URL for the Bamboo → Bitbucket AND
+Bitbucket → Bamboo URl to</strong> <code class="docutils literal notranslate"><span class="pre">http://localhost:7990</span></code> <strong>and</strong>
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8085</span></code> <strong>.</strong></p>
+<blockquote>
+<div><p><strong>Bamboo:</strong></p>
+<div class="figure align-center" id="id1">
+<img alt="../../../_images/bamboo_bitbucket_applicationLink.png" src="../../../_images/bamboo_bitbucket_applicationLink.png" />
+<p class="caption"><span class="caption-text">Bamboo → Bitbucket</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id2">
+<img alt="../../../_images/bamboo_jira_applicationLink.png" src="../../../_images/bamboo_jira_applicationLink.png" />
+<p class="caption"><span class="caption-text">Bamboo → Jira</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Bitbucket:</strong></p>
+<div class="figure align-center" id="id3">
+<img alt="../../../_images/bitbucket_bamboo_applicationLink.png" src="../../../_images/bitbucket_bamboo_applicationLink.png" />
+<p class="caption"><span class="caption-text">Bitbucket → Bamboo</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id4">
+<img alt="../../../_images/bitbucket_jira_applicationLink.png" src="../../../_images/bitbucket_jira_applicationLink.png" />
+<p class="caption"><span class="caption-text">Bitbucket → Jira</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Jira:</strong></p>
+<div class="figure align-center" id="id5">
+<img alt="../../../_images/jira_bamboo_applicationLink.png" src="../../../_images/jira_bamboo_applicationLink.png" />
+<p class="caption"><span class="caption-text">Jira → Bamboo</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id6">
+<img alt="../../../_images/jira_bitbucket_applicationLink.png" src="../../../_images/jira_bitbucket_applicationLink.png" />
+<p class="caption"><span class="caption-text">Jira → Bitbucket</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic" start="5">
+<li><p>The script has already created users and groups but you need to
+manually assign the users into their respective group in Jira. In our
+test setup, users 1-5 are students, 6-10 are tutors, 11-15 are
+editors and 16-20 are instructors. The usernames are artemis_test_user_{1-20}
+and the password is again the username. When you create a course in artemis
+you have to manually choose the created groups (students, tutors, editors
+instructors).</p></li>
+<li><p>Use the <a class="reference external" href="https://confluence.atlassian.com/adminjiraserver/allowing-connections-to-jira-for-user-management-938847045.html">user directories in
+Jira</a>
+to synchronize the users in bitbucket and bamboo:</p>
+<ul>
+<li><p>Go to Jira → User management → Jira user server → Add application →
+Create one application for bitbucket and one for bamboo → add the
+IP-address <code class="docutils literal notranslate"><span class="pre">0.0.0.0/0</span></code> to IP Addresses</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/jira_add_application.png" src="../../../_images/jira_add_application.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>Go to Bitbucket and Bamboo → User Directories → Add Directories →
+Atlassian Crowd → use the URL <code class="docutils literal notranslate"><span class="pre">http://jira:8080</span></code> as Server URL →
+use the application name and password which you used in the previous
+step. Also, you should decrease the synchronisation period (e.g. to 2
+minutes). Press synchronise after adding the directory, the users and
+groups should now be available.</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/user_directories.png" src="../../../_images/user_directories.png" />
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>In Bamboo create a global variable named
+SERVER_PLUGIN_SECRET_PASSWORD, the value of this variable will be used
+as the secret. The value of this variable should be then stored in
+<code class="docutils literal notranslate"><span class="pre">src/main/resources/config/application-artemis.yml</span></code> as the value of
+<code class="docutils literal notranslate"><span class="pre">artemis-authentication-token-value</span></code>.</p></li>
+<li><p>Download the
+<a class="reference external" href="https://github.com/ls1intum/bamboo-server-notification-plugin/releases">bamboo-server-notifaction-plugin</a>
+and add it to bamboo. Go to Bamboo → Manage apps → Upload app → select
+the downloaded .jar file → Upload</p></li>
+<li><p>Add Maven and JDK:</p>
+<ul class="simple">
+<li><p>Go to Bamboo → Server capabilities → Add capabilities menu →
+Capability type <code class="docutils literal notranslate"><span class="pre">Executable</span></code> → select type <code class="docutils literal notranslate"><span class="pre">Maven</span> <span class="pre">3.x</span></code> → insert
+<code class="docutils literal notranslate"><span class="pre">Maven</span> <span class="pre">3</span></code> as executable label → insert <code class="docutils literal notranslate"><span class="pre">/artemis</span></code> as path.</p></li>
+<li><p>Add capabilities menu → Capability type <code class="docutils literal notranslate"><span class="pre">JDK</span></code> → insert <code class="docutils literal notranslate"><span class="pre">JDK16</span></code>
+as JDK label → insert <code class="docutils literal notranslate"><span class="pre">/usr/lib/jvm/java-16-oracle</span></code> as Java home.</p></li>
+</ul>
+</li>
+<li><p>Generate a personal access token</p></li>
+</ol>
+<blockquote>
+<div><p>While username and password can still be used as a fallback, this option is already marked as deprecated and will
+be removed in the future.</p>
+<p>9.1 Personal access token for Bamboo.</p>
+<blockquote>
+<div><ul>
+<li><p>Log in as the admin user and go to Bamboo -&gt; Profile (top right corner) -&gt; Personal access tokens -&gt; Create token</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/bamboo-create-token.png" src="../../../_images/bamboo-create-token.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>Insert the generated token into the file <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> in the section <code class="docutils literal notranslate"><span class="pre">continuous-integration</span></code>:</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="c1">#insert the token here</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>9.2 Personal access token for Bitbucket.</p>
+<blockquote>
+<div><ul>
+<li><p>Log in as the admin user and go to Bitbucket -&gt; View Profile (top right corner) -&gt; Manage account -&gt; Personal access tokens -&gt; Create token</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/bitbucket-create-token.png" src="../../../_images/bitbucket-create-token.png" />
+</div>
+</div></blockquote>
+</li>
+<li><p>Insert the generated token into the file <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> in the section <code class="docutils literal notranslate"><span class="pre">version-control</span></code>:</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;username&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;password&gt;</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="c1">#insert the token here</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic" start="11">
+<li><p>Disable XSRF checking
+Although XSRF checking is highly recommended, we currently have to disable it as Artemis does not yet support
+sending the required headers.</p>
+<ul>
+<li><p>Log in as the admin user go to Bamboo -&gt; Overview -&gt; Security Settings</p>
+<blockquote>
+<div><p>Edit the settings and disable XSRF checking:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/bamboo_xsrf_disable.png" src="../../../_images/bamboo_xsrf_disable.png" />
+</div>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>Add a SSH key for the admin user</p>
+<p>Artemis can clone/push the repositories during setup and for the online code editor using SSH.
+If the SSH key is not present, the username + token will be used as fallback (and all git operations will use HTTP(S) instead of SSH).
+If the token is also not present, the username + password will be used as fallback (again, using HTTP(S)).</p>
+<p>You first have to create a SSH key (locally), e.g. using <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code> (more information on how to create a SSH key can be found e.g. at <a class="reference external" href="https://www.ssh.com/ssh/keygen/">ssh.com</a> or at <a class="reference external" href="https://confluence.atlassian.com/bitbucketserver076/creating-ssh-keys-1026534841.html">atlassian.com</a>).</p>
+<p>The list of supported ciphers can be found at <a class="reference external" href="https://github.com/apache/mina-sshd">Apache Mina</a>.</p>
+<p>It is recommended to use a password to secure the private key, but it is not mandatory.</p>
+<p>Please note that the private key file <strong>must</strong> be named <code class="docutils literal notranslate"><span class="pre">ìd_rsa</span></code>, <code class="docutils literal notranslate"><span class="pre">id_dsa</span></code>, <code class="docutils literal notranslate"><span class="pre">id_ecdsa</span></code> or <code class="docutils literal notranslate"><span class="pre">id_ed25519</span></code>, depending on the ciphers used.</p>
+<p>You now have to extract the public key and add it to Bitbucket.
+Open the public key file (usually called <code class="docutils literal notranslate"><span class="pre">id_rsa.pub</span></code> (when using RSA)) and copy it’s content (you can also use <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">id_rsa.pub</span></code> to show the public key).</p>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">BITBUCKET-URL/plugins/servlet/ssh/account/keys</span></code> and add the SSH key by pasting the content of the public key.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;ssh-key-path&gt;</span></code> is the path to the folder containing the <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code> file (but without the filename). It will be used in the configuration of Artemis to specify where Artemis should look for the key and store the <code class="docutils literal notranslate"><span class="pre">known_hosts</span></code> file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;ssh-private-key-password&gt;</span></code> is the password used to secure the private key. It is also needed for the configuration of Artemis, but can be omitted if no password was set (e.g. for development environments).</p>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-artemis">
+<h2><a class="toc-backref" href="#id9">Configure Artemis</a><a class="headerlink" href="#configure-artemis" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">src/main/resources/config/application-artemis.yml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">repo-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos/</span>
+<span class="nt">repo-download-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos-download/</span>
+<span class="nt">encryption-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis-encrypt</span>     <span class="c1"># arbitrary password for encrypting database values</span>
+<span class="nt">user-management</span><span class="p">:</span>
+    <span class="nt">use-external</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">external</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:8081</span>
+        <span class="nt">user</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;jira-admin-user&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;jira-admin-password&gt;</span>
+        <span class="nt">admin-group-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">instructors</span>
+    <span class="nt">internal-admin</span><span class="p">:</span>
+        <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+<span class="nt">version-control</span><span class="p">:</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:7990</span>
+    <span class="nt">user</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;bitbucket-admin-user&gt;</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;bitbuckt-admin-password&gt;</span>
+    <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;bitbucket-admin-token&gt;</span>
+    <span class="nt">ssh-private-key-folder-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;ssh-private-key-folder-path&gt;</span>
+    <span class="nt">ssh-private-key-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;ssh-private-key-password&gt;</span>
+<span class="nt">continuous-integration</span><span class="p">:</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:8085</span>
+    <span class="nt">user</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">&lt;bamboo-admin-user&gt;</span>
+    <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;bamboo-admin-password&gt;</span>
+    <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;bamboo-admin-token&gt;</span>
+    <span class="nt">vcs-application-link-name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">LS1 Bitbucket Server</span>
+    <span class="nt">empty-commit-necessary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+    <span class="nt">artemis-authentication-token-value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;artemis-authentication-token-value&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Modify the application-dev.yml</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">server</span><span class="p">:</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8080</span>                                         <span class="c1"># The port of artemis</span>
+    <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://172.20.0.1:8080</span>                        <span class="c1"># needs to be an ip</span>
+    <span class="nt">// url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://docker.for.mac.host.internal:8080</span>   <span class="c1"># If the above one does not work for mac try this one</span>
+    <span class="nt">// url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://host.docker.internal:8080</span>           <span class="c1"># If the above one does not work for windows try this one</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>In addition, you have to start Artemis with the profiles <code class="docutils literal notranslate"><span class="pre">bamboo</span></code>,
+<code class="docutils literal notranslate"><span class="pre">bitbucket</span></code> and <code class="docutils literal notranslate"><span class="pre">jira</span></code> so that the correct adapters will be used,
+e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">spring</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">active</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span><span class="n">bamboo</span><span class="p">,</span><span class="n">bitbucket</span><span class="p">,</span><span class="n">jira</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span>
+</pre></div>
+</div>
+<p>Please read <a class="reference internal" href="../"><span class="doc">Setup Guide</span></a> for more details.</p>
+</div>
+<div class="section" id="how-to-verify-the-connection-works">
+<h2><a class="toc-backref" href="#id10">How to verify the connection works?</a><a class="headerlink" href="#how-to-verify-the-connection-works" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="artemis-jira">
+<h3>Artemis → Jira<a class="headerlink" href="#artemis-jira" title="Permalink to this headline">¶</a></h3>
+<p>You can login to Artemis with the admin user you created in Jira</p>
+</div>
+<div class="section" id="artemis-bitbucket">
+<h3>Artemis → Bitbucket<a class="headerlink" href="#artemis-bitbucket" title="Permalink to this headline">¶</a></h3>
+<p>You can create a programming exercise</p>
+</div>
+<div class="section" id="artemis-bamboo">
+<h3>Artemis → Bamboo<a class="headerlink" href="#artemis-bamboo" title="Permalink to this headline">¶</a></h3>
+<p>You can create a programming exercise</p>
+</div>
+<div class="section" id="bitbucket-bamboo">
+<h3>Bitbucket → Bamboo<a class="headerlink" href="#bitbucket-bamboo" title="Permalink to this headline">¶</a></h3>
+<p>The build of the students repository gets started after pushing to it</p>
+</div>
+<div class="section" id="bitbucket-artemis">
+<h3>Bitbucket → Artemis<a class="headerlink" href="#bitbucket-artemis" title="Permalink to this headline">¶</a></h3>
+<p>When using the code editor, after clicking on <em>Submit</em>, the text <em>Building and testing…</em> should appear.</p>
+</div>
+<div class="section" id="bamboo-artemis">
+<h3>Bamboo → Artemis<a class="headerlink" href="#bamboo-artemis" title="Permalink to this headline">¶</a></h3>
+<p>The build result is displayed in the code editor.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../jenkins-gitlab/" class="btn btn-neutral float-right" title="Setup for Programming Exercises with Jenkins and GitLab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../" class="btn btn-neutral float-left" title="Setup Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

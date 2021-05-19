@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Database Relationships &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Code Review" href="../code-review/" />
+    <link rel="prev" title="Client" href="../client/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../setup/">Setup Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../">Coding and design guidelines</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../server/">Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../client/">Client</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Database Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#retrieving-and-building-objects">1. Retrieving and Building Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relationships">2. Relationships</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cascade-types">2. Cascade Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solutions-for-known-issues">Solutions for known issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code-review/">Code Review</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Coding and design guidelines</a> &raquo;</li>
+        
+      <li>Database Relationships</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/guidelines/database.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="database-relationships">
+<h1>Database Relationships<a class="headerlink" href="#database-relationships" title="Permalink to this headline">¶</a></h1>
+<p>WORK IN PROGRESS</p>
+<div class="section" id="retrieving-and-building-objects">
+<h2>1. Retrieving and Building Objects<a class="headerlink" href="#retrieving-and-building-objects" title="Permalink to this headline">¶</a></h2>
+<p>The cost of retrieving and building an object’s relationships far exceeds the cost of selecting the object. This is especially true for relationships where it would trigger the loading of every child through the relationship hierarchy. The solution to this issue is <strong>lazy fetching</strong> (lazy loading). Lazy fetching allows the fetching of a relationship to be deferred until it is accessed. This is important not only to avoid the database access, but also to avoid the cost of building the objects if they are not needed. <br /></p>
+<p>In JPA lazy fetching can be set on any relationship using the fetch attribute. The fetch can be set to either <code class="docutils literal notranslate"><span class="pre">LAZY</span></code> or <code class="docutils literal notranslate"><span class="pre">EAGER</span></code> as defined in the <code class="docutils literal notranslate"><span class="pre">FetchType</span></code> enum. The default fetch type is <code class="docutils literal notranslate"><span class="pre">LAZY</span></code> for all relationships except for <strong>OneToOne</strong> and <strong>ManyToOne</strong>, but in general it is a good idea to make every relationship <code class="docutils literal notranslate"><span class="pre">LAZY</span></code>. The <code class="docutils literal notranslate"><span class="pre">EAGER</span></code> default for <strong>OneToOne</strong> and <strong>ManyToOne</strong> is for implementation reasons (more easier to implement), not because it is a good idea. <br /></p>
+<p>We <strong>always</strong> use <code class="docutils literal notranslate"><span class="pre">FetchType.LAZY</span></code>, unless there is a very strong case to be made for <code class="docutils literal notranslate"><span class="pre">FetchType.EAGER</span></code>.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Additional effort to use <code class="docutils literal notranslate"><span class="pre">FetchType.LAZY</span></code> does not count as a strong argument.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="relationships">
+<h2>2. Relationships<a class="headerlink" href="#relationships" title="Permalink to this headline">¶</a></h2>
+<p>A relationship is a reference from one object to another. In a relational database relationships are defined through foreign keys. The source row contains the primary key of the target row to define the relationship (and sometimes the inverse). A query must be performed to read the target objects of the relationship using the foreign key and primary key information. If there is a relationship to a collection of other objects, a <code class="docutils literal notranslate"><span class="pre">Collection</span></code> or <code class="docutils literal notranslate"><span class="pre">array</span></code> type is used to hold the contents of the relationship. In a relational database, collection relations are either defined by the target objects having a foreign key back to the source object’s primary key, or by having an intermediate join table to store the relationship (containing both objects’ primary keys). <br /></p>
+<p>In this section, we depict common entity relationships we use in Artemis and show some code snippets.</p>
+<ul class="simple">
+<li><p><strong>OneToOne</strong> A unique reference from one object to another. It is also inverse of itself. Example: one <code class="docutils literal notranslate"><span class="pre">Complaint</span></code> has a reference to one <code class="docutils literal notranslate"><span class="pre">Result</span></code>.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Complaint.java</span>
+<span class="nd">@OneToOne</span>
+<span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">Result</span> <span class="n">result</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>OneToMany</strong> A <code class="docutils literal notranslate"><span class="pre">Collection</span></code> or <code class="docutils literal notranslate"><span class="pre">Map</span></code> of objects. It is the inverse of a <strong>ManyToOne</strong> relationship. Example: one <code class="docutils literal notranslate"><span class="pre">Result</span></code> has a list of <code class="docutils literal notranslate"><span class="pre">Feedback</span></code> elements. For ordered OneToMany relations see <a class="reference internal" href="#ordered"><span class="std std-ref">ordered collections</span></a>.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Result.java</span>
+<span class="nd">@OneToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">ALL</span><span class="p">,</span> <span class="n">orphanRemoval</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@OrderColumn</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">allowSetters</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@Cache</span><span class="p">(</span><span class="n">usage</span> <span class="o">=</span> <span class="n">CacheConcurrencyStrategy</span><span class="p">.</span><span class="na">NONSTRICT_READ_WRITE</span><span class="p">)</span>
+<span class="nd">@JsonView</span><span class="p">(</span><span class="n">QuizView</span><span class="p">.</span><span class="na">Before</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Feedback</span><span class="o">&gt;</span> <span class="n">feedbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>ManyToOne</strong> A reference from one object to another. It is the inverse of an <strong>OneToMany</strong> relationship. Example: one <code class="docutils literal notranslate"><span class="pre">Feedback</span></code> has a reference to one <code class="docutils literal notranslate"><span class="pre">Result</span></code>.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Feedback.java</span>
+<span class="nd">@ManyToOne</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="s">&quot;feedbacks&quot;</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">Result</span> <span class="n">result</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>ManyToMany</strong> <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">Collection</span></code> or <code class="docutils literal notranslate"><span class="pre">Map</span></code> of objects. It is the inverse of itself. Example: one <code class="docutils literal notranslate"><span class="pre">Exercise</span></code> has a list of <code class="docutils literal notranslate"><span class="pre">LearningGoal</span></code> elements, one <code class="docutils literal notranslate"><span class="pre">LearningGoal</span></code> has list of <code class="docutils literal notranslate"><span class="pre">Exercise</span></code> elements. In other words: many exercises are connected to many learning goals and vice-versa.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Exercise.java</span>
+<span class="nd">@ManyToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;exercises&quot;</span><span class="p">)</span>
+<span class="kd">public</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">LearningGoal</span><span class="o">&gt;</span> <span class="n">learningGoals</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+
+<span class="c1">// LearningGoal.java</span>
+<span class="nd">@ManyToMany</span>
+<span class="nd">@JoinTable</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;learning_goal_exercise&quot;</span><span class="p">,</span> <span class="n">joinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;learning_goal_id&quot;</span><span class="p">,</span> <span class="n">referencedColumnName</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span><span class="p">),</span> <span class="n">inverseJoinColumns</span> <span class="o">=</span> <span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;exercise_id&quot;</span><span class="p">,</span> <span class="n">referencedColumnName</span> <span class="o">=</span> <span class="s">&quot;id&quot;</span><span class="p">))</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="s">&quot;learningGoals&quot;</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Exercise</span><span class="o">&gt;</span> <span class="n">exercises</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For <strong>OneToMany</strong>, <strong>ManyToOne</strong>, and <strong>ManyToMany</strong> relationships you must not forget to mark the associated elements with <code class="docutils literal notranslate"><span class="pre">&#64;JsonIgnoreProperties()</span></code>. Without this, the object serialization process will be stuck in an endless loop and throw an error. For more information check out the examples listed above and see: <a class="reference external" href="https://www.concretepage.com/jackson-api/jackson-jsonignore-jsonignoreproperties-and-jsonignoretype">Jackson and JsonIgnoreType</a>.</p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="cascade-types">
+<h2>2. Cascade Types<a class="headerlink" href="#cascade-types" title="Permalink to this headline">¶</a></h2>
+<p>Entity relationships often depend on the existence of another entity — for example, the Result-Feedback relationship. Without the Result, the Feedback entity doesn’t have any meaning of its own. When we delete the Result entity, our Feedback entity should also get deleted. For more information see: <a class="reference external" href="https://www.baeldung.com/jpa-cascade-types">jpa cascade types</a>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CascadeType.ALL</span></code> Propagates all operations mentioned below from the parent object to the to child object.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Result.java</span>
+<span class="nd">@OneToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">ALL</span><span class="p">,</span> <span class="n">orphanRemoval</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@OrderColumn</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">allowSetters</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@Cache</span><span class="p">(</span><span class="n">usage</span> <span class="o">=</span> <span class="n">CacheConcurrencyStrategy</span><span class="p">.</span><span class="na">NONSTRICT_READ_WRITE</span><span class="p">)</span>
+<span class="nd">@JsonView</span><span class="p">(</span><span class="n">QuizView</span><span class="p">.</span><span class="na">Before</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Feedback</span><span class="o">&gt;</span> <span class="n">feedbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CascadeType.PERSIST</span></code> When persisting a parent entity, it also persists the child entities held in its fields. This cascade rule is helpful for relationships where the parent acts as a <em>container</em> to the child entity. If you do not use this, you have to ensure that you persist the child entity first, otherwise an error will be thrown. Example: The code below propagates the <strong>persist</strong> operation from parent <code class="docutils literal notranslate"><span class="pre">AnswerCounter</span></code> to child <code class="docutils literal notranslate"><span class="pre">AnswerOption</span></code>. When an <code class="docutils literal notranslate"><span class="pre">AnswerCounter</span></code> is persisted, its <code class="docutils literal notranslate"><span class="pre">AnswerOption</span></code> is persisted as well.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// AnswerCounter.java</span>
+<span class="nd">@OneToOne</span><span class="p">(</span><span class="n">cascade</span> <span class="o">=</span> <span class="p">{</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">PERSIST</span> <span class="p">})</span>
+<span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">AnswerOption</span> <span class="n">answer</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CascadeType.MERGE</span></code> If you merge the source entity (saved/updated/synchronized) to the database, the merge is cascaded to the target of the association. This rule applies to existing objects only. Use this type to always merge/synchronize the existing data in the table with the data in the object. Example below: whenever we merge a <code class="docutils literal notranslate"><span class="pre">Result</span></code> to the database, i.e. save the changes on the object, the <code class="docutils literal notranslate"><span class="pre">Assessor</span></code> object is also merged/saved.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Result.java</span>
+<span class="nd">@OneToOne</span><span class="p">(</span><span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">MERGE</span><span class="p">,</span> <span class="n">fetch</span> <span class="o">=</span> <span class="n">FetchType</span><span class="p">.</span><span class="na">LAZY</span><span class="p">)</span>
+<span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">unique</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">User</span> <span class="n">assessor</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CascadeType.REMOVE</span></code> If the source entity is removed, the target of the association is also removed. Example below: propagates <strong>remove</strong> operation from parent <code class="docutils literal notranslate"><span class="pre">Submission</span></code> to child <code class="docutils literal notranslate"><span class="pre">Result</span></code>. When a <code class="docutils literal notranslate"><span class="pre">Submission</span></code> is deleted, the corresponding <code class="docutils literal notranslate"><span class="pre">Result</span></code> is also deleted.</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Submission.java</span>
+<span class="nd">@OneToOne</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;submission&quot;</span><span class="p">,</span> <span class="n">fetch</span> <span class="o">=</span> <span class="n">FetchType</span><span class="p">.</span><span class="na">LAZY</span><span class="p">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">REMOVE</span><span class="p">)</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">({</span> <span class="s">&quot;submission&quot;</span><span class="p">,</span> <span class="s">&quot;participation&quot;</span> <span class="p">})</span>
+<span class="nd">@JoinColumn</span><span class="p">(</span><span class="n">unique</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">Result</span> <span class="n">result</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CascadeType.REFRESH</span></code> If the source entity is refreshed, it cascades the refresh to the target of the association. This is used to refresh the data in the object and its associations. This is useful for cases where there is a change which needs to be synchronized FROM the database.</p></li>
+</ul>
+<p>Not used in Artemis yet.</p>
+</div>
+<div class="section" id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>If you want to create a <code class="docutils literal notranslate"><span class="pre">&#64;OneToMany</span></code> relationship or <code class="docutils literal notranslate"><span class="pre">&#64;ManyToMany</span></code> relationship, first think about if it is important for the association to be ordered. If you do not need the association to be ordered, then always go for a <code class="docutils literal notranslate"><span class="pre">Set</span></code> instead of <code class="docutils literal notranslate"><span class="pre">List</span></code>. If you are unsure, start with a <code class="docutils literal notranslate"><span class="pre">Set</span></code>.</p>
+<ul>
+<li><p><strong>Unordered Collection</strong>: A <code class="docutils literal notranslate"><span class="pre">Set</span></code> comes with certain advantages such as ensuring that there are no duplicates and null values in your collection. There are also performance arguments to use a <code class="docutils literal notranslate"><span class="pre">Set</span></code>, especially for <code class="docutils literal notranslate"><span class="pre">&#64;ManyToMany</span></code> relationships. For more information see this <a class="reference external" href="https://stackoverflow.com/questions/4655392/which-java-type-do-you-use-for-jpa-collections-and-why">stackoverflow thread</a>. E.g.:</p>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Course.java</span>
+<span class="nd">@OneToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;course&quot;</span><span class="p">,</span> <span class="n">fetch</span> <span class="o">=</span> <span class="n">FetchType</span><span class="p">.</span><span class="na">LAZY</span><span class="p">)</span>
+<span class="nd">@Cache</span><span class="p">(</span><span class="n">usage</span> <span class="o">=</span> <span class="n">CacheConcurrencyStrategy</span><span class="p">.</span><span class="na">NONSTRICT_READ_WRITE</span><span class="p">)</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="s">&quot;course&quot;</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Exercise</span><span class="o">&gt;</span> <span class="n">exercises</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote id="ordered">
+<div><ul>
+<li><p><strong>Ordered Collection</strong>: When you want to order the collection of objects of the relationship, then always use a <code class="docutils literal notranslate"><span class="pre">List</span></code>. It is important to note here that there is no inherent order in a database table. One could argue that you can use the <code class="docutils literal notranslate"><span class="pre">id</span></code> field for the ordering, but there are edge cases where this can lead to problems. Therefore, for a ordered collection, <strong>always</strong> annotate it with <code class="docutils literal notranslate"><span class="pre">&#64;OrderColumn</span></code>. An order column indicates to hibernate that we want to order our collection based on a specific column of our data table. By default, the column name it expects is <em>tablenameS_order</em>. For ordered collections, we also recommend that you annotate them with <code class="docutils literal notranslate"><span class="pre">CascadeType.ALL</span></code> and <code class="docutils literal notranslate"><span class="pre">orphanRemoval</span> <span class="pre">=</span> <span class="pre">true</span></code>. E.g.:</p>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Result.java</span>
+<span class="nd">@OneToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">ALL</span><span class="p">,</span> <span class="n">orphanRemoval</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@OrderColumn</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">allowSetters</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@Cache</span><span class="p">(</span><span class="n">usage</span> <span class="o">=</span> <span class="n">CacheConcurrencyStrategy</span><span class="p">.</span><span class="na">NONSTRICT_READ_WRITE</span><span class="p">)</span>
+<span class="nd">@JsonView</span><span class="p">(</span><span class="n">QuizView</span><span class="p">.</span><span class="na">Before</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Feedback</span><span class="o">&gt;</span> <span class="n">feedbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Hibernate will take care of the ordering for you but you must create the order column in the database. This is not created automatically!</p>
+</div>
+</div></blockquote>
+<p>With ordered collections, you have to be very careful with the way you persist the objects in the database. You must first persist the child object without a relation to the parent object. Then, you recreate the association and persist the parent object. Example of how to correctly persist objects in an ordered collection:</p>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// ProgrammingAssessmentService</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Feedback</span><span class="o">&gt;</span> <span class="n">savedFeedbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="n">result</span><span class="p">.</span><span class="na">getFeedbacks</span><span class="p">().</span><span class="na">forEach</span><span class="p">(</span><span class="n">feedback</span> <span class="o">-&gt;</span> <span class="p">{</span>
+   <span class="c1">// cut association to parent object</span>
+   <span class="n">feedback</span><span class="p">.</span><span class="na">setResult</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+   <span class="c1">// persist the child object without an association to the parent object. IMPORTANT: Use the object returned from the database!</span>
+   <span class="n">feedback</span> <span class="o">=</span> <span class="n">feedbackRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">feedback</span><span class="p">);</span>
+   <span class="c1">// restore the association to the parent object</span>
+   <span class="n">feedback</span><span class="p">.</span><span class="na">setResult</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+   <span class="n">savedFeedbacks</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">feedback</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// set the association of the parent to its child objects which are now persisted in the database</span>
+<span class="n">result</span><span class="p">.</span><span class="na">setFeedbacks</span><span class="p">(</span><span class="n">savedFeedbacks</span><span class="p">);</span>
+<span class="c1">// persist the parent object</span>
+<span class="k">return</span> <span class="n">resultRepository</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="solutions-for-known-issues">
+<h2>Solutions for known issues<a class="headerlink" href="#solutions-for-known-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">org.hibernate.LazyInitializationException</span> <span class="pre">:</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">initialize</span> <span class="pre">proxy</span> <span class="pre">–</span> <span class="pre">no</span> <span class="pre">Session</span></code> caused by <code class="docutils literal notranslate"><span class="pre">fetchType.LAZY</span></code>. You must explicitly load the associated object from the database before trying to access those. Example of how to eagerly fetch the feedbacks with the result:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// ResultRepository.java</span>
+<span class="nd">@Query</span><span class="p">(</span><span class="s">&quot;select r from Result r left join fetch r.feedbacks where r.id = :resultId&quot;</span><span class="p">)</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&gt;</span> <span class="nf">findByIdWithEagerFeedbacks</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;resultId&quot;</span><span class="p">)</span> <span class="n">Long</span> <span class="n">id</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">JpaSystemException:</span> <span class="pre">null</span> <span class="pre">index</span> <span class="pre">column</span> <span class="pre">for</span> <span class="pre">collection</span></code> caused by <code class="docutils literal notranslate"><span class="pre">&#64;OrderColumn</span></code> annotation:</p></li>
+</ul>
+<blockquote>
+<div><p>There is a problem with the way you save the associated objects. You must follow this procedure:</p>
+<ol class="arabic simple">
+<li><p>Save the child entity (e.g., <a class="reference external" href="https://github.com/ls1intum/Artemis/blob/develop/src/main/java/de/tum/in/www1/artemis/domain/Feedback.java">Feedback</a>) without connection to the parent entity (e.g., <a class="reference external" href="https://github.com/ls1intum/Artemis/blob/develop/src/main/java/de/tum/in/www1/artemis/domain/Result.java">Result</a>)</p></li>
+<li><p>Add back the connection of the child entity to the parent entity.</p></li>
+<li><p>Save the parent entity.</p></li>
+<li><p>Always use the returned value after saving the entity, see: <code class="docutils literal notranslate"><span class="pre">feedback</span> <span class="pre">=</span> <span class="pre">feedbackRepository.save(feedback);</span></code></p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information see <a class="reference internal" href="#ordered"><span class="std std-ref">ordered collections</span></a>.</p>
+</div>
+</div></blockquote>
+<ul>
+<li><p>There are <code class="docutils literal notranslate"><span class="pre">null</span></code> values in your ordered collection: You must annotate the ordered collection with <code class="docutils literal notranslate"><span class="pre">CascadeType.ALL</span></code> and <code class="docutils literal notranslate"><span class="pre">orphanRemoval</span> <span class="pre">=</span> <span class="pre">true</span></code>. E.g:</p>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Result.java</span>
+<span class="nd">@OneToMany</span><span class="p">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="n">CascadeType</span><span class="p">.</span><span class="na">ALL</span><span class="p">,</span> <span class="n">orphanRemoval</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@OrderColumn</span>
+<span class="nd">@JsonIgnoreProperties</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;result&quot;</span><span class="p">,</span> <span class="n">allowSetters</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span>
+<span class="nd">@Cache</span><span class="p">(</span><span class="n">usage</span> <span class="o">=</span> <span class="n">CacheConcurrencyStrategy</span><span class="p">.</span><span class="na">NONSTRICT_READ_WRITE</span><span class="p">)</span>
+<span class="nd">@JsonView</span><span class="p">(</span><span class="n">QuizView</span><span class="p">.</span><span class="na">Before</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Feedback</span><span class="o">&gt;</span> <span class="n">feedbacks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../code-review/" class="btn btn-neutral float-right" title="Code Review" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../client/" class="btn btn-neutral float-left" title="Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1487 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup for Programming Exercises with Jenkins and GitLab &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="Setup of Artemis with multiple instances" href="../distributed/" />
+    <link rel="prev" title="Setup for Programming Exercises with Bamboo, Bitbucket and Jira" href="../bamboo-bitbucket-jira/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../">Setup Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../#server-setup">Server Setup</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../bamboo-bitbucket-jira/">Bamboo, Bitbucket and Jira</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Jenkins and Gitlab</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#artemis">Artemis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gitlab">GitLab</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkins">Jenkins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#caching">Caching</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#separate-nginx-configurations">Separate NGINX Configurations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deployment-artemis-gitlab-jenkins-using-docker-on-local-machine">Deployment Artemis / GitLab / Jenkins using Docker on Local machine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../distributed/">Multiple instances</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/">Adjustments for programming exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../programming-exercises/#caching-example-for-maven">Caching example for Maven</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-service-configuration">Run the server via a service configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-via-a-run-configuration-in-intellij">Run the server via a run configuration in IntelliJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#typical-problems-with-liquibase-checksums">Typical problems with Liquibase checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-spring-boot-and-spring-profiles">Run the server with Spring Boot and Spring profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../#run-the-server-with-the-command-line-gradle-wrapper">Run the server with the command line (Gradle wrapper)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../#client-setup">Client Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#customize-your-artemis-instance">Customize your Artemis instance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#alternative-using-docker-compose">Alternative: Using docker-compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../#athene-service">Athene Service</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testservers/">Test Servers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docker/">Builds and Dependency Management</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../">Setup Guide</a> &raquo;</li>
+        
+      <li>Setup for Programming Exercises with Jenkins and GitLab</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/setup/jenkins-gitlab.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setup-for-programming-exercises-with-jenkins-and-gitlab">
+<h1>Setup for Programming Exercises with Jenkins and GitLab<a class="headerlink" href="#setup-for-programming-exercises-with-jenkins-and-gitlab" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how to set up a programming exercise environment
+based on Jenkins and GitLab. Optional commands are in curly brackets <code class="docutils literal notranslate"><span class="pre">{}</span></code>.</p>
+<p>The following assumes that all instances run on separate servers. If you
+have one single server, or your own NGINX instance, just skip all NGINX
+related steps and use the configurations provided under <em>Separate NGINX
+Configurations</em></p>
+<p><strong>If you want to setup everything on your local development computer,
+ignore all NGINX related steps.</strong> <strong>Just make sure that you use
+unique port mappings for your Docker containers (e.g.</strong> <code class="docutils literal notranslate"><span class="pre">8081</span></code> <strong>for
+GitLab,</strong> <code class="docutils literal notranslate"><span class="pre">8082</span></code> <strong>for Jenkins,</strong> <code class="docutils literal notranslate"><span class="pre">8080</span></code> <strong>for Artemis)</strong></p>
+<p><strong>Prerequisites:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.docker.com/install">Docker</a></p></li>
+</ul>
+<blockquote>
+<div><p>Make sure that docker has enough memory (~ 6GB). To adapt it, go to <code class="docutils literal notranslate"><span class="pre">Preferences</span> <span class="pre">-&gt;</span> <span class="pre">Resources</span></code> and restart Docker.</p>
+</div></blockquote>
+<div class="contents local topic" id="content-of-this-document">
+<p class="topic-title">Content of this document</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#artemis" id="id10">Artemis</a></p></li>
+<li><p><a class="reference internal" href="#gitlab" id="id11">GitLab</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gitlab-server-quickstart" id="id12">Gitlab Server Quickstart</a></p></li>
+<li><p><a class="reference internal" href="#manual-gitlab-server-setup" id="id13">Manual Gitlab Server Setup</a></p></li>
+<li><p><a class="reference internal" href="#upgrade-gitlab" id="id14">Upgrade GitLab</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#jenkins" id="id15">Jenkins</a></p>
+<ul>
+<li><p><a class="reference internal" href="#automated-jenkins-server-setup" id="id16">Automated Jenkins Server Setup</a></p></li>
+<li><p><a class="reference internal" href="#manual-jenkins-server-setup" id="id17">Manual Jenkins Server Setup</a></p></li>
+<li><p><a class="reference internal" href="#required-jenkins-plugins" id="id18">Required Jenkins Plugins</a></p></li>
+<li><p><a class="reference internal" href="#timestamper-configuration" id="id19">Timestamper Configuration</a></p></li>
+<li><p><a class="reference internal" href="#server-notification-plugin" id="id20">Server Notification Plugin</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-credentials" id="id21">Jenkins Credentials</a></p></li>
+<li><p><a class="reference internal" href="#gitlab-to-jenkins-push-notification-token" id="id22">GitLab to Jenkins push notification token</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-user-management" id="id23">Jenkins User Management</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-build-plan-access-control-configuration" id="id24">Jenkins Build Plan Access Control Configuration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#caching" id="id25">Caching</a></p>
+<ul>
+<li><p><a class="reference internal" href="#upgrade-jenkins" id="id26">Upgrade Jenkins</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#separate-nginx-configurations" id="id27">Separate NGINX Configurations</a></p>
+<ul>
+<li><p><a class="reference internal" href="#jenkins-1" id="id28">Jenkins</a></p></li>
+<li><p><a class="reference internal" href="#etc-nginx-common-common-ssl-conf" id="id29">/etc/nginx/common/common_ssl.conf</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#deployment-artemis-gitlab-jenkins-using-docker-on-local-machine" id="id30">Deployment Artemis / GitLab / Jenkins using Docker on Local machine</a></p>
+<ul>
+<li><p><a class="reference internal" href="#preparation" id="id31">Preparation</a></p></li>
+<li><p><a class="reference internal" href="#gitlab-1" id="id32">Gitlab</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-2" id="id33">Jenkins</a></p></li>
+<li><p><a class="reference internal" href="#artemis-1" id="id34">Artemis</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="artemis">
+<h2><a class="toc-backref" href="#id10">Artemis</a><a class="headerlink" href="#artemis" title="Permalink to this headline">¶</a></h2>
+<p>In order to use Artemis with Jenkins as <strong>Continuous Integration</strong>
+Server and Gitlab as <strong>Version Control</strong> Server, you have to configure
+the file <code class="docutils literal notranslate"><span class="pre">application-prod.yml</span></code> (Production Server) or
+<code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> (Local Development) accordingly. Please note
+that all values in <code class="docutils literal notranslate"><span class="pre">&lt;..&gt;</span></code> have to be configured properly. These values
+will be explained below in the corresponding sections.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">repo-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos/</span>
+    <span class="nt">repo-download-clone-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./repos-download/</span>
+    <span class="nt">encryption-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis-encrypt</span>     <span class="c1"># arbitrary password for encrypting database values</span>
+    <span class="nt">user-management</span><span class="p">:</span>
+        <span class="nt">use-external</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">internal-admin</span><span class="p">:</span>
+             <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+             <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;https://gitlab-url&gt;</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;gitlab-admin-user&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;gitlab-admin-password&gt;</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
+        <span class="nt">ci-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;ci-token&gt;</span>
+        <span class="nt">ssh-private-key-folder-path</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;ssh-private-key-folder-path&gt;</span>
+        <span class="nt">ssh-private-key-password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;ssh-private-key-password&gt;</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;jenkins-admin-user&gt;</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;jenkins-admin-password&gt;</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;https://jenkins-url&gt;</span>
+        <span class="nt">empty-commit-necessary</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">secret-push-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;secret push token&gt;</span>
+        <span class="nt">vcs-credentials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;vcs-credentials&gt;</span>
+        <span class="nt">artemis-authentication-token-key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;artemis-authentication-token-key&gt;</span>
+        <span class="nt">artemis-authentication-token-value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;artemis-authentication-token-value&gt;</span>
+</pre></div>
+</div>
+<p>In addition, you have to start Artemis with the profiles <code class="docutils literal notranslate"><span class="pre">gitlab</span></code> and
+<code class="docutils literal notranslate"><span class="pre">jenkins</span></code> so that the correct adapters will be used, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">spring</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">active</span><span class="o">=</span><span class="n">dev</span><span class="p">,</span><span class="n">jenkins</span><span class="p">,</span><span class="n">gitlab</span><span class="p">,</span><span class="n">artemis</span><span class="p">,</span><span class="n">scheduling</span>
+</pre></div>
+</div>
+<p>Please read <a class="reference internal" href="../"><span class="doc">Setup Guide</span></a> for more details.</p>
+<p>For a local setup on Windows you can use <cite>http://host.docker.internal</cite> appended
+by the chosen ports as the version-control and continuous-integration url.</p>
+<p>Make sure to change the <code class="docutils literal notranslate"><span class="pre">server.url</span></code> value in <code class="docutils literal notranslate"><span class="pre">application-dev.yml</span></code>
+or <code class="docutils literal notranslate"><span class="pre">application-prod.yml</span></code> accordingly. This value will be used for the
+communication hooks from Gitlab to Artemis and from Jenkins to Artemis.
+In case you use a different port than 80 (http) or 443 (https) for the
+communication, you have to append it to the <code class="docutils literal notranslate"><span class="pre">server.url</span></code> value,
+e.g. <code class="docutils literal notranslate"><span class="pre">127.0.0.1:8080</span></code>.</p>
+<p>When you start Artemis for the first time, it will automatically create
+an admin user based on the default encryption password specified in the
+yml file above. In case you want to use a different encryption password,
+you can insert users manually into the <code class="docutils literal notranslate"><span class="pre">jhi_user</span></code> table. You can use
+<a class="reference external" href="https://www.devglan.com/online-tools/jasypt-online-encryption-decryption">Jasypt Online Encryption
+Tool</a>
+to generate encryption strings. Use Two Way Encryption (With Secret
+Text).</p>
+<p><strong>Note:</strong> Sometimes Artemis does not generate the admin user which may lead to a startup
+error. You will have to create the user manually in the MySQL database and in Gitlab. Make sure
+both are set up correctly and follow these steps:</p>
+<ol class="arabic">
+<li><p>Use the tool mentioned above to generate a password hash.</p></li>
+<li><p>Connect to the database via a client like <a class="reference external" href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>
+and execute the following query to create the user. Replace <cite>artemis_admin</cite> and <cite>HASHED_PASSWORD</cite> with your
+chosen username and password:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">artemis</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">jhi_user</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">id</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">login</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">password_hash</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">first_name</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">last_name</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">email</span><span class="o">`</span><span class="p">,</span>
+<span class="o">`</span><span class="n">activated</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">lang_key</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">activation_key</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">reset_key</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">created_by</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">created_date</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">reset_date</span><span class="o">`</span><span class="p">,</span>
+<span class="o">`</span><span class="n">last_modified_by</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">last_modified_date</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">image_url</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">last_notification_read</span><span class="o">`</span><span class="p">,</span><span class="o">`</span><span class="n">registration_number</span><span class="o">`</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&quot;artemis_admin&quot;</span><span class="p">,</span><span class="ss">&quot;HASHED_PASSWORD&quot;</span><span class="p">,</span><span class="ss">&quot;artemis&quot;</span><span class="p">,</span><span class="ss">&quot;administrator&quot;</span><span class="p">,</span><span class="ss">&quot;artemis_admin@localhost&quot;</span><span class="p">,</span>
+<span class="mi">1</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">,</span><span class="k">NULL</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Give the user admin and user roles:</p>
+<blockquote>
+<div><div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">artemis</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">jhi_user_authority</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">authority_name</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&quot;ROLE_ADMIN&quot;</span><span class="p">);</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="o">`</span><span class="n">artemis</span><span class="o">`</span><span class="p">.</span><span class="o">`</span><span class="n">jhi_user_authority</span><span class="o">`</span> <span class="p">(</span><span class="o">`</span><span class="n">user_id</span><span class="o">`</span><span class="p">,</span> <span class="o">`</span><span class="n">authority_name</span><span class="o">`</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="ss">&quot;ROLE_USER&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p>4. Create a user in Gitlab (<code class="docutils literal notranslate"><span class="pre">http://your-gitlab-domain/admin/users/new</span></code>) and make sure that the username,
+email, and password are the same as the user from the database:</p>
+<div class="figure align-default">
+<img alt="../../../_images/gitlab_admin_user.png" src="../../../_images/gitlab_admin_user.png" />
+</div>
+<p>Starting the Artemis server should now succeed.</p>
+</div>
+<div class="section" id="gitlab">
+<h2><a class="toc-backref" href="#id11">GitLab</a><a class="headerlink" href="#gitlab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gitlab-server-quickstart">
+<h3><a class="toc-backref" href="#id12">Gitlab Server Quickstart</a><a class="headerlink" href="#gitlab-server-quickstart" title="Permalink to this headline">¶</a></h3>
+<p>The following steps describes how to set up the Gitlab server in a semi-automated way.
+This is ideal as a quickstart for developers. For a more detailed setup, see <a class="reference external" href="#gitlab-server-setup">Manual Gitlab Server Setup</a>.</p>
+<ol class="arabic">
+<li><p>Start the Gitlab container defined in <cite>src/main/docker/gitlab-jenkins-mysql.yml</cite> by running</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">jenkins</span><span class="o">-</span><span class="n">mysql</span><span class="o">.</span><span class="n">yml</span> <span class="n">up</span> <span class="o">--</span><span class="n">build</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+<p>The file uses the <cite>GITLAB_OMNIBUS_CONFIG</cite> environment variable to configure the Gitlab instance after the container is started.
+It disables prometheus monitoring, sets the ssh port to <code class="docutils literal notranslate"><span class="pre">2222</span></code>, and adjusts the monitoring endpoint whitelist by default.</p>
+</li>
+<li><p>Wait a couple of minutes since Gitlab can take some time to set up. Open the instance in your browser and set a first admin password of your choosing.
+You can then login using the username <code class="docutils literal notranslate"><span class="pre">root</span></code> and your password.</p></li>
+<li><p>Open the Artemis configuration <code class="docutils literal notranslate"><span class="pre">application-local.yml</span></code> file and insert the Gitlab admin account:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">root</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.gitlab.admin.password</span>
+</pre></div>
+</div>
+</li>
+<li><p>You now need to generate an admin access token. Navigate to <code class="docutils literal notranslate"><span class="pre">http://localhost:8081/-/profile/personal_access_tokens</span></code> and generate a token with all scopes.
+Copy this token into the <code class="docutils literal notranslate"><span class="pre">ADMIN_PERSONAL_ACCESS_TOKEN</span></code> field in the <code class="docutils literal notranslate"><span class="pre">src/main/docker/gitlab/gitlab-local-setup.sh</span></code> file.</p></li>
+<li><p>Run the following command and copy the generated access tokens into the Artemis configuration <code class="docutils literal notranslate"><span class="pre">application-local.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">jenkins-casc-config.yml</span></code> files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">jenkins</span><span class="o">-</span><span class="n">mysql</span><span class="o">.</span><span class="n">yml</span> <span class="n">exec</span> <span class="n">gitlab</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;sh /gitlab-local-setup.sh&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><dl class="simple">
+<dt>You’re done! Follow the <a class="reference external" href="#automated-jenkins-server-setup">Automated Jenkins Server Setup</a> section for configuring Jenkins.</dt><dd><p>There you can skip steps 4 and 5.</p>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+<div class="section" id="manual-gitlab-server-setup">
+<h3><a class="toc-backref" href="#id13">Manual Gitlab Server Setup</a><a class="headerlink" href="#manual-gitlab-server-setup" title="Permalink to this headline">¶</a></h3>
+<p>GitLab provides no possibility to set a users password via API without forcing the user to change it afterwards (see <a class="reference external" href="https://gitlab.com/gitlab-org/gitlab/-/issues/19141">Issue 19141</a>).
+Therefore, you may want to patch the official gitlab docker image.
+Thus, you can use the following Dockerfile:</p>
+<div class="highlight-dockerfile notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span> <span class="s">gitlab/gitlab-ce:latest</span>
+<span class="k">RUN</span> sed -i <span class="s1">&#39;/^.*user_params\[:password_expires_at\] = Time.current if admin_making_changes_for_another_user.*$/s/^/#/&#39;</span> /opt/gitlab/embedded/service/gitlab-rails/lib/api/users.rb
+</pre></div>
+</div>
+<p>This dockerfile disables the mechanism that sets the password to expired state after changed via API.
+If you want to use this custom image, you have to build the image and replace all occurances of <code class="docutils literal notranslate"><span class="pre">gitlab/gitlab-ce:latest</span></code> in the following instructions by your chosen image name.</p>
+<ol class="arabic">
+<li><p>Pull the latest GitLab Docker image (only if you don’t use your custom gitlab image)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">ce</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="section" id="start-gitlab">
+<h4>Start Gitlab<a class="headerlink" href="#start-gitlab" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic" start="2">
+<li><p>Run the image (and change the values for hostname and ports). Add
+<code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">2222:22</span></code> if cloning/pushing via ssh should be possible. As
+Gitlab runs in a docker container and the default port for SSH (22)
+is typically used by the host running Docker, we change the port
+Gitlab uses for SSH to <code class="docutils literal notranslate"><span class="pre">2222</span></code>. This can be adjusted if needed.</p>
+<p>Make sure to remove the comments from the command before running it.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">itd</span> <span class="o">--</span><span class="n">name</span> <span class="n">gitlab</span> \
+    <span class="o">--</span><span class="n">hostname</span> <span class="n">your</span><span class="o">.</span><span class="n">gitlab</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> \   <span class="c1"># Specify the hostname</span>
+    <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> \
+    <span class="o">-</span><span class="n">m</span> <span class="mi">3000</span><span class="n">m</span> \                            <span class="c1"># Optional argument to limit the memory usage of Gitlab</span>
+    <span class="o">-</span><span class="n">p</span> <span class="mi">8081</span><span class="p">:</span><span class="mi">80</span> <span class="o">-</span><span class="n">p</span> <span class="mi">443</span><span class="p">:</span><span class="mi">443</span> \               <span class="c1"># Alternative 1: If you are NOT running your own NGINX instance</span>
+    <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">some</span> <span class="n">port</span> <span class="n">of</span> <span class="n">your</span> <span class="n">choosing</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">80</span> \  <span class="c1"># Alternative 2: If you ARE running your own NGINX instance</span>
+    <span class="o">-</span><span class="n">p</span> <span class="mi">2222</span><span class="p">:</span><span class="mi">22</span> \                          <span class="c1"># Remove this if cloning via SSH should not be supported</span>
+    <span class="o">-</span><span class="n">v</span> <span class="n">gitlab_data</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gitlab</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="n">gitlab_logs</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">gitlab</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="n">gitlab_config</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gitlab</span> \
+    <span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">ce</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+</li>
+<li><p>Wait a couple of minutes until the container is deployed and GitLab
+is set up, then open the instance in you browser and set a first
+admin password of your choosing. You can then login using the
+username <code class="docutils literal notranslate"><span class="pre">root</span></code> and your password.</p></li>
+<li><p>We recommend to rename the <code class="docutils literal notranslate"><span class="pre">root</span></code> admin user to <code class="docutils literal notranslate"><span class="pre">artemis</span></code>. To rename
+the user, click on the image on the top right and select <code class="docutils literal notranslate"><span class="pre">Settings</span></code>.
+Now select <code class="docutils literal notranslate"><span class="pre">Account</span></code> on the left and change the username. Use the
+same password in the Artemis configuration file
+<code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">the.password.you.chose</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>If you run your own NGINX or if you install Gitlab on a local development computer, then skip the next steps (6-7)</strong></p></li>
+<li><p>Configure Gitlab to automatically generate certificates using
+LetsEncrypt. Edit the Gitlab configuration</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">gitlab</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">.</span><span class="n">rb</span>
+</pre></div>
+</div>
+<p>And add the following part</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">letsencrypt</span><span class="p">[</span><span class="s1">&#39;enable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">true</span>                          <span class="c1"># GitLab 10.5 and 10.6 require this option</span>
+<span class="n">external_url</span> <span class="s2">&quot;https://your.gitlab.domain.com&quot;</span>         <span class="c1"># Must use https protocol</span>
+<span class="n">letsencrypt</span><span class="p">[</span><span class="s1">&#39;contact_emails&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gitlab@your.gitlab.domain.com&#39;</span><span class="p">]</span> <span class="c1"># Optional</span>
+
+<span class="n">nginx</span><span class="p">[</span><span class="s1">&#39;redirect_http_to_https&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">nginx</span><span class="p">[</span><span class="s1">&#39;redirect_http_to_https_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">80</span>
+</pre></div>
+</div>
+</li>
+<li><p>Reconfigure gitlab to generate the certificate.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save your changes and finally run</span>
+<span class="n">gitlab</span><span class="o">-</span><span class="n">ctl</span> <span class="n">reconfigure</span>
+</pre></div>
+</div>
+<p>If this command fails, try using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gitlab</span><span class="o">-</span><span class="n">ctl</span> <span class="n">renew</span><span class="o">-</span><span class="n">le</span><span class="o">-</span><span class="n">certs</span>
+</pre></div>
+</div>
+</li>
+<li><p>Login to GitLab using the Artemis admin account and go to the profile
+settings (upper right corned → <em>Settings</em>)</p>
+<div class="figure align-center">
+<img alt="../../../_images/gitlab_setting_button.png" src="../../../_images/gitlab_setting_button.png" />
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="gitlab-access-token">
+<h4>Gitlab Access Token<a class="headerlink" href="#gitlab-access-token" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple" start="9">
+<li><p>Go to <em>Access Tokens</em></p></li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/gitlab_access_tokens_button.png" src="../../../_images/gitlab_access_tokens_button.png" />
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li><p>Create a new token named “Artemis” and give it <strong>all</strong> rights.</p></li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/artemis_gitlab_access_token.png" src="../../../_images/artemis_gitlab_access_token.png" />
+</div>
+</div></blockquote>
+<ol class="arabic" start="11">
+<li><p>Copy the generated token and insert it into the Artemis
+configuration file <em>application-artemis.yml</em></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.generated.api.token</span>
+</pre></div>
+</div>
+</li>
+<li><p>(Optional, only necessary for local setup) Allow outbound requests to local network</p>
+<p>There is a known limitation for the local setup: webhook URLs for the
+communication between Gitlab and Artemis and between Gitlab and Jenkins
+cannot include local IP addresses. This option can be deactivated in
+Gitlab on <code class="docutils literal notranslate"><span class="pre">&lt;https://gitlab-url&gt;/admin/application_settings/network</span></code> →
+Outbound requests. Another possible solution is to register a local URL,
+e.g. using <a class="reference external" href="https://ngrok.com/">ngrok</a>, to be available over a domain
+the Internet.</p>
+</li>
+<li><p>Adjust the monitoring-endpoint whitelist. Run the following command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">gitlab</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p>Then edit the Gitlab configuration</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">.</span><span class="n">rb</span>
+</pre></div>
+</div>
+<p>Add the following lines</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">&#39;monitoring_whitelist&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0.0.0.0/0&#39;</span><span class="p">]</span>
+<span class="n">gitlab_rails</span><span class="p">[</span><span class="s1">&#39;gitlab_shell_ssh_port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2222</span>
+</pre></div>
+</div>
+<p>This will disable the firewall for all IP addresses. If you only want to
+allow the server that runs Artemis to query the information, replace
+<code class="docutils literal notranslate"><span class="pre">0.0.0.0/0</span></code> with <code class="docutils literal notranslate"><span class="pre">ARTEMIS.SERVER.IP.ADRESS/32</span></code></p>
+<p>If you use SSH and use a different port than <code class="docutils literal notranslate"><span class="pre">2222</span></code>, you have to
+adjust the port above.</p>
+</li>
+<li><p>Disable prometheus.
+As we encountered issues with the prometheus log files not being deleted and therefore filling up the disk space, we decided to disable prometheus within Gitlab.
+If you also want to disable prometheus, edit the configuration again using</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">.</span><span class="n">rb</span>
+</pre></div>
+</div>
+<p>and add the following line</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prometheus_monitoring</span><span class="p">[</span><span class="s1">&#39;enable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">false</span>
+</pre></div>
+</div>
+<p>The issue with more details can be found <a class="reference external" href="https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/4166">here</a>.</p>
+</li>
+<li><p>Add a SSH key for the admin user.</p>
+<p>Artemis can clone/push the repositories during setup and for the online code editor using SSH.
+If the SSH key is not present, the username + token will be used as fallback (and all git operations will use HTTP(S) instead of SSH).</p>
+<p>You first have to create a SSH key (locally), e.g. using <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code> (more information on how to create a SSH key can be found e.g. at <a class="reference external" href="https://www.ssh.com/ssh/keygen/">ssh.com</a> or at <a class="reference external" href="https://docs.gitlab.com/ee/ssh/#rsa-ssh-keys">gitlab.com</a>).</p>
+<p>The list of supported ciphers can be found at <a class="reference external" href="https://github.com/apache/mina-sshd">Apache Mina</a>.</p>
+<p>It is recommended to use a password to secure the private key, but it is not mandatory.</p>
+<p>Please note that the private key file <strong>must</strong> be named <code class="docutils literal notranslate"><span class="pre">ìd_rsa</span></code>, <code class="docutils literal notranslate"><span class="pre">id_dsa</span></code>, <code class="docutils literal notranslate"><span class="pre">id_ecdsa</span></code> or <code class="docutils literal notranslate"><span class="pre">id_ed25519</span></code>, depending on the ciphers used.</p>
+<p>You now have to extract the public key and add it to Gitlab.
+Open the public key file (usually called <code class="docutils literal notranslate"><span class="pre">id_rsa.pub</span></code> (when using RSA)) and copy it’s content (you can also use <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">id_rsa.pub</span></code> to show the public key).</p>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">GITLAB-URL/-/profile/keys</span></code> and add the SSH key by pasting the content of the public key.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;ssh-key-path&gt;</span></code> is the path to the folder containing the <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code> file (but without the filename). It will be used in the configuration of Artemis to specify where Artemis should look for the key and store the <code class="docutils literal notranslate"><span class="pre">known_hosts</span></code> file.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;ssh-private-key-password&gt;</span></code> is the password used to secure the private key. It is also needed for the configuration of Artemis, but can be omitted if no password was set (e.g. for development environments).</p>
+</li>
+</ol>
+<p>Reconfigure Gitlab</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gitlab</span><span class="o">-</span><span class="n">ctl</span> <span class="n">reconfigure</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="upgrade-gitlab">
+<h3><a class="toc-backref" href="#id14">Upgrade GitLab</a><a class="headerlink" href="#upgrade-gitlab" title="Permalink to this headline">¶</a></h3>
+<p>You can upgrade GitLab by downloading the latest Docker image and
+starting a new container with the old volumes:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="n">gitlab</span>
+<span class="n">docker</span> <span class="n">rename</span> <span class="n">gitlab</span> <span class="n">gitlab_old</span>
+<span class="n">docker</span> <span class="n">pull</span> <span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">ce</span><span class="p">:</span><span class="n">latest</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>See <a class="reference external" href="https://hub.docker.com/r/gitlab/gitlab-ce/">https://hub.docker.com/r/gitlab/gitlab-ce/</a> for the latest version.
+You can also specify an earlier one.</p>
+<p>Start a GitLab container just as described in <a class="reference external" href="#start-gitlab">Start-Gitlab</a> and wait for a couple of minutes. GitLab
+should configure itself automatically. If there are no issues, you can
+delete the old container using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">gitlab_old</span></code> and the olf
+image (see <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code>) using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rmi</span> <span class="pre">&lt;old-image-id&gt;</span></code>.
+You can also remove all old images using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">image</span> <span class="pre">prune</span> <span class="pre">-a</span></code></p>
+</div>
+</div>
+<div class="section" id="jenkins">
+<h2><a class="toc-backref" href="#id15">Jenkins</a><a class="headerlink" href="#jenkins" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="automated-jenkins-server-setup">
+<h3><a class="toc-backref" href="#id16">Automated Jenkins Server Setup</a><a class="headerlink" href="#automated-jenkins-server-setup" title="Permalink to this headline">¶</a></h3>
+<p>The following steps describe how to deploy a pre-configured version of the Jenkins server.
+This is ideal as a quickstart for developers. For a more detailed setup, see <a class="reference external" href="#manual-jenkins-server-setup">Manual Jenkins Server Setup</a>.</p>
+<ol class="arabic simple">
+<li><p>Open the dockerfile located at <code class="docutils literal notranslate"><span class="pre">src/main/docker/jenkins/Dockerfile</span></code> or <code class="docutils literal notranslate"><span class="pre">src/main/docker/jenkins/swift/Dockerfile</span></code> (in case you want to additionally install Swift/SwiftLint).</p></li>
+<li><p>Uncomment the line which installs the docker client. Jenkins uses build agents to build code. The automated setup configures a local agent running from within Jenkins container.</p></li>
+<li><p>Uncomment the line that disables the first-time setup wizard and save the dockerfile:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ENV</span> <span class="n">JAVA_OPTS</span> <span class="o">-</span><span class="n">Djenkins</span><span class="o">.</span><span class="n">install</span><span class="o">.</span><span class="n">runSetupWizard</span><span class="o">=</span><span class="n">false</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Create a new access token in Gitlab named <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> and give it <strong>api</strong> and <strong>read_repository</strong> rights.</p></li>
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">src/main/docker/jenkins/jenkins-casc-config.yml</span></code> file with an editor and insert the generated token, the gitlab admin username, and password:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">credentials</span><span class="p">:</span>
+ <span class="nt">system</span><span class="p">:</span>
+     <span class="nt">domainCredentials</span><span class="p">:</span>
+         <span class="p p-Indicator">-</span> <span class="nt">credentials</span><span class="p">:</span>
+             <span class="p p-Indicator">-</span> <span class="nt">gitLabApiTokenImpl</span><span class="p">:</span>
+                 <span class="nt">apiToken</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.api.token</span>
+         <span class="p p-Indicator">-</span> <span class="nt">usernamePassword</span><span class="p">:</span>
+             <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_gitlab_admin_credentials</span>
+             <span class="nt">scope</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GLOBAL</span>
+             <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.gitlab.admin.username</span>
+             <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.gitlab.admin.password</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Navigate to the bottom of the file and set the url of your Gitlab instance. This is typically the ip address or hostname of the Gitlab container.</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">unclassified</span><span class="p">:</span>
+  <span class="nt">gitlabconnectionconfig</span><span class="p">:</span>
+    <span class="nt">connections</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">apiTokenId</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_gitlab_api_token</span>
+        <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.gitlab.url</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>You can now deploy Jenkins. A <code class="docutils literal notranslate"><span class="pre">src/main/docker/gitlab-jenkins-mysql.yml</span></code> file is provided which deploys the Jenkins, Gitlab, and Mysql containers bound to static ip addresses. You can deploy them by running:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">jenkins</span><span class="o">-</span><span class="n">mysql</span><span class="o">.</span><span class="n">yml</span> <span class="n">up</span> <span class="o">--</span><span class="n">build</span>
+</pre></div>
+</div>
+<p>If you already have a Gitlab and Mysql instance running, you can comment out all services except for jenkins and then run the docker-compose file.</p>
+<ol class="arabic simple" start="8">
+<li><p>You need to generate the <cite>ci-token</cite> and <cite>secret-push-token</cite>. Please follow the <a class="reference external" href="##gitlab-to-jenkins-push-notification-token">Gitlab to Jenkins push notification token</a> steps.</p></li>
+<li><p>The <cite>application-local.yml</cite> must be adapted with the values configured in <code class="docutils literal notranslate"><span class="pre">jenkins-casc-config.yml</span></code>:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">user-management</span><span class="p">:</span>
+        <span class="nt">use-external</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+        <span class="nt">internal-admin</span><span class="p">:</span>
+            <span class="nt">username</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis-admin</span>
+        <span class="nt">version-control</span><span class="p">:</span>
+            <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:8081</span>
+            <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">ci-token</span><span class="p">:</span> <span class="c1"># generated in step 9</span>
+        <span class="nt">continuous-integration</span><span class="p">:</span>
+            <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:8080</span>
+            <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">vcs-credentials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_gitlab_admin_credentials</span>
+            <span class="nt">artemis-authentication-token-key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_notification_plugin_token</span>
+            <span class="nt">artemis-authentication-token-value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">artemis_admin</span>
+            <span class="nt">secret-push-token</span><span class="p">:</span> <span class="c1"># generated in step 8</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="10">
+<li><p>Open the <code class="docutils literal notranslate"><span class="pre">src/main/resources/config/appliciation-jenkins.yml</span></code> and change the following:</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">jenkins</span><span class="p">:</span>
+    <span class="nt">internal-urls</span><span class="p">:</span>
+        <span class="nt">ci-url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://jenkins:8080</span>
+        <span class="nt">vcs-url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://gitlab:80</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="11">
+<li><p>You’re done. You can now run Artemis with the Gitlab/Jenkins environment.</p></li>
+</ol>
+</div>
+<div class="section" id="manual-jenkins-server-setup">
+<h3><a class="toc-backref" href="#id17">Manual Jenkins Server Setup</a><a class="headerlink" href="#manual-jenkins-server-setup" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Pull the latest Jenkins LTS Docker image</p>
+<p>Run the following command to get the latest jenkins LTS docker image.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">pull</span> <span class="n">jenkins</span><span class="o">/</span><span class="n">jenkins</span><span class="p">:</span><span class="n">lts</span>
+</pre></div>
+</div>
+</li>
+<li><p>Create a custom docker image</p>
+<p>In order to install and use Maven with Java in the Jenkins container,
+you have to first install maven, then download Java and finally
+configure Maven to use Java instead of the default version.
+You also need to install Swift and SwiftLint if you want to be able to
+create Swift programming exercises.</p>
+<p>To perform all these steps automatically, you can prepare a Docker
+image:</p>
+<p>Create a dockerfile with the content found <cite>here &lt;src/main/docker/jenkins/Dockerfile&gt;</cite>
+or <cite>here &lt;src/main/docker/jenkins/swift/Dockerfile&gt;</cite> in case you want to additionally
+install Swift/SwiftLint.
+Copy it in a file named <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>, e.g. in
+the folder <code class="docutils literal notranslate"><span class="pre">/opt/jenkins/</span></code> using <code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">Dockerfile</span></code>.</p>
+<p>Now run the command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">--no-cache</span> <span class="pre">-t</span> <span class="pre">jenkins-artemis</span> <span class="pre">.</span></code></p>
+<p>This might take a while because Docker will download Java, but this
+is only required once.</p>
+</li>
+<li><p><strong>If you run your own NGINX or if you install Jenkins on a local development computer, then skip the next steps (4-7)</strong></p></li>
+<li><p>Create a file increasing the maximum file size for the nginx proxy.
+The nginx-proxy uses a default file limit that is too small for the
+plugin that will be uploaded later. <strong>Skip this step if you have your
+own NGINX instance.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;client_max_body_size 16m;&quot;</span> <span class="o">&gt;</span> <span class="n">client_max_body_size</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</li>
+<li><p>The NGINX default timeout is pretty low. For plagarism check and unlocking student repos for the exam a higher timeout is advisable. Therefore we write our own nginx.conf and load it in the container.</p>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">user</span>  <span class="s">nginx</span><span class="p">;</span>
+<span class="k">worker_processes</span>  <span class="s">auto</span><span class="p">;</span>
+
+<span class="k">error_log</span>  <span class="s">/var/log/nginx/error.log</span> <span class="s">warn</span><span class="p">;</span>
+<span class="k">pid</span>        <span class="s">/var/run/nginx.pid</span><span class="p">;</span>
+
+
+<span class="k">events</span> <span class="p">{</span>
+    <span class="kn">worker_connections</span>  <span class="mi">1024</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="k">http</span> <span class="p">{</span>
+    <span class="kn">include</span>       <span class="s">/etc/nginx/mime.types</span><span class="p">;</span>
+    <span class="kn">default_type</span>  <span class="s">application/octet-stream</span><span class="p">;</span>
+
+    <span class="kn">log_format</span>  <span class="s">main</span>  <span class="s">&#39;</span><span class="nv">$remote_addr</span> <span class="s">-</span> <span class="nv">$remote_user</span> <span class="s">[</span><span class="nv">$time_local]</span> <span class="s">&quot;</span><span class="nv">$request&quot;</span> <span class="s">&#39;</span>
+                      <span class="s">&#39;</span><span class="nv">$status</span> <span class="nv">$body_bytes_sent</span> <span class="s">&quot;</span><span class="nv">$http_referer&quot;</span> <span class="s">&#39;</span>
+                      <span class="s">&#39;&quot;</span><span class="nv">$http_user_agent&quot;</span> <span class="s">&quot;</span><span class="nv">$http_x_forwarded_for&quot;&#39;</span><span class="p">;</span>
+
+    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/access.log</span>  <span class="s">main</span><span class="p">;</span>
+
+    <span class="kn">fastcgi_read_timeout</span> <span class="mi">300</span><span class="p">;</span>
+    <span class="kn">proxy_read_timeout</span> <span class="mi">300</span><span class="p">;</span>
+
+    <span class="kn">sendfile</span>        <span class="no">on</span><span class="p">;</span>
+    <span class="c1">#tcp_nopush     on;</span>
+
+    <span class="kn">keepalive_timeout</span>  <span class="mi">65</span><span class="p">;</span>
+
+    <span class="c1">#gzip  on;</span>
+
+    <span class="kn">include</span> <span class="s">/etc/nginx/conf.d/*.conf</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">daemon</span> <span class="no">off</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the NGINX proxy docker container, this will automatically setup
+all reverse proxies and force https on all connections. (This image
+would also setup proxies for all other running containers that have
+the VIRTUAL_HOST and VIRTUAL_PORT environment variables). <strong>Skip this
+step if you have your own NGINX instance.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -itd --name nginx_proxy \
+    -p 80:80 -p 443:443 \
+    --restart always \
+    -v /var/run/docker.sock:/tmp/docker.sock:ro \
+    -v /etc/nginx/certs \
+    -v /etc/nginx/vhost.d \
+    -v /usr/share/nginx/html \
+    -v $(pwd)/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro \
+    -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \
+    jwilder/nginx-proxy
+</pre></div>
+</div>
+</li>
+<li><p>The nginx proxy needs another docker-container to generate
+letsencrypt certificates. Run the following command to start it (make
+sure to change the email-address). <strong>Skip this step if you have your
+own NGINX instance.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">detach</span> \
+    <span class="o">--</span><span class="n">name</span> <span class="n">nginx_proxy</span><span class="o">-</span><span class="n">letsencrypt</span> \
+    <span class="o">--</span><span class="n">volumes</span><span class="o">-</span><span class="kn">from</span> <span class="nn">nginx_proxy</span> \
+    <span class="o">--</span><span class="n">volume</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="n">ro</span> \
+    <span class="o">--</span><span class="n">env</span> <span class="s2">&quot;DEFAULT_EMAIL=mail@yourdomain.tld&quot;</span> \
+    <span class="n">jrcs</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">-</span><span class="n">nginx</span><span class="o">-</span><span class="n">proxy</span><span class="o">-</span><span class="n">companion</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="section" id="start-jenkins">
+<h4>Start Jenkins<a class="headerlink" href="#start-jenkins" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic" start="8">
+<li><p>Run Jenkins by executing the following command (change the hostname
+and choose which port alternative you need)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">itd</span> <span class="o">--</span><span class="n">name</span> <span class="n">jenkins</span> \
+    <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="n">jenkins_data</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">docker</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">docker</span><span class="p">:</span><span class="n">ro</span> \
+    <span class="o">-</span><span class="n">e</span> <span class="n">VIRTUAL_HOST</span><span class="o">=</span><span class="n">your</span><span class="o">.</span><span class="n">jenkins</span><span class="o">.</span><span class="n">domain</span> <span class="o">-</span><span class="n">e</span> <span class="n">VIRTUAL_PORT</span><span class="o">=</span><span class="mi">8080</span> \    <span class="c1"># Alternative 1: If you are NOT using a separate NGINX instance</span>
+    <span class="o">-</span><span class="n">e</span> <span class="n">LETSENCRYPT_HOST</span><span class="o">=</span><span class="n">your</span><span class="o">.</span><span class="n">jenkins</span><span class="o">.</span><span class="n">domain</span> \                     <span class="c1"># Only needed if Alternative 1 is used</span>
+    <span class="o">-</span><span class="n">p</span> <span class="mi">8082</span><span class="p">:</span><span class="mi">8080</span> \                                                <span class="c1"># Alternative 2: If you ARE using a separate NGINX instance OR you ARE installing Jenkins on a local development computer</span>
+    <span class="o">-</span><span class="n">u</span> <span class="n">root</span> \
+    <span class="n">jenkins</span><span class="o">/</span><span class="n">jenkins</span><span class="p">:</span><span class="n">lts</span>
+</pre></div>
+</div>
+<p>If you still need the old setup with python &amp; maven installed locally, use <cite>jenkins-artemis</cite> instead of <cite>jenkins/jenkins:lts</cite>.
+Also note that you can omit the <code class="docutils literal notranslate"><span class="pre">-u</span> <span class="pre">root</span></code>, <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">/var/run/docker.sock:/var/run/docker.sock</span></code> and <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">/usr/bin/docker:/usr/bin/docker:ro</span></code> parameters, if you do not want to run Docker builds on the Jenkins master (but e.g. use remote agents).</p>
+</li>
+<li><dl>
+<dt>Open Jenkins in your browser (e.g. <code class="docutils literal notranslate"><span class="pre">localhost:8082</span></code>) and setup the</dt><dd><p>admin user account (install all suggested plugins). You can get the
+initial admin password using the following command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Jenkins highlights the password in the logs, you can&#39;t miss it</span>
+<span class="n">docker</span> <span class="n">logs</span> <span class="o">-</span><span class="n">f</span> <span class="n">jenkins</span>
+<span class="ow">or</span> <span class="n">alternatively</span>
+<span class="n">docker</span> <span class="n">exec</span> <span class="n">jenkins</span> <span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">secrets</span><span class="o">/</span><span class="n">initialAdminPassword</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><p>Set the chosen credentials in the Artemis configuration
+<em>application-artemis.yml</em></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">user</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.chosen.username</span>
+        <span class="nt">password</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">your.chosen.password</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="required-jenkins-plugins">
+<h3><a class="toc-backref" href="#id18">Required Jenkins Plugins</a><a class="headerlink" href="#required-jenkins-plugins" title="Permalink to this headline">¶</a></h3>
+<p><strong>Note:</strong> The custom Jenkins dockerfile takes advantage of the <a class="reference external" href="https://github.com/jenkinsci/plugin-installation-manager-tool">Plugin Installation Manager Tool for Jenkins</a> to automatically
+install the plugins listed below. If you used the dockerfile, you can skip these steps and <a class="reference external" href="#server-notification-plugin">Server Notification Plugin</a>. The list of plugins is maintained in <code class="docutils literal notranslate"><span class="pre">src/main/docker/jenkins/plugins.yml</span></code>.</p>
+<p>You will need to install the following plugins (apart from the
+recommended ones that got installed during the setup process):</p>
+<ol class="arabic">
+<li><p><a class="reference external" href="https://plugins.jenkins.io/gitlab-plugin/">GitLab</a> for enabling
+webhooks to and from GitLab</p></li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/timestamper/">Timestamper</a> for adding the
+time to every line of the build output (Timestamper might already be installed)</p></li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/workflow-aggregator/">Pipeline</a> for defining the
+build description using declarative files (Pipeline might already be installed)</p>
+<p><strong>Note:</strong> This is a suite of plugins that will install multiple plugins</p>
+</li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/pipeline-maven/">Pipeline Maven</a> to use maven within the pipelines. If you want to use docker for your build agents you may also need to install <a class="reference external" href="https://plugins.jenkins.io/docker-workflow/">Docker Pipeline</a> .</p></li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/matrix-auth/">Matrix Authorization Strategy Plugin</a> for configuring permissions for users on a project and build plan level (Matrix Authorization Strategy might already be installed).</p></li>
+</ol>
+<p>The plugins above (and the pipeline-setup associated with it) got introduced in Artemis 4.7.3.
+If you are using exercises that were created before 4.7.3, you also have to install these plugins:</p>
+<p>Please note that this setup is <strong>deprecated</strong> and will be removed in the future.
+Please migrate to the new pipeline-setup if possible.</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://plugins.jenkins.io/multiple-scms/">Multiple SCMs</a> for combining the
+exercise test and assignment repositories in one build</p></li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/postbuild-task/">Post Build Task</a> for preparing build
+results to be exported to Artemis</p></li>
+<li><p><a class="reference external" href="https://plugins.jenkins.io/xvfb/">Xvfb</a> for exercises based on GUI
+libraries, for which tests have to have some virtual display</p></li>
+</ol>
+<p>Choose “Download now and install after restart” and checking the
+“Restart Jenkins when installation is complete and no jobs are running” box</p>
+</div>
+<div class="section" id="timestamper-configuration">
+<h3><a class="toc-backref" href="#id19">Timestamper Configuration</a><a class="headerlink" href="#timestamper-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Go to <em>Manage Jenkins → Configure System</em>. There you will find the
+Timestamper configuration, use the following value for both formats:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;&lt;b&gt;&#39;</span><span class="n">yyyy</span><span class="o">-</span><span class="n">MM</span><span class="o">-</span><span class="n">dd</span><span class="s1">&#39;T&#39;</span><span class="n">HH</span><span class="p">:</span><span class="n">mm</span><span class="p">:</span><span class="n">ssX</span><span class="s1">&#39;&lt;/b&gt; &#39;</span>
+</pre></div>
+</div>
+<div class="figure align-center">
+<img alt="../../../_images/timestamper_config.png" src="../../../_images/timestamper_config.png" />
+</div>
+</div>
+<div class="section" id="server-notification-plugin">
+<h3><a class="toc-backref" href="#id20">Server Notification Plugin</a><a class="headerlink" href="#server-notification-plugin" title="Permalink to this headline">¶</a></h3>
+<p>Artemis needs to receive a notification after every build, which
+contains the test results and additional commit information. For that
+purpose, we developed a Jenkins plugin, that can aggregate and <em>POST</em>
+JUnit formatted results to any URL.</p>
+<p>You can download the current release of the plugin
+<a class="reference external" href="https://github.com/ls1intum/jenkins-server-notification-plugin/releases">here</a>
+(Download the <strong>.hpi</strong> file). Go to the Jenkins plugin page (<em>Manage
+Jenkins → Manage Plugins</em>) and install the downloaded file under the
+<em>Advanced</em> tab under <em>Upload Plugin</em></p>
+<div class="figure align-center">
+<img alt="../../../_images/jenkins_custom_plugin.png" src="../../../_images/jenkins_custom_plugin.png" />
+</div>
+</div>
+<div class="section" id="jenkins-credentials">
+<h3><a class="toc-backref" href="#id21">Jenkins Credentials</a><a class="headerlink" href="#jenkins-credentials" title="Permalink to this headline">¶</a></h3>
+<p>Go to <em>Manage Jenkins -&gt; Security -&gt; Manage Credentials → Jenkins → Global credentials</em> and create the
+following credentials</p>
+<div class="section" id="gitlab-api-token">
+<h4>GitLab API Token<a class="headerlink" href="#gitlab-api-token" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p>Create a new access token in GitLab named <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> and give it
+<strong>api</strong> rights and <strong>read_repository</strong> rights. For detailed
+instructions on how to create such a token follow <a class="reference external" href="#gitlab-access-token">Gitlab Access
+Token</a>.</p>
+<div class="figure align-center">
+<img alt="../../../_images/gitlab_jenkins_token_rights.png" src="../../../_images/gitlab_jenkins_token_rights.png" />
+</div>
+</li>
+<li><p>Copy the generated token and create new Jenkins credentials:</p>
+<ol class="arabic simple">
+<li><p><strong>Kind</strong>: GitLab API token</p></li>
+<li><p><strong>Scope</strong>: Global</p></li>
+<li><p><strong>API token</strong>: <em>your.copied.token</em></p></li>
+<li><p>Leave the ID field blank</p></li>
+<li><p>The description is up to you</p></li>
+</ol>
+</li>
+<li><p>Go to the Jenkins settings <em>Manage Jenkins → Configure System</em>. There
+you will find the GitLab settings. Fill in the URL of your GitLab
+instance and select the just created API token in the credentials
+dropdown. After you click on “Test Connection”, everything should
+work fine. If you have problems finding the right URL for your local docker setup,
+you can try <cite>http://host.docker.internal:8081</cite> for Windows or <cite>http://docker.for.mac.host.internal:8081</cite> for Mac
+if GitLab is reachable over port 8081.</p>
+<div class="figure align-center">
+<img alt="../../../_images/jenkins_gitlab_configuration.png" src="../../../_images/jenkins_gitlab_configuration.png" />
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="server-notification-token">
+<h4>Server Notification Token<a class="headerlink" href="#server-notification-token" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p>Create a new Jenkins credential containing the token, which gets send
+by the server notification plugin to Artemis with every build result:</p>
+<ol class="arabic simple">
+<li><p><strong>Kind</strong>: Secret text</p></li>
+<li><p><strong>Scope</strong>: Global</p></li>
+<li><p><strong>Secret</strong>: <em>your.secret_token_value</em> (choose any value you want,
+copy it for the nex step)</p></li>
+<li><p>Leave the ID field blank</p></li>
+<li><p>The description is up to you</p></li>
+</ol>
+</li>
+<li><p>Copy the generated ID of the new credentials and put it into the
+Artemis configuration <em>application-artemis.yml</em></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">artemis-authentication-token-key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">the.id.of.the.notification.token.credential</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the actual value you chose for the token and put it into the
+Artemis configuration <em>application-artemis.yml</em></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">artemis-authentication-token-value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">the.actual.value.of.the.notification.token</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="gitlab-repository-access">
+<h4>GitLab Repository Access<a class="headerlink" href="#gitlab-repository-access" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p>Create a new Jenkins credentials containing the username and password
+of the GitLab administrator account:</p>
+<ol class="arabic simple">
+<li><p><strong>Kind</strong>: Username with password</p></li>
+<li><p><strong>Scope</strong>: Global</p></li>
+<li><p><strong>Username</strong>: <em>the_username_you_chose_for_the_gitlab_admin_user</em></p></li>
+<li><p><strong>Password</strong>: <em>the_password_you_chose_for_the_gitlab_admin_user</em></p></li>
+<li><p>Leave the ID field blank</p></li>
+<li><p>The description is up to you</p></li>
+</ol>
+</li>
+<li><p>Copy the generated ID (e.g. <code class="docutils literal notranslate"><span class="pre">ea0e3c08-4110-4g2f-9c83-fb2cdf6345fa</span></code>)
+of the new credentials and put it into the Artemis configuration file
+<em>application-artemis.yml</em></p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">vcs-credentials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">the.id.of.the.username.and.password.credentials.from.jenkins</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="gitlab-to-jenkins-push-notification-token">
+<h3><a class="toc-backref" href="#id22">GitLab to Jenkins push notification token</a><a class="headerlink" href="#gitlab-to-jenkins-push-notification-token" title="Permalink to this headline">¶</a></h3>
+<p>GitLab has to notify Jenkins build plans if there are any new commits to
+the repository. The push notification that gets sent here is secured by
+a token generated by Jenkins. In order to get this token, you have to do
+the following steps:</p>
+<ol class="arabic simple">
+<li><p>Create a new item in Jenkins (use the Freestyle project type) and
+name it <strong>TestProject</strong></p></li>
+<li><p>In the project configuration, go to <em>Build Triggers → Build when a
+change is pushed to GitLab</em> and activate this option</p></li>
+<li><p>Click on <em>Advanced</em>.</p></li>
+<li><p>You will now have a couple of new options here, one of them being a
+“<strong>Secret token</strong>”.</p></li>
+<li><p>Click on the “<em>Generate</em>” button right below the text box for that
+token.</p></li>
+<li><p>Copy the generated value, let’s call it <strong>$gitlab-push-token</strong></p></li>
+<li><p>Apply these change to the plan (i.e. click on <em>Apply</em>)</p></li>
+</ol>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="../../../_images/jenkins_test_project.png" src="../../../_images/jenkins_test_project.png" />
+</div>
+</div></blockquote>
+<ol class="arabic" start="8">
+<li><p>Perform a <em>GET</em> request to the following URL (e.g. with Postman)
+using Basic Authentication and the username and password you chose
+for the Jenkins admin account:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">jenkins</span><span class="o">.</span><span class="n">domain</span><span class="o">/</span><span class="n">job</span><span class="o">/</span><span class="n">TestProject</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+</li>
+<li><p>You will get the whole configuration XML of the just created build
+plan, there you will find the following tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;secretToken&gt;{$some-long-encrypted-value}&lt;/secretToken&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="figure align-center" id="id5">
+<img alt="../../../_images/jenkins_project_config_xml.png" src="../../../_images/jenkins_project_config_xml.png" />
+<p class="caption"><span class="caption-text">Job configuration XML</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+<ol class="arabic" start="10">
+<li><p>Copy the <code class="docutils literal notranslate"><span class="pre">secret-push-token</span> <span class="pre">value</span></code> in the line
+<code class="docutils literal notranslate"><span class="pre">&lt;secretToken&gt;{secret-push-token}&lt;/secretToken&gt;</span></code>. This is the encrypted value of the <code class="docutils literal notranslate"><span class="pre">gitlab-push-token</span></code>
+you generated in step 5.</p></li>
+<li><p>Now, you can delete this test project and input the following values
+into your Artemis configuration <em>application-artemis.yml</em> (replace
+the placeholders with the actual values you wrote down)</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">artemis</span><span class="p">:</span>
+    <span class="nt">version-control</span><span class="p">:</span>
+        <span class="nt">ci-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$gitlab-push-token</span>
+    <span class="nt">continuous-integration</span><span class="p">:</span>
+        <span class="nt">secret-push-token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$some-long-encrytped-value</span>
+</pre></div>
+</div>
+</li>
+<li><p>In a local setup, you have to disable CSRF otherwise some API endpoints will return HTTP Status 403 Forbidden.
+This is done by creating a groovy script inside the <code class="docutils literal notranslate"><span class="pre">jenkins</span></code> docker container at <code class="docutils literal notranslate"><span class="pre">jenkins_home/init.groovy</span></code>
+with the following contents:</p>
+<div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jenkins.model.Jenkins</span>
+<span class="kt">def</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">Jenkins</span><span class="o">.</span><span class="na">instance</span>
+<span class="n">instance</span><span class="o">.</span><span class="na">setCrumbIssuer</span><span class="o">(</span><span class="kc">null</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>In order to save the script, first create a file called <code class="docutils literal notranslate"><span class="pre">jenkins-disable-csrf.groovy</span></code> with the groovy code from above.</p>
+<p>Then create a <cite>init.groovy</cite> file in your Jenkins container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="n">jenkins</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;cd /var/jenkins_home; touch init.groovy&quot;</span>
+</pre></div>
+</div>
+<p>Now we need to pipe the script into the container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">i</span> <span class="n">jenkins</span> <span class="n">dd</span> <span class="n">of</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">groovy</span> <span class="o">&lt;</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">disable</span><span class="o">-</span><span class="n">csrf</span><span class="o">.</span><span class="n">groovy</span>
+</pre></div>
+</div>
+<p>To make sure that the commands worked as intended, the following command should output the script from above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">exec</span> <span class="n">jenkins</span> <span class="n">cat</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">groovy</span>
+</pre></div>
+</div>
+<p>The last step is to disable the <code class="docutils literal notranslate"><span class="pre">use-crumb</span></code> option in <code class="docutils literal notranslate"><span class="pre">application-jenkins.yml</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">jenkins</span><span class="p">:</span>
+    <span class="nt">use-crumb</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="section" id="build-agents">
+<h4>Build agents<a class="headerlink" href="#build-agents" title="Permalink to this headline">¶</a></h4>
+<p>You can either run the builds locally (that means on the machine that hosts Jenkins) or on remote build agents.</p>
+</div>
+<div class="section" id="configuring-local-build-agents">
+<h4>Configuring local build agents<a class="headerlink" href="#configuring-local-build-agents" title="Permalink to this headline">¶</a></h4>
+<p>Go to <cite>Manage Jenkins</cite> &gt; <cite>Manage Nodes and Clouds</cite> &gt; <cite>master</cite>
+Configure your master node like this  (adjust the number of executors, if needed). Make sure to add the docker label.</p>
+<blockquote>
+<div><div class="figure align-center" id="id6">
+<img alt="../../../_images/jenkins_local_node.png" src="../../../_images/jenkins_local_node.png" />
+<p class="caption"><span class="caption-text">Jenkins local node</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="alternative-local-build-agents-setup-using-docker">
+<h4>Alternative local build agents setup using docker<a class="headerlink" href="#alternative-local-build-agents-setup-using-docker" title="Permalink to this headline">¶</a></h4>
+<p>An alternative way of adding a build agent that will use docker (similar to the remote agents below) but running
+locally, can be done using the jenkins/ssh-agent docker image <a class="reference external" href="https://hub.docker.com/r/jenkins/ssh-agent">docker image</a>.</p>
+<p>Prerequisites:</p>
+<ol class="arabic simple">
+<li><p>Make sure to have Docker <a class="reference external" href="https://docs.docker.com/engine/install/">installed</a></p></li>
+</ol>
+<p>Agent setup:</p>
+<ol class="arabic">
+<li><p>Create a new SSH key using <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code> (if a passphrase is added, store it for later)</p></li>
+<li><p>Copy the public key content (e.g. in ~/.ssh/id_rsa.pub)</p></li>
+<li><p>Run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">--</span><span class="n">name</span> <span class="n">jenkins_agent</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span> \
+<span class="n">jenkins</span><span class="o">/</span><span class="n">ssh</span><span class="o">-</span><span class="n">agent</span><span class="p">:</span><span class="n">latest</span> <span class="s2">&quot;&lt;copied_public_key&gt;&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Get the GID of the ‘docker’ group with <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/etc/groups</span></code> and remember it for later</p></li>
+<li><p>Enter the agent’s container with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span> <span class="pre">-it</span> <span class="pre">jenkins_agent</span> <span class="pre">bash</span></code></p></li>
+<li><p>Install Docker with <code class="docutils literal notranslate"><span class="pre">apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">docker.io</span></code></p></li>
+<li><p>Check if group ‘docker’ already exists with <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/etc/groups</span></code>. If yes, remove it with <code class="docutils literal notranslate"><span class="pre">groupdel</span> <span class="pre">docker</span></code></p></li>
+<li><p>Add a new ‘docker’ group with the same GID as seen in point 2 with <code class="docutils literal notranslate"><span class="pre">groupadd</span> <span class="pre">-g</span> <span class="pre">&lt;GID&gt;</span> <span class="pre">docker</span></code></p></li>
+<li><p>Add ‘jenkins’ user to the group with <code class="docutils literal notranslate"><span class="pre">usermod</span> <span class="pre">-aG</span> <span class="pre">docker</span> <span class="pre">jenkins</span></code></p></li>
+<li><p>Activate changes with <code class="docutils literal notranslate"><span class="pre">newgrp</span> <span class="pre">docker</span></code></p></li>
+<li><p>Now check if ‘jenkins’ has the needed permissions to run docker commands</p>
+<ol class="arabic simple">
+<li><p>Log in as ‘jenkins’ with <code class="docutils literal notranslate"><span class="pre">su</span> <span class="pre">jenkins</span></code></p></li>
+<li><p>Try if <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span> <span class="pre">&lt;agent_container_name&gt;</span></code> works or if a permission error occurs</p></li>
+<li><p>If an permission error occurs, try to restart the docker container</p></li>
+</ol>
+</li>
+<li><p>Now you can exit the container executing <code class="docutils literal notranslate"><span class="pre">exit</span></code> twice (the first will exit the jenkins user and the second the container)</p></li>
+</ol>
+<p>Add agent in Jenkins:</p>
+<ol class="arabic">
+<li><p>Open Jenkins in your browser (e.g. localhost:8082)</p></li>
+<li><p>Go to Manage Jenkins -&gt; Manage Credentials -&gt; (global) -&gt; Add Credentials</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Kind: SSH Username with private key</p></li>
+<li><p>ID: leave blank</p></li>
+<li><p>Description: Up to you</p></li>
+<li><p>Username: jenkins</p></li>
+<li><p>Private Key: &lt;content of the previous generated private key&gt; (e.g /root/.ssh/id_rsa)</p></li>
+<li><p>Passphrase: &lt;the previous entered passphrase&gt; (you can leave it blank if none has been specified)</p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<img alt="../../../_images/alternative_jenkins_node_credentials.png" src="../../../_images/alternative_jenkins_node_credentials.png" />
+</div>
+</li>
+<li><p>Go to Manage Jenkins -&gt; Manage Nodes and Clouds -&gt; New Node</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Node name: Up to you (e.g. Docker)</p></li>
+<li><p>Check ‘Permanent Agent’</p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<img alt="../../../_images/alternative_jenkins_node_setup.png" src="../../../_images/alternative_jenkins_node_setup.png" />
+</div>
+</li>
+<li><p>Node settings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p># of executors: Up to you (e.g. 4)</p></li>
+<li><p>Remote root directory: /home/jenkins/agent</p></li>
+<li><p>Labels: docker</p></li>
+<li><p>Usage: Only build jobs with label expressions matching this node</p></li>
+<li><p>Launch method: Launch agents via SSH</p></li>
+<li><p>Host: output of command <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span> <span class="pre">--format</span> <span class="pre">'{{</span> <span class="pre">.Config.Hostname</span> <span class="pre">}}'</span> <span class="pre">jenkins_agent</span></code></p></li>
+<li><p>Credentials: &lt;the previously created SSH credential&gt;</p></li>
+<li><p>Host Key Verification Strategy: Non verifying Verification Strategy</p></li>
+<li><p>Availability: Keep this agent online as much as possible</p></li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<img alt="../../../_images/alternative_jenkins_node.png" src="../../../_images/alternative_jenkins_node.png" />
+</div>
+</li>
+<li><p>Save the new node</p></li>
+<li><p>Node should now be up and running</p></li>
+</ol>
+</div>
+<div class="section" id="installing-remote-build-agents">
+<h4>Installing remote build agents<a class="headerlink" href="#installing-remote-build-agents" title="Permalink to this headline">¶</a></h4>
+<p>You might want to run the builds on additional Jenkins agents, especially if a large amount of students should use the system at the same time.
+Jenkins supports remote build agents: The actual compilation of the students submissions happens on these other machines but the whole process is transparent to Artemis.</p>
+<p>This guide explains setting up a remote agent on an Ubuntu virtual machine that supports docker builds.</p>
+<p>Prerequisites:
+1. Install Docker on the remote machine: <a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<ol class="arabic" start="2">
+<li><p>Add a new user to the remote machine that Jenkins will use: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">adduser</span> <span class="pre">--disabled-password</span> <span class="pre">--gecos</span> <span class="pre">&quot;&quot;</span> <span class="pre">jenkins</span></code></p></li>
+<li><p>Add the jenkins user to the docker group (This allows the jenkins user to interact with docker): <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-a</span> <span class="pre">-G</span> <span class="pre">docker</span> <span class="pre">jenkins</span></code></p></li>
+<li><p>Generate a new SSH key locally (e.g. using <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code>) and add the public key to the <code class="docutils literal notranslate"><span class="pre">.ssh/authorized_keys</span></code> file of the jenkins user on the agent VM.</p></li>
+<li><p>Validate that you can connect to the build agent machine using SSH and the generated private key and validate that you can use docker (<cite>docker ps</cite> should not show an error)</p></li>
+<li><p>Log in with your normal account on the build agent machine and install Java: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">default-jre</span></code></p></li>
+<li><p>Add a new secret in Jenkins, enter private key you just generated and add the passphrase, if set:</p>
+<div class="figure align-center" id="id7">
+<img alt="../../../_images/jenkins_ssh_credentials.png" src="../../../_images/jenkins_ssh_credentials.png" />
+<p class="caption"><span class="caption-text">Jenkins SSH Credentials</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</li>
+<li><dl>
+<dt>Add a new node (select a name and select <cite>Permanent Agent</cite>):</dt><dd><p>Set the number of executors so that it matches your machine’s specs: This is the number of concurrent builds this agent can handle. It is recommended to match the number of cores of the machine, but you might want to adjust this later if needed.</p>
+<p>Set the remote root directory to <code class="docutils literal notranslate"><span class="pre">/home/jenkins/remote_agent</span></code>.</p>
+<p>Set the usage to <cite>Only build jobs with label expressions matching this node</cite>. This ensures that only docker-jobs will be built on this agent, and not other jobs.</p>
+<p>Add a label <code class="docutils literal notranslate"><span class="pre">docker</span></code> to the agent.</p>
+<p>Set the launch method to <cite>Launch via SSH</cite> and add the host of the machine. Select the credentials you just created and select <cite>Manually trusted key Verification Strategy</cite> as Host key verification Strategy.
+Save it.</p>
+</dd>
+</dl>
+<div class="figure align-center" id="id8">
+<img alt="../../../_images/jenkins_node.png" src="../../../_images/jenkins_node.png" />
+<p class="caption"><span class="caption-text">Add a Jenkins node</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</div>
+</li>
+<li><dl class="simple">
+<dt>Wait for some moments while jenkins installs it’s remote agent on the agent’s machine.</dt><dd><p>You can track the progress using the <cite>Log</cite> page when selecting the agent. System information should also be available.</p>
+</dd>
+</dl>
+</li>
+<li><p>Change the settings of the master node to be used only for specific jobs.
+This ensures that the docker tasks are not executed on the master agent but on the remote agent.</p></li>
+</ol>
+<blockquote>
+<div><div class="figure align-center" id="id9">
+<img alt="../../../_images/jenkins_master_node.png" src="../../../_images/jenkins_master_node.png" />
+<p class="caption"><span class="caption-text">Adjust Jenkins master node settings</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="11">
+<li><p>You are finished, the new agent should now also process builds.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="jenkins-user-management">
+<h3><a class="toc-backref" href="#id23">Jenkins User Management</a><a class="headerlink" href="#jenkins-user-management" title="Permalink to this headline">¶</a></h3>
+<p>Artemis supports user management in Jenkins as of version 4.11.0. Creating an account in Artemis will also create an
+account on Jenkins using the same password. This enables users to login and access Jenkins. Updating and/or deleting
+users from Artemis will also lead to updating and/or deleting from Jenkins.</p>
+<p>Unfortunately, Jenkins does not provide a Rest API for user management which present the following <strong>caveats</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The username of a user is treated as a unique identifier in Jenkins.</p></li>
+<li><p>It’s not possible to update an existing user with a single request. We update by deleting the user from Jenkins and recreating it with the updated data.</p></li>
+<li><p>In Jenkins, users are created in an on-demand basis. For example, when a build is performed, its change log is computed and as a result commits from users who Jenkins has never seen may be discovered and created.</p></li>
+<li><p>Since Jenkins users may be re-created automatically, issues may occur such as 1) creating a user, deleting it, and  then re-creating it and 2) changing the username of the user and reverting back to the previous one.</p></li>
+<li><p>Updating a user will re-create it in Jenkins and therefore remove any additionally saved Jenkins-specific user data such as API access tokens.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="jenkins-build-plan-access-control-configuration">
+<h3><a class="toc-backref" href="#id24">Jenkins Build Plan Access Control Configuration</a><a class="headerlink" href="#jenkins-build-plan-access-control-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Artemis takes advantage of the Project-based Matrix Authorization Strategy plugin to support build plan access control in Jenkins.
+This enables specific Artemis users to access build plans and execute actions such as triggering a build.
+This section explains the changes required in Jenkins in order to set up build plan access control:</p>
+<ol class="arabic simple">
+<li><p>Navigate to Manage Jenkins -&gt; Manage Plugins -&gt; Installed and make sure that you have the <a class="reference external" href="https://plugins.jenkins.io/matrix-auth/">Matrix Authorization Strategy</a> plugin installed</p></li>
+<li><p>Navigate to Manage Jenkins -&gt; Configure Global Security and navigate to the “Authorization” section</p></li>
+<li><p>Select the “Project-based Matrix Authorization Strategy” option</p></li>
+<li><p>In the table make sure that the “Read” permission under the “Overall” section is assigned to the “Authenticated Users” user group.</p></li>
+<li><p>In the table make sure that all “Administer” permission is assigned to all administrators.</p></li>
+<li><p>You are finished. If you want to fine-tune permissions assigned to teaching assistants and/or instructors, you can change them within the <code class="docutils literal notranslate"><span class="pre">JenkinsJobPermission.java</span></code> file.</p></li>
+</ol>
+<div class="figure align-center">
+<img alt="../../../_images/jenkins_authorization_permissions.png" src="../../../_images/jenkins_authorization_permissions.png" />
+</div>
+</div>
+</div>
+<div class="section" id="caching">
+<h2><a class="toc-backref" href="#id25">Caching</a><a class="headerlink" href="#caching" title="Permalink to this headline">¶</a></h2>
+<p>You can configure caching for e.g. Maven repositories.
+See <a class="reference internal" href="../programming-exercises/"><span class="doc">Adjustments for programming exercises</span></a> for more details.</p>
+<div class="section" id="upgrade-jenkins">
+<h3><a class="toc-backref" href="#id26">Upgrade Jenkins</a><a class="headerlink" href="#upgrade-jenkins" title="Permalink to this headline">¶</a></h3>
+<p>Build the latest version of the <code class="docutils literal notranslate"><span class="pre">jenkins-artemis</span></code> Docker image, stop
+the running container and mount the Jenkins data volume to the new LTS
+container. Make sure to perform this command in the folder where the
+<code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> was created (e.g. <code class="docutils literal notranslate"><span class="pre">/opt/jenkins/</span></code>):</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">stop</span> <span class="n">jenkins</span>
+<span class="n">docker</span> <span class="n">rename</span> <span class="n">jenkins</span> <span class="n">jenkins_old</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">cache</span> <span class="o">-</span><span class="n">t</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">artemis</span> <span class="o">.</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Now start a new Jenkins container just as described in <a class="reference external" href="#start-jenkins">Start-Jenkins</a>.</p>
+<p>Jenkins should be up and running again. If there are no issues, you can
+delete the old container using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span> <span class="pre">jenkins_old</span></code> and the old
+image (see <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">images</span></code>) using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rmi</span> <span class="pre">&lt;old-image-id&gt;</span></code>.
+You can also remove all old images using <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">image</span> <span class="pre">prune</span> <span class="pre">-a</span></code></p>
+<p>You should also update the Jenkins plugins regularly due to security
+reasons. You can update them directly in the Web User Interface in the
+Plugin Manager.</p>
+</div>
+</div>
+<div class="section" id="separate-nginx-configurations">
+<h2><a class="toc-backref" href="#id27">Separate NGINX Configurations</a><a class="headerlink" href="#separate-nginx-configurations" title="Permalink to this headline">¶</a></h2>
+<p>There are some placeholders in the following configurations. Replace
+them with your setup specific values ### GitLab</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
+    listen 443 ssl http2;
+    server_name your.gitlab.domain;
+    ssl_session_cache shared:GitLabSSL:10m;
+    include /etc/nginx/common/common_ssl.conf;
+    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubDomains; preload&quot;;
+    add_header X-Frame-Options DENY;
+    add_header Referrer-Policy same-origin;
+    client_max_body_size 10m;
+    client_body_buffer_size 1m;
+
+    location / {
+        proxy_pass              http://localhost:&lt;your exposed GitLab HTTP port (default 80)&gt;;
+        proxy_read_timeout      300;
+        proxy_connect_timeout   300;
+        proxy_http_version      1.1;
+        proxy_redirect          http://         https://;
+
+        proxy_set_header    Host                $http_host;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   $scheme;
+
+        gzip off;
+    }
+}
+</pre></div>
+</div>
+<div class="section" id="jenkins-1">
+<span id="id1"></span><h3><a class="toc-backref" href="#id28">Jenkins</a><a class="headerlink" href="#jenkins-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server {
+    listen 443 ssl http2;
+    server_name your.jenkins.domain;
+    ssl_session_cache shared:JenkinsSSL:10m;
+    include /etc/nginx/common/common_ssl.conf;
+    add_header Strict-Transport-Security &quot;max-age=63072000; includeSubDomains; preload&quot;;
+    add_header X-Frame-Options DENY;
+    add_header Referrer-Policy same-origin;
+    client_max_body_size 10m;
+    client_body_buffer_size 1m;
+
+    location / {
+        proxy_pass              http://localhost:&lt;your exposed Jenkins HTTP port (default 8081)&gt;;
+        proxy_set_header        Host                $host:$server_port;
+        proxy_set_header        X-Real-IP           $remote_addr;
+        proxy_set_header        X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto   $scheme;
+        proxy_redirect          http://             https://;
+
+        # Required for new HTTP-based CLI
+        proxy_http_version 1.1;
+        proxy_request_buffering off;
+        proxy_buffering off; # Required for HTTP-based CLI to work over SSL
+
+        # workaround for https://issues.jenkins-ci.org/browse/JENKINS-45651
+        add_header &#39;X-SSH-Endpoint&#39; &#39;your.jenkins.domain.com:50022&#39; always;
+    }
+
+    error_page 502 /502.html;
+    location /502.html {
+        root /usr/share/nginx/html;
+        internal;
+    }
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="etc-nginx-common-common-ssl-conf">
+<h3><a class="toc-backref" href="#id29">/etc/nginx/common/common_ssl.conf</a><a class="headerlink" href="#etc-nginx-common-common-ssl-conf" title="Permalink to this headline">¶</a></h3>
+<p>If you haven’t done so, generate the DH param file:
+<code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">openssl</span> <span class="pre">dhparam</span> <span class="pre">-out</span> <span class="pre">/etc/nginx/dhparam.pem</span> <span class="pre">4096</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ssl_certificate     &lt;path to your fullchain certificate&gt;;
+ssl_certificate_key &lt;path to the private key of your certificate&gt;;
+ssl_protocols       TLSv1.2 TLSv1.3;
+ssl_dhparam /etc/nginx/dhparam.pem;
+ssl_prefer_server_ciphers   on;
+ssl_ciphers ECDH+CHACHA20:EECDH+AESGCM:EDH+AESGCM:!AES128;
+ssl_ecdh_curve secp384r1;
+ssl_session_timeout  10m;
+ssl_session_cache shared:SSL:10m;
+ssl_session_tickets off;
+ssl_stapling on;
+ssl_stapling_verify on;
+resolver &lt;if you have any, specify them here&gt; valid=300s;
+resolver_timeout 5s;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deployment-artemis-gitlab-jenkins-using-docker-on-local-machine">
+<h2><a class="toc-backref" href="#id30">Deployment Artemis / GitLab / Jenkins using Docker on Local machine</a><a class="headerlink" href="#deployment-artemis-gitlab-jenkins-using-docker-on-local-machine" title="Permalink to this headline">¶</a></h2>
+<p>Execute the following steps in addition to the ones described above:</p>
+<div class="section" id="preparation">
+<h3><a class="toc-backref" href="#id31">Preparation</a><a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Create a Docker network named “artemis” with
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">network</span> <span class="pre">create</span> <span class="pre">artemis</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="gitlab-1">
+<span id="id2"></span><h3><a class="toc-backref" href="#id32">Gitlab</a><a class="headerlink" href="#gitlab-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Add the Gitlab container to the created network with
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">network</span> <span class="pre">connect</span> <span class="pre">artemis</span> <span class="pre">gitlab</span></code>.</p></li>
+<li><p>Get the URL of the Gitlab container with the first IP returned by
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span> <span class="pre">-f</span> <span class="pre">'{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span> <span class="pre">gitlab</span></code>.</p></li>
+<li><p>Use this IP in the <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> file at
+<code class="docutils literal notranslate"><span class="pre">artemis.version-control.url</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="jenkins-2">
+<span id="id3"></span><h3><a class="toc-backref" href="#id33">Jenkins</a><a class="headerlink" href="#jenkins-2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Add the Jenkins container to the created network with
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">network</span> <span class="pre">connect</span> <span class="pre">artemis</span> <span class="pre">jenkins</span></code>.</p></li>
+<li><p>Get the URL of the Gitlab container with the first IP returned by
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span> <span class="pre">-f</span> <span class="pre">'{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span> <span class="pre">jenkins</span></code>.</p></li>
+<li><p>Use this IP in the <code class="docutils literal notranslate"><span class="pre">application-artemis.yml</span></code> file at
+<code class="docutils literal notranslate"><span class="pre">artemis.continuous-integration.url</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="artemis-1">
+<span id="id4"></span><h3><a class="toc-backref" href="#id34">Artemis</a><a class="headerlink" href="#artemis-1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>In <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code>:</p>
+<ol class="arabic simple">
+<li><p>Make sure to use unique ports, e.g. 8080 for Artemis, 8081 for Gitlab and 8082 for Jenkins.</p></li>
+<li><p>Change the <code class="docutils literal notranslate"><span class="pre">SPRING_PROFILES_ACTIVE</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">dev,jenkins,gitlab,artemis,scheduling</span></code>.</p></li>
+</ol>
+</li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">src/main/resources/config/application-dev.yml</span></code> at <code class="docutils literal notranslate"><span class="pre">server:</span></code> use <code class="docutils literal notranslate"><span class="pre">port:</span> <span class="pre">8080</span></code> for Artemis.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code>.</p></li>
+<li><p>After the container has been deployed run
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span> <span class="pre">-f</span> <span class="pre">'{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'</span> <span class="pre">artemis_artemis-server</span></code>
+and copy the first resulting IP.</p></li>
+<li><p>In <code class="docutils literal notranslate"><span class="pre">src/main/resources/config/application-dev.yml</span></code> at <code class="docutils literal notranslate"><span class="pre">server:</span></code>
+at <code class="docutils literal notranslate"><span class="pre">url:</span></code> paste the copied IP with the port number, e.g. <code class="docutils literal notranslate"><span class="pre">url:</span> <span class="pre">http://172.33.0.1:8080</span></code>.</p></li>
+<li><p>Stop the Artemis docker container with Control-C and re-run
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../distributed/" class="btn btn-neutral float-right" title="Setup of Artemis with multiple instances" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../bamboo-bitbucket-jira/" class="btn btn-neutral float-left" title="Setup for Programming Exercises with Bamboo, Bitbucket and Jira" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

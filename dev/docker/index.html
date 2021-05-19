@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Builds and Dependency Management &mdash; Artemis  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="User Registration" href="../../admin/registration/" />
+    <link rel="prev" title="Test Servers" href="../testservers/" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../" class="icon icon-home" alt="Documentation Home"> Artemis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search/" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exercises/">Exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/exam_mode/">Exam Mode</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributor Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/">Setup Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guidelines/">Coding and design guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../system-design/">System Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use-local-user-management/">Using local user management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../saml2-shibboleth/">Shibboleth/SAML2 Login &amp; Registration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guided-tour/">Guided Tour</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../testservers/">Test Servers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Builds and Dependency Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-structure-of-programming-exercise-execution">General Structure of Programming Exercise Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#steps-for-updating-the-dockerbuilds-used-in-artemis">Steps for Updating the DockerBuilds used in Artemis</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Administration Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../admin/registration/">User Registration</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../">Artemis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Builds and Dependency Management</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/ls1intum/Artemis/blob/develop/docs/dev/docker.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="builds-and-dependency-management">
+<span id="docker"></span><h1>Builds and Dependency Management<a class="headerlink" href="#builds-and-dependency-management" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-structure-of-programming-exercise-execution">
+<h2>General Structure of Programming Exercise Execution<a class="headerlink" href="#general-structure-of-programming-exercise-execution" title="Permalink to this headline">¶</a></h2>
+<p>Artemis uses docker containers to run programming exercises. This ensures that the students’ code does not have direct access to the build agents’ hardware.
+To reduce the time required for each test run, these docker containers already include commonly used dependencies such as JUnit.</p>
+<p>There are currently docker containers for:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/ls1intum/artemis-maven-docker">Maven (Java and Kotlin)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ls1intum/artemis-ocaml-docker">OCaml</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ls1intum/artemis-python-docker">Python</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ls1intum/artemis-c-docker">C</a></p></li>
+<li><p><a class="reference external" href="https://github.com/lukasstevens/docker-fpv-stack">Haskell</a> (external)</p></li>
+<li><p><a class="reference external" href="https://github.com/norio-nomura/docker-swiftlint">Swift</a> (external)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/tizianleonhardt/era-artemis-assembler">Assembler</a> (external)</p></li>
+<li><p><a class="reference external" href="https://hub.docker.com/r/tizianleonhardt/era-artemis-vhdl">VHDL</a> (external)</p></li>
+</ul>
+</div>
+<div class="section" id="steps-for-updating-the-dockerbuilds-used-in-artemis">
+<h2>Steps for Updating the DockerBuilds used in Artemis<a class="headerlink" href="#steps-for-updating-the-dockerbuilds-used-in-artemis" title="Permalink to this headline">¶</a></h2>
+<p>Updating can only be done with access to the account on Dockerhub. If you need access, contact <a class="reference external" href="mailto:krusche&#37;&#52;&#48;in&#46;tum&#46;de">Stephan Krusche</a>.</p>
+<ol class="arabic">
+<li><p>Update the dependencies via a pull request in the repository of the docker container. Each docker container has its own repository as listed above</p></li>
+<li><p>After the PR got merged, go to the build overview on Dockerhub:</p>
+<ul class="simple">
+<li><p>Choose the correct repository on <a class="reference external" href="https://hub.docker.com/orgs/ls1tum/repositories">Dockerhub</a></p></li>
+<li><p>Go to the “Builds” tab of that repository</p></li>
+</ul>
+</li>
+<li><p>Wait for a successful build of “latest”</p></li>
+<li><div class="line-block">
+<div class="line">Click “Configure Automated Builds” and create a new build rule for a new tag, following the naming scheme:</div>
+<div class="line">“&lt;programming language&gt;&lt;Version of programming language&gt;-&lt;Upwards counting number&gt;”, for example “java16-3”</div>
+</div>
+<ul class="simple">
+<li><p>The “Sourcetype” should be “Tag”</p></li>
+<li><p>This tag should be used as “Source Tag” and “Docker Tag”</p></li>
+</ul>
+<div class="figure align-center">
+<img alt="Required steps for creating a new build" src="../../_images/new-docker-image-example.png" />
+</div>
+</li>
+<li><p>Go back to the repository of the docker container in GitHub and create a new Tag</p>
+<ul class="simple">
+<li><p>Click “Releases” on the right on the front page of that repository</p></li>
+<li><p>Create a new release with the button called “Draft release” and give it the same name as in step 4</p></li>
+</ul>
+</li>
+<li><p>Wait for the build in Dockerhub of the newly created Tag</p></li>
+<li><p>Change the docker image used in Artemis to the newly created tag: <a class="reference external" href="https://github.com/ls1intum/Artemis/blob/develop/src/main/java/de/tum/in/www1/artemis/service/connectors/ContinuousIntegrationService.java">ContinuousIntegrationService.java</a></p></li>
+<li><p>If the used docker container should also be changed for already created exercises you have to change the build plan of that exercise</p>
+<ul class="simple">
+<li><p>Change the docker image used by following this path: Configure Buildplan &gt; Default Job &gt; Docker &gt; Docker Image</p></li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../admin/registration/" class="btn btn-neutral float-right" title="User Registration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../testservers/" class="btn btn-neutral float-left" title="Test Servers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Technical University of Munich, Chair for Applied Software Engineering
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
